@@ -27,6 +27,8 @@ class SkyTextField extends StatelessWidget {
   final bool obscureText;
   final FocusNode? focusNode;
   final double borderRadius;
+    final List<TextInputFormatter>? inputFormatters;
+
 
   const SkyTextField({
     Key? key,
@@ -52,6 +54,7 @@ class SkyTextField extends StatelessWidget {
     this.obscureText = false,
     this.focusNode,
     this.borderRadius = 8,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -66,6 +69,7 @@ class SkyTextField extends StatelessWidget {
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       focusNode: focusNode,
+      inputFormatters: inputFormatters,
       obscureText: obscureText,
       autofocus: autofocus!,
       textCapitalization: textCapitalization,

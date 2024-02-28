@@ -1,5 +1,6 @@
 class IconPath {
   static const String basePath = "assets/icons";
+  static const String basePathAnim = "assets/animations";
 
   //Logo
   static const String logo = "$basePath/logo.svg";
@@ -21,4 +22,5 @@ class IconPath {
   //Assets
   static const String finance = "$basePath/finance.svg";
   static const String qr = "$basePath/qr.svg";
+  static const String loadingJson = "$basePathAnim/saralnova-loading.json";
 }

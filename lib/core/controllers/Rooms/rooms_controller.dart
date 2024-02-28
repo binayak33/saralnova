@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/helpers/validators.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 
@@ -7,6 +9,8 @@ class RoomsController extends GetxController {
   final roomScreenFormKey = GlobalKey<FormState>();
   RxList<String> roomTypes = RxList<String>.empty();
   final roomTypeScreenController = TextEditingController();
+  var pageState = PageState.ADD.obs;
+  RxnInt updateIndex = RxnInt();
 
   void onSave() async {
     if (roomScreenFormKey.currentState!.validate()) {
@@ -16,7 +20,28 @@ class RoomsController extends GetxController {
       //   (route) => route.settings.name == DashPanel.routeName,
       // );
       // Navigator.of(context1).pop();
+      pageState.value = PageState.ADD;
+
       Get.back();
+    }
+  }
+
+  void onUpdate() async {
+    if (roomScreenFormKey.currentState!.validate()) {
+      final index = updateIndex.value;
+      if (index != null &&
+          index >= 0 &&
+          index < Get.find<RoomsController>().roomTypes.length) {
+        Get.find<RoomsController>().roomTypes[index] =
+            roomTypeScreenController.text;
+        roomTypeScreenController.clear();
+        pageState.value = PageState.ADD;
+
+        // Get.until(
+        //   (route) => route.settings.name == DashPanel.routeName,
+        // );
+        Get.back();
+      }
     }
   }
 
@@ -43,19 +68,26 @@ class RoomsController extends GetxController {
                     height: 20,
                   ),
                   SkyTextField(
+                    // fillColor: AppColors.fillColor,
                     autofocus: true,
                     hint: "Add Room Type",
                     controller: roomTypeScreenController,
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.name,
+                    validator: (value) => Validator.validateEmpty(value!),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  SkyElevatedButton(
-                    onPressed: onSave,
-                    title: "Add Room Type",
-                  )
+                  pageState.value == PageState.ADD
+                      ? SkyElevatedButton(
+                          onPressed: onSave,
+                          title: "Add Room Type",
+                        )
+                      : SkyElevatedButton(
+                          onPressed: onUpdate,
+                          title: "Update Room Type",
+                        )
                 ],
               ),
             ),

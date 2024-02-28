@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/repo/Auth_repo.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
-import 'package:saralnova/features/widgets/common_widgets/sky_toast.dart';
+import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 
 import '../../../features/widgets/common_widgets/loading_dialog.dart';
-import '../../../features/widgets/common_widgets/sky_snack_bar.dart';
 
 class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
-  final CustomLoadingDialog loading = CustomLoadingDialog();
+  final LogoLoading loading = LogoLoading();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -19,9 +18,9 @@ class LoginController extends GetxController {
     // Get.toNamed(BrowserView.routeName);
   }
 
-  void onSubmit(BuildContext context) async {
+  void onSubmit() async {
     if (formKey.currentState!.validate()) {
-   showLoadingDialog(context);
+      loading.show();
       var email = emailController.text;
       var password = passwordController.text;
 
@@ -29,17 +28,15 @@ class LoginController extends GetxController {
         email: email,
         password: password,
         onSuccess: (user, accessToken) {
-          // loading.hide();
-          hideLoadingDialog(context);
+          loading.hide();
 
           Get.offAllNamed(DashPanel.routeName);
-          // SkySnackBar.success(title: "Login", message: "Logged in Succesfully");
-          SkyToast.showSuccessToast("Login Successfully");
+          SkySnackBar.success(title: "Login", message: "Logged in Succesfully");
         },
         onError: (message) {
-          hideLoadingDialog(context);
-          // SkySnackBar.error(title: "Login", message: message);
-          SkyToast.showErrorToast(message);
+          loading.hide();
+
+          SkySnackBar.error(title: "Login", message: message);
         },
       );
     }

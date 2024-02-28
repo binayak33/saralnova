@@ -9,6 +9,8 @@ class AppColors {
 
   static const Color borderColor = Color(0xFFB6B6B6);
   static const Color blackColor = Colors.black;
+  static const Color fillColor = Color.fromARGB(255, 219, 219, 219);
+  static const Color orangeColor = Colors.orange;
 
   static const Color hintTextColor = Color(0xFFD1D5DB);
   static const Color textColor = Color(0xFF374151);

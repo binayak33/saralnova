@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Rooms/rooms_controller.dart';
+import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
 
-enum PageState { ADD, UPDATE }
+
 
 class AddRoomController extends GetxController {
   final formKey = GlobalKey<FormState>();
