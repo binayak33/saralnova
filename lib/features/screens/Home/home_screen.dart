@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:saralnova/core/model/grid_view_modal.dart';
 
 class HomeScreen extends StatelessWidget {
-  
+  List _grid_view_data = [Data(icon: "", text: "")];
   HomeScreen({super.key});
 
   @override
@@ -13,7 +14,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisCount: 2, crossAxisSpacing: 5, mainAxisSpacing: 5),
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: Container(
               width: double.infinity,
               height: 100,
