@@ -2,14 +2,16 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Calendar/calendar_controller.dart';
 import 'package:saralnova/core/controllers/Dashboard/dashboard_panel_controller.dart';
 import 'package:saralnova/core/controllers/Facility/facility_controller.dart';
+import 'package:saralnova/core/controllers/Feature/aminities/aminites_controller.dart';
+import 'package:saralnova/core/controllers/Feature/feature_controller.dart';
+import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
 import 'package:saralnova/core/controllers/Guest/guest_controller.dart';
 import 'package:saralnova/core/controllers/Home/home_controller.dart';
-import 'package:saralnova/core/controllers/Rooms/add_room_controller.dart';
-import 'package:saralnova/core/controllers/Rooms/rooms_controller.dart';
 import 'package:saralnova/core/controllers/Splash/splash_controller.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
 import 'package:saralnova/features/screens/Facilities/facility_screen.dart';
-import 'package:saralnova/features/screens/Rooms/add_room_screen.dart';
+import 'package:saralnova/features/screens/Feature/aminity_type/aminities_screen.dart';
+import 'package:saralnova/features/screens/Feature/room_type/room_screen.dart';
 import 'package:saralnova/features/screens/Splash/splash_screen.dart';
 
 import '../../../features/screens/Auth/login_screen.dart';
@@ -38,15 +40,22 @@ final List<GetPage> pages = [
       Get.lazyPut(() => HomeController());
       Get.lazyPut(() => CalendarController());
       Get.lazyPut(() => GuestController());
-      Get.lazyPut(() => RoomsController());
+      Get.lazyPut(() => FeatureController());
     }),
   ),
 
   GetPage(
-    name: AddRoomScreen.routeName,
-    page: () => AddRoomScreen(),
+    name: RoomsScreen.routeName,
+    page: () => RoomsScreen(),
     binding: BindingsBuilder(() {
-      Get.lazyPut(() => AddRoomController());
+      Get.lazyPut(() => RoomController());
+    }),
+  ),
+  GetPage(
+    name: AmenitiesScreen.routeName,
+    page: () => AmenitiesScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => AminityController());
     }),
   ),
   GetPage(

@@ -12,6 +12,7 @@ class IconPath {
   static const String logout = "$basePath/log-out.svg";
   static const String cheveronDown = "$basePath/chevron-down.svg";
   static const String arrowLeftCircle = "$basePath/arrow-left-circle.svg";
+  static const String camera = "$basePath/camera.svg";
 
   //Bottom Nav Icons
   static const String home = "$basePath/home.svg";

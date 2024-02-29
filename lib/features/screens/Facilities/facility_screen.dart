@@ -60,7 +60,7 @@ class FacilityScreen extends StatelessWidget {
                                               facility.title.toString();
                                           c.facilityPriceController.text =
                                               facility.price.toString();
-                                          c.pageState.value = PageState.UPDATE;
+                                          c.pageState.value = CRUDSTATE.UPDATE;
 
                                           c.updateFacilityIndex.value = index;
 

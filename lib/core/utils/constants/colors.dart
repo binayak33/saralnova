@@ -26,4 +26,9 @@ class AppColors {
   static const Color bookingColor = Color(0xFF44BEA5);
   static const Color occupiedColor = Color(0xFF5140B2);
   static const Color repairingColor = Color(0xFFF94F82);
+
+  //Shimmer Colors
+  static final Color shimmerBase = Colors.grey.withOpacity(0.40);
+  static const Color shimmerHighlight = Color(0xFFE1E1E1);
+  static final Color shimmerBaseLight = Colors.grey.withOpacity(0.10);
 }

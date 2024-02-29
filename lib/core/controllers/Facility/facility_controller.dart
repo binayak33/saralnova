@@ -11,7 +11,7 @@ class FacilityController extends GetxController {
   final facilityFormKey = GlobalKey<FormState>();
   final facilityTitleController = TextEditingController();
   final facilityPriceController = TextEditingController();
-  var pageState = PageState.ADD.obs;
+  var pageState = CRUDSTATE.ADD.obs;
   RxnInt updateFacilityIndex = RxnInt();
 
   RxList<Facility> facilites = RxList<Facility>.empty();
@@ -25,7 +25,7 @@ class FacilityController extends GetxController {
       facilites.add(newFacility);
       facilityTitleController.clear();
       facilityPriceController.clear();
-      pageState.value = PageState.ADD;
+      pageState.value = CRUDSTATE.ADD;
       Get.back();
     }
   }
@@ -39,7 +39,7 @@ class FacilityController extends GetxController {
       );
       facilityTitleController.clear();
       facilityPriceController.clear();
-      pageState.value = PageState.ADD;
+      pageState.value = CRUDSTATE.ADD;
       Get.back();
     }
   }
@@ -93,7 +93,7 @@ class FacilityController extends GetxController {
                   const SizedBox(
                     height: 10,
                   ),
-                  pageState.value == PageState.ADD
+                  pageState.value == CRUDSTATE.ADD
                       ? SkyElevatedButton(
                           onPressed: onSave,
                           title: "Add Facility",

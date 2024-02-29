@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/controllers/Rooms/rooms_controller.dart';
+import 'package:saralnova/core/controllers/Feature/feature_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
+import 'package:saralnova/features/screens/Facilities/facility_screen.dart';
+import 'package:saralnova/features/screens/Feature/aminity_type/aminities_screen.dart';
+import 'package:saralnova/features/screens/Feature/room_type/room_screen.dart';
 
-class RoomsScreen extends StatelessWidget {
+class FeatureScreen extends StatelessWidget {
   static const String routeName = "/login-screen";
-  final c = Get.find<RoomsController>();
-  RoomsScreen({super.key});
+  final c = Get.find<FeatureController>();
+  FeatureScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,26 +20,49 @@ class RoomsScreen extends StatelessWidget {
         backgroundColor: AppColors.primary,
         centerTitle: true,
         title: Text(
-          "Room Types",
+          "Features",
           style: CustomTextStyles.f20W600(color: AppColors.whiteColor),
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              Card(
                 child: ListTile(
-              title: Text("Rooms Types"),
-              onTap: () {
-                // Get.toNamed(RoomTypesScreen.)
-              },
-            ))
-          ],
+                  title: const Text("Rooms Types"),
+                  onTap: () {
+                    Get.toNamed(RoomsScreen.routeName);
+                  },
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  title: const Text("Facilities"),
+                  onTap: () {
+                    Get.toNamed(FacilityScreen.routeName);
+                  },
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  title: const Text("Aminities"),
+                  onTap: () {
+                    Get.toNamed(AmenitiesScreen.routeName);
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+
+
 
 
 
