@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 
-class FacilityWidget extends StatelessWidget {
+class HotelFeatureWidget extends StatelessWidget {
   final String? title;
-  // final String? subtitle;
-  const FacilityWidget({
+  final int? subtitle;
+  const HotelFeatureWidget({
     super.key,
     this.title,
-    // this.subtitle,
+    this.subtitle,
   });
 
   @override
@@ -29,12 +29,13 @@ class FacilityWidget extends StatelessWidget {
                 color: AppColors.blackColor,
               ),
             ),
-            // Text(
-            //  subtitle?? "",
-            //   style: CustomTextStyles.f16W400(
-            //     color: AppColors.secondaryTextColor,
-            //   ),
-            // ),
+            if (subtitle != null)
+              Text(
+                subtitle.toString(),
+                style: CustomTextStyles.f16W400(
+                  color: AppColors.secondaryTextColor,
+                ),
+              ),
           ],
         ),
       ),

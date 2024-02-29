@@ -5,7 +5,7 @@ import 'package:saralnova/core/controllers/Feature/aminities/aminites_controller
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
-import 'package:saralnova/features/widgets/common_widgets/facilityWidget.dart';
+import 'package:saralnova/features/widgets/common_widgets/hotel_feature_widget.dart';
 
 class AmenitiesScreen extends StatelessWidget {
   static const String routeName = "/aminity-screen";
@@ -46,7 +46,7 @@ class AmenitiesScreen extends StatelessWidget {
                     physics: const ClampingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      var aminity = c.amenitiesList[index];
+                      var amenity = c.amenitiesList[index];
                       return Container(
                         decoration: BoxDecoration(
                             color: AppColors.whiteColor,
@@ -61,11 +61,11 @@ class AmenitiesScreen extends StatelessWidget {
                                 SlidableAction(
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    c.updateIndex.value = aminity.id;
+                                    c.updateIndex.value = amenity.id;
                                     c.crudState.value = CRUDSTATE.UPDATE;
                                     c.titleAminityController.text =
-                                        aminity.title.toString();
-                                    c.openRoomsBottomSheet();
+                                        amenity.title.toString();
+                                    c.openAmenityBottomSheet();
                                   },
                                   backgroundColor: AppColors.orangeColor,
                                   foregroundColor: Colors.white,
@@ -79,7 +79,7 @@ class AmenitiesScreen extends StatelessWidget {
                                   ),
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    // c.deleteRoomType(room.id!);
+                                    c.deleteAminity(amenity.id!);
                                   },
                                   backgroundColor: AppColors.errorColor,
                                   foregroundColor: Colors.white,
@@ -88,8 +88,8 @@ class AmenitiesScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: FacilityWidget(
-                              title: aminity.title,
+                            child: HotelFeatureWidget(
+                              title: amenity.title,
                               // subtitle:room.,
                             )),
                       );
@@ -108,7 +108,8 @@ class AmenitiesScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
-          c.openRoomsBottomSheet();
+          c.titleAminityController.clear();
+          c.openAmenityBottomSheet();
         },
         child: Container(
           padding: const EdgeInsets.all(10),

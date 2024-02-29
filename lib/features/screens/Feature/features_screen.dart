@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/feature_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/features/screens/Facilities/facility_screen.dart';
+import 'package:saralnova/features/screens/Feature/facility_type/facility_screen.dart';
 import 'package:saralnova/features/screens/Feature/aminity_type/aminities_screen.dart';
 import 'package:saralnova/features/screens/Feature/room_type/room_screen.dart';
 

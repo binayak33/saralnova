@@ -63,7 +63,7 @@ class AminityController extends GetxController {
     }
   }
 
-  openRoomsBottomSheet() async {
+  openAmenityBottomSheet() async {
     showModalBottomSheet(
       isScrollControlled: true,
       context: Get.context!,
@@ -78,46 +78,47 @@ class AminityController extends GetxController {
     );
   }
 
-  // void updateRoomType() async {
-  //   if (roomKey.currentState!.validate()) {
-  //     loading.show();
-  //     RoomRepo.updateRoomType(
-  //       roomTitle: titleRoomController.text,
-  //       roomId: int.parse(updateIndex.value.toString()),
-  //       onSuccess: (room) {
-  //         loading.hide();
-  //         //TODO show page state so that loader will be displayed
+  void updateAmenityType() async {
+    if (aminityKey.currentState!.validate()) {
+      loading.show();
+      AminityRepo.updateAminityType(
+        amenityTitle: titleAminityController.text,
+        amenityId: int.parse(updateIndex.value.toString()),
+        onSuccess: (room) {
+          loading.hide();
+          //TODO show page state so that loader will be displayed
 
-  //         getAllMovies();
-  //         titleRoomController.clear();
-  //         crudState.value = CRUDSTATE.ADD;
-  //         Get.back();
-  //       },
-  //       onError: (message) {
-  //         loading.hide();
+          getAllAmenities();
+          titleAminityController.clear();
+          crudState.value = CRUDSTATE.ADD;
+          Get.back();
+        },
+        onError: (message) {
+          loading.hide();
 
-  //         SkySnackBar.error(title: "Login", message: message);
-  //       },
-  //     );
-  //   }
-  // }
+          SkySnackBar.error(title: "Amenity", message: message);
+        },
+      );
+    }
+  }
 
-  // void deleteRoomType(int roomId) async {
-  //   loading.show();
-  //   // TODO: show confirmation while delete
-  //   RoomRepo.deleteRoomType(
-  //     roomId: roomId,
-  //     onSuccess: (room) {
-  //       loading.hide();
+  void deleteAminity(int amenityId) async {
+    loading.show();
+    // TODO: show confirmation while delete
+    AminityRepo.deleteAminityType(
+      amenityId: amenityId,
+      onSuccess: (message) {
+        loading.hide();
+        SkySnackBar.success(title: "Amenity", message: message);
 
-  //       getAllMovies();
-  //       Get.back();
-  //     },
-  //     onError: (message) {
-  //       loading.hide();
+        getAllAmenities();
+        Get.back();
+      },
+      onError: (message) {
+        loading.hide();
 
-  //       SkySnackBar.error(title: "Login", message: message);
-  //     },
-  //   );
-  // }
+        SkySnackBar.error(title: "Amenity", message: message);
+      },
+    );
+  }
 }
