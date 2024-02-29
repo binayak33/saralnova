@@ -103,9 +103,7 @@ class AddAmenityScreen extends StatelessWidget {
                     title: "Add Amenity ",
                   )
                 : SkyElevatedButton(
-                    // onPressed: c.updateRoomType,
-                    onPressed: () {},
-
+                    onPressed: c.updateAmenityType,
                     title: "Update Amenity ",
                   )
           ],

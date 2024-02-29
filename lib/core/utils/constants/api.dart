@@ -40,4 +40,10 @@ class Api {
   static String storeAminityType = "$apiBaseUrl/amenities/store";
   static String updateAminityType = "$apiBaseUrl/amenities/update";
   static String deleteAminityType = "$apiBaseUrl/amenities/delete";
+
+  // ----------facilities
+  static String getFacilityTypes = "$apiBaseUrl/facility";
+  static String storeFacilityType = "$apiBaseUrl/facility/store";
+  static String updateFacilityType = "$apiBaseUrl/facility/update";
+  static String deleteFacilityType = "$apiBaseUrl/facility/delete";
 }

@@ -9,6 +9,7 @@ import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/core/utils/helpers/sky_requests.dart';
 
 class AminityRepo {
+  // TODO make name correct
   static Future<void> getAminityTypes({
     required Function(List<Aminity> amenities) onSuccess,
     required Function(String message) onError,
@@ -68,16 +69,17 @@ class AminityRepo {
   }
 
   static Future<void> updateAminityType({
-    required String roomTitle,
-    required int roomId,
-    required Function(Room room) onSuccess,
+    required String amenityTitle,
+    required int amenityId,
+    // required String imageUrl TODO
+    required Function(Aminity aminity) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
       String url = Api.updateAminityType;
       var body = {
-        "id": roomId,
-        "title": roomTitle,
+        "id": amenityId,
+        "title": amenityTitle,
       };
 
       http.Response response = await SkyRequest.post(
@@ -88,8 +90,8 @@ class AminityRepo {
       var data = json.decode(response.body);
 
       if (data["status"]) {
-        var room = Room.fromJson(data['data']);
-        onSuccess(room);
+        var aminity = Aminity.fromJson(data['data']);
+        onSuccess(aminity);
       } else {
         onError(data['message']);
       }
@@ -100,14 +102,14 @@ class AminityRepo {
   }
 
   static Future<void> deleteAminityType({
-    required int roomId,
+    required int amenityId,
     required Function(String message) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
       String url = Api.deleteAminityType;
       var body = {
-        "id": roomId,
+        "id": amenityId,
       };
 
       http.Response response = await SkyRequest.post(
@@ -120,7 +122,6 @@ class AminityRepo {
       print(data);
 
       if (data["status"]) {
-        print("status--------------${data['message']}");
         String msg = data['message'];
         onSuccess(msg);
       } else {
