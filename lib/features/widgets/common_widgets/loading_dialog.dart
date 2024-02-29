@@ -24,7 +24,11 @@ class CustomLoadingDialog extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Lottie.asset('assets/animations/loading_anim.json')
+                Lottie.asset(
+                  'assets/animations/saralnova-loading.json',
+                  // frameRate: FrameRate.max,
+                  // frameRate: FrameRate(1000),
+                )
               ],
             ),
           ),

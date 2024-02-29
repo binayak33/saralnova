@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
+
 class Data {
-  String icon;
+  IconData icon;
   String text;
 
   Data({

@@ -6,7 +6,7 @@ class CustomTheme {
   static ThemeData basicTheme() {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: AppColors.primary,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarDividerColor: AppColors.scaffoldColor,
       ),

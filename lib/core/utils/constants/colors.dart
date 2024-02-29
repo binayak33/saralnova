@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primary = Color(0xFF1EC677);
-  static const Color fillColor = Color(0xFFE9F9F1);
+  static const Color primary = Color(0xFF5140b2);
   static const Color secondaryColor = Color(0xFF252526);
-  static const Color scaffoldColor = Color(0xFFFFFFFF);
+  static const Color scaffoldColor =
+      Color.fromRGBO(233, 231, 231, 1); //TODO  choose specific color from figma
+  static const Color whiteColor = Colors.white;
+
   static const Color borderColor = Color(0xFFB6B6B6);
+  static const Color blackColor = Colors.black;
+
   static const Color hintTextColor = Color(0xFFD1D5DB);
   static const Color textColor = Color(0xFF374151);
   static const Color errorColor = Color(0xFFDC3545);

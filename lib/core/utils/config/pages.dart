@@ -3,9 +3,11 @@ import 'package:saralnova/core/controllers/Calendar/calendar_controller.dart';
 import 'package:saralnova/core/controllers/Dashboard/dashboard_panel_controller.dart';
 import 'package:saralnova/core/controllers/Guest/guest_controller.dart';
 import 'package:saralnova/core/controllers/Home/home_controller.dart';
+import 'package:saralnova/core/controllers/Rooms/add_room_controller.dart';
 import 'package:saralnova/core/controllers/Rooms/rooms_controller.dart';
 import 'package:saralnova/core/controllers/Splash/splash_controller.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
+import 'package:saralnova/features/screens/Rooms/add_room_screen.dart';
 import 'package:saralnova/features/screens/Splash/splash_screen.dart';
 
 import '../../../features/screens/Auth/login_screen.dart';
@@ -35,6 +37,14 @@ final List<GetPage> pages = [
       Get.lazyPut(() => CalendarController());
       Get.lazyPut(() => GuestController());
       Get.lazyPut(() => RoomsController());
+    }),
+  ),
+
+  GetPage(
+    name: AddRoomScreen.routeName,
+    page: () => AddRoomScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => AddRoomController());
     }),
   ),
   // GetPage(
