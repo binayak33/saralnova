@@ -1,5 +1,3 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 class Api {
   // static const String baseUrl = "https://stay.saralnova.com";
   static const String baseUrl = "http://192.168.100.36:8003";
@@ -29,4 +27,17 @@ class Api {
   static String login = "$baseUrl/login";
   static String forgetPassword = "$baseUrl/forgot-password";
   static String dashboard = "$baseUrl/dashboard";
+
+  // ------------rooms
+  static String getRoomTypes = "$apiBaseUrl/room-types";
+  static String storeRoomType = "$apiBaseUrl/room-types/store";
+  static String updateRoomType = "$apiBaseUrl/room-types/update";
+  static String deleteRoomType = "$apiBaseUrl/room-types/delete";
+
+  // ---------aminities
+
+  static String getAminityTypes = "$apiBaseUrl/amenities";
+  static String storeAminityType = "$apiBaseUrl/amenities/store";
+  static String updateAminityType = "$apiBaseUrl/amenities/update";
+  static String deleteAminityType = "$apiBaseUrl/amenities/delete";
 }

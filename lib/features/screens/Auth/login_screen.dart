@@ -6,7 +6,6 @@ import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/helpers/validators.dart';
-import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 
@@ -48,7 +47,6 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         SkyTextField(
                           hint: "Email",
-
                           textCapitalization: TextCapitalization.none,
                           validator: (value) => Validator.validateEmail(value!),
                           controller: c.emailController,
@@ -100,9 +98,7 @@ class LoginScreen extends StatelessWidget {
                           height: 16,
                         ),
                         SkyElevatedButton(
-                          onPressed:  () {
-                            c.onSubmit(context); // Pass the context here
-                          },
+                          onPressed: c.onSubmit,
                           // onPressed: () {
                           //   Get.offAllNamed(DashPanel.routeName);
                           // },
@@ -115,9 +111,7 @@ class LoginScreen extends StatelessWidget {
                           height: 16,
                         ),
                         SkyOutlineButton(
-                          onPressed: () {
-                            c.onSubmit(context); // Pass the context here
-                          },
+                          onPressed: c.onSubmit,
                           title: "Login with QR",
                           radius: 8,
                           // width: 100,

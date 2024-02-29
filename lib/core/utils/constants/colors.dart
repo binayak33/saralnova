@@ -9,6 +9,8 @@ class AppColors {
 
   static const Color borderColor = Color(0xFFB6B6B6);
   static const Color blackColor = Colors.black;
+  static const Color fillColor = Color.fromARGB(255, 219, 219, 219);
+  static const Color orangeColor = Colors.orange;
 
   static const Color hintTextColor = Color(0xFFD1D5DB);
   static const Color textColor = Color(0xFF374151);
@@ -24,4 +26,9 @@ class AppColors {
   static const Color bookingColor = Color(0xFF44BEA5);
   static const Color occupiedColor = Color(0xFF5140B2);
   static const Color repairingColor = Color(0xFFF94F82);
+
+  //Shimmer Colors
+  static final Color shimmerBase = Colors.grey.withOpacity(0.40);
+  static const Color shimmerHighlight = Color(0xFFE1E1E1);
+  static final Color shimmerBaseLight = Colors.grey.withOpacity(0.10);
 }

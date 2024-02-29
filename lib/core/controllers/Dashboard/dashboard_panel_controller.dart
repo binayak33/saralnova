@@ -5,7 +5,7 @@ import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/features/screens/Calendar/calander_screen.dart';
 import 'package:saralnova/features/screens/Guest/guest_screen.dart';
 import 'package:saralnova/features/screens/Home/home_screen.dart';
-import 'package:saralnova/features/screens/Rooms/rooms_screen.dart';
+import 'package:saralnova/features/screens/Feature/features_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.dart';
 
 class DashPanelController extends GetxController {
@@ -17,7 +17,7 @@ class DashPanelController extends GetxController {
     HomeScreen(),
     CalendarScreen(),
     GuestScreen(),
-    RoomsScreen(),
+    FeatureScreen(),
   ];
 
   void onUpdatePage(int value) {
