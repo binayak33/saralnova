@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Calendar/calendar_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
-import 'package:saralnova/features/widgets/common_widgets/facilityWidget.dart';
+import 'package:saralnova/features/widgets/common_widgets/hotel_feature_widget.dart';
 
 class CalendarScreen extends StatelessWidget {
   static const String routeName = "/calender-screen";
@@ -31,9 +30,8 @@ class CalendarScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-             
               ListView.builder(
-                itemCount:10,
+                itemCount: 10,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return Container(
@@ -49,9 +47,7 @@ class CalendarScreen extends StatelessWidget {
                           children: [
                             SlidableAction(
                               padding: EdgeInsets.zero,
-                              onPressed: (value) {
-                                
-                              },
+                              onPressed: (value) {},
                               backgroundColor: AppColors.orangeColor,
                               foregroundColor: Colors.white,
                               icon: Icons.edit,
@@ -63,8 +59,7 @@ class CalendarScreen extends StatelessWidget {
                                 bottomRight: Radius.circular(4),
                               ),
                               padding: EdgeInsets.zero,
-                              onPressed: (value) {
-                              },
+                              onPressed: (value) {},
                               backgroundColor: AppColors.errorColor,
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
@@ -72,22 +67,19 @@ class CalendarScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: FacilityWidget(
+                        child: HotelFeatureWidget(
                           title: "hahaha",
-                            
-                            )),
+                        )),
                   );
                 },
               ),
-             
             ],
           ),
         ),
       ),
       floatingActionButton: InkResponse(
         radius: 20,
-        onTap: () {
-        },
+        onTap: () {},
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
