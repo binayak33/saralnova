@@ -5,6 +5,7 @@ import 'package:saralnova/core/controllers/Feature/aminities/aminites_controller
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
 import 'package:saralnova/features/widgets/common_widgets/hotel_feature_widget.dart';
 
 class AmenitiesScreen extends StatelessWidget {
@@ -48,11 +49,11 @@ class AmenitiesScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       var amenity = c.amenitiesList[index];
                       return Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.whiteColor,
-                            borderRadius: BorderRadius.circular(4)),
-                        margin: const EdgeInsets.only(bottom: 10),
-                        child: Slidable(
+                          decoration: BoxDecoration(
+                              color: AppColors.splashBackgroundColor,
+                              borderRadius: BorderRadius.circular(4)),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: Slidable(
                             key: ValueKey(index),
                             endActionPane: ActionPane(
                               extentRatio: 0.5,
@@ -88,11 +89,28 @@ class AmenitiesScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: HotelFeatureWidget(
-                              title: amenity.title,
-                              // subtitle:room.,
-                            )),
-                      );
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: SkyNetworkImage(
+                                      imageUrl: amenity.imageUrl ?? "",
+                                      // imageUrl: "",
+                                      height: 70,
+                                      width: 70,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: HotelFeatureWidget(
+                                    title: amenity.title,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ));
                     },
                   );
                 } else {
@@ -109,6 +127,7 @@ class AmenitiesScreen extends StatelessWidget {
         radius: 20,
         onTap: () {
           c.titleAminityController.clear();
+          c.pickedFile.value = null; // Clearing the picked file value
           c.openAmenityBottomSheet();
         },
         child: Container(

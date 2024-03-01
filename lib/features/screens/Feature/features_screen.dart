@@ -21,7 +21,7 @@ class FeatureScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
           "Features",
-          style: CustomTextStyles.f20W600(color: AppColors.whiteColor),
+          style: CustomTextStyles.f20W600(color: AppColors.splashBackgroundColor),
         ),
       ),
       body: SingleChildScrollView(

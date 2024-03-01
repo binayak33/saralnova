@@ -17,7 +17,6 @@ class SplashController extends GetxController {
         } else {
           Get.offAllNamed(LoginScreen.routeName);
         }
-        // Get.toNamed(LoginScreen.routeName);
       },
     );
     super.onInit();

@@ -49,7 +49,7 @@ class FacilityScreen extends StatelessWidget {
                       var facility = c.facilitiesList[index];
                       return Container(
                         decoration: BoxDecoration(
-                            color: AppColors.whiteColor,
+                            color: AppColors.splashBackgroundColor,
                             borderRadius: BorderRadius.circular(4)),
                         margin: const EdgeInsets.only(bottom: 10),
                         child: Slidable(
