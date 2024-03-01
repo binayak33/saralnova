@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:saralnova/core/model/aminity_model.dart';
-import 'package:saralnova/core/model/room_model.dart';
 import 'package:saralnova/core/utils/constants/api.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
@@ -38,6 +38,7 @@ class AminityRepo {
   static Future<void> storeAmintyType({
     required String title,
     // TODO : upload image
+    File? image,
     required Function(Aminity amenity) onSuccess,
     required Function(String message) onError,
   }) async {
@@ -45,7 +46,7 @@ class AminityRepo {
       String url = Api.storeAminityType;
       var body = {
         "title": title,
-        //add image
+        "icon": image,
       };
 
       http.Response response = await SkyRequest.post(

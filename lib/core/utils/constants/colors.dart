@@ -5,7 +5,7 @@ class AppColors {
   static const Color secondaryColor = Color(0xFF252526);
   static const Color scaffoldColor =
       Color.fromRGBO(233, 231, 231, 1); //TODO  choose specific color from figma
-  static const Color whiteColor = Colors.white;
+  static const Color splashBackgroundColor = Colors.white;
 
   static const Color borderColor = Color(0xFFB6B6B6);
   static const Color blackColor = Colors.black;

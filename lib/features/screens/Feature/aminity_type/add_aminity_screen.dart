@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:saralnova/core/controllers/Feature/aminities/aminites_controller.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/core/utils/helpers/image_helper.dart';
 import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
 import 'package:saralnova/core/utils/helpers/validators.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
@@ -32,46 +34,34 @@ class AddAmenityScreen extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: const SkyNetworkImage(
-                    // imageUrl:
-                    //     c.currentUser.value?.avatarUrl ??
-                    //         "",
-                    imageUrl: "",
-                    height: 100,
-                    width: 100,
-                  ),
+                  child: Obx(() {
+                    final file = c.pickedFile.value;
+                    if (file != null) {
+                      return Image.file(
+                        file,
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                      );
+                    } else {
+                      return const SkyNetworkImage(
+                        imageUrl: "",
+                        height: 100,
+                        width: 100,
+                      );
+                    }
+                  }),
                 ),
                 Positioned(
                   bottom: 5,
                   right: 10,
                   child: InkResponse(
                     onTap: () {
-                      // ImageHelper.pickImage(
-                      //     imageSource: ImageSource.camera,
-                      //     onPickImage: (pickedImage) {
-                      //       c.pickImage(pickedImage);
-                      //     });
-
-                      // showModalBottomSheet(
-                      //   backgroundColor: AppColors.blackColor,
-                      //   context: context,
-                      //   shape: const RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.vertical(
-                      //       top: Radius.circular(16),
-                      //     ),
-                      //   ),
-                      //   builder: (BuildContext context) {
-                      //     // return SelectImage(
-                      //     //     selectImg: (ImageSource source) {
-                      //     //   ImageHelper.pickImage(
-                      //     //       imageSource: source,
-                      //     //       onPickImage: (pickedImage) {
-                      //     //         c.pickImage(pickedImage);
-                      //     //       });
-                      //     // });
-                      //     return Text("ha");
-                      //   },
-                      // );
+                      ImageHelper.pickImage(
+                          imageSource: ImageSource.gallery,
+                          onPickImage: (imageFile) {
+                            c.pickImage(imageFile);
+                          });
                     },
                     child: SvgPicture.asset(
                       IconPath.camera,
