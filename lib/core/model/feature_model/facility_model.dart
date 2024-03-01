@@ -3,8 +3,8 @@ List<Facility> facilitiesFromJson(List<dynamic> facilitiesJson) =>
         facilitiesJson.map((facilityJson) => Facility.fromJson(facilityJson)));
 
 class Facility {
-  int? id;
-  int? vendorId;
+  String? id;
+  String? vendorId;
   String? title;
   num? price;
   String? createdAt;

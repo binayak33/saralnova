@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
+import 'package:saralnova/core/controllers/Feature/room/room_type_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
-import 'package:saralnova/features/widgets/common_widgets/hotel_feature_widget.dart';
+import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
 
-class RoomsScreen extends StatelessWidget {
+class RoomTypeScreen extends StatelessWidget {
   static const String routeName = "/roomtype-screen";
-  final c = Get.find<RoomController>();
-  RoomsScreen({super.key});
+  final c = Get.find<RoomTypeController>();
+  RoomTypeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +43,7 @@ class RoomsScreen extends StatelessWidget {
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.builder(
                     itemCount: c.roomTypes.length,
+                    physics: const ClampingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       var room = c.roomTypes[index];
@@ -60,7 +61,7 @@ class RoomsScreen extends StatelessWidget {
                                 SlidableAction(
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    c.updateIndex.value = room.id;
+                                    c.updateIndex.value = room.id.toString();
                                     c.crudState.value = CRUDSTATE.UPDATE;
                                     c.titleRoomController.text =
                                         room.title.toString();

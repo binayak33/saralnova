@@ -1,19 +1,21 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:saralnova/core/model/room_model.dart';
+import 'package:saralnova/core/model/feature_model/aminity_model.dart';
 import 'package:saralnova/core/utils/constants/api.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/core/utils/helpers/sky_requests.dart';
 
-class RoomRepo {
-  static Future<void> getRoomsTypes({
-    required Function(List<Room> rooms) onSuccess,
+class AminityRepo {
+  // TODO make name correct
+  static Future<void> getAminityTypes({
+    required Function(List<Aminity> amenities) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
-      String url = Api.getRoomTypes;
+      String url = Api.getAminityTypes;
 
       http.Response response = await SkyRequest.get(
         url,
@@ -21,28 +23,30 @@ class RoomRepo {
 
       var data = json.decode(response.body);
 
-      print(data);
       if (data["status"]) {
-        var rooms = roomFromJson(data['data']);
-        onSuccess(rooms);
+        var amenities = amenitiesFromJson(data['data']);
+        onSuccess(amenities);
       } else {
         onError(data['message']);
       }
     } catch (e, s) {
-      LogHelper.error(Api.getRoomTypes, error: e, stackTrace: s);
+      LogHelper.error(Api.getAminityTypes, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }
 
-  static Future<void> storeRoomType({
+  static Future<void> storeAmintyType({
     required String title,
-    required Function(Room room) onSuccess,
+    // TODO : upload image
+    File? image,
+    required Function(Aminity amenity) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
-      String url = Api.storeRoomType;
+      String url = Api.storeAminityType;
       var body = {
         "title": title,
+        "icon": image,
       };
 
       http.Response response = await SkyRequest.post(
@@ -54,28 +58,29 @@ class RoomRepo {
 
       print(data);
       if (data["status"]) {
-        var room = Room.fromJson(data['data']);
-        onSuccess(room);
+        var amenity = Aminity.fromJson(data['data']);
+        onSuccess(amenity);
       } else {
         onError(data['message']);
       }
     } catch (e, s) {
-      LogHelper.error(Api.storeRoomType, error: e, stackTrace: s);
+      LogHelper.error(Api.storeAminityType, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }
 
-  static Future<void> updateRoomType({
-    required String roomTitle,
-    required int roomId,
-    required Function(Room room) onSuccess,
+  static Future<void> updateAminityType({
+    required String amenityTitle,
+    required String amenityId,
+    // required String imageUrl TODO
+    required Function(Aminity aminity) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
-      String url = Api.updateRoomType;
+      String url = Api.updateAminityType;
       var body = {
-        "id": roomId,
-        "title": roomTitle,
+        "id": amenityId,
+        "title": amenityTitle,
       };
 
       http.Response response = await SkyRequest.post(
@@ -86,26 +91,26 @@ class RoomRepo {
       var data = json.decode(response.body);
 
       if (data["status"]) {
-        var room = Room.fromJson(data['data']);
-        onSuccess(room);
+        var aminity = Aminity.fromJson(data['data']);
+        onSuccess(aminity);
       } else {
         onError(data['message']);
       }
     } catch (e, s) {
-      LogHelper.error(Api.updateRoomType, error: e, stackTrace: s);
+      LogHelper.error(Api.updateAminityType, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }
 
-  static Future<void> deleteRoomType({
-    required int roomId,
+  static Future<void> deleteAminityType({
+    required String amenityId,
     required Function(String message) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
-      String url = Api.deleteRoomType;
+      String url = Api.deleteAminityType;
       var body = {
-        "id": roomId,
+        "id": amenityId,
       };
 
       http.Response response = await SkyRequest.post(
@@ -118,14 +123,13 @@ class RoomRepo {
       print(data);
 
       if (data["status"]) {
-        print("status--------------${data['message']}");
         String msg = data['message'];
         onSuccess(msg);
       } else {
         onError(data['message']);
       }
     } catch (e, s) {
-      LogHelper.error(Api.deleteRoomType, error: e, stackTrace: s);
+      LogHelper.error(Api.deleteAminityType, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

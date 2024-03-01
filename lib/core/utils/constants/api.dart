@@ -1,6 +1,7 @@
 class Api {
   // static const String baseUrl = "https://stay.saralnova.com";
-  static const String baseUrl = "http://192.168.100.36:8003";
+  // static const String baseUrl = "http://192.168.100.36:8003";
+  static const String baseUrl = "http://192.168.1.109:8003";
 
   // static String get baseUrl {
   //   final apiMode = dotenv.env['API_MODE'];
@@ -13,7 +14,7 @@ class Api {
   //   }
   // }
 
-  static String apiBaseUrl = "$baseUrl/api";
+  static String apiBaseUrl = "$baseUrl/api/v1";
 
   static String loginApi = "$apiBaseUrl/login";
   static String dashboardApi = "$apiBaseUrl/dashboard";
@@ -28,7 +29,7 @@ class Api {
   static String forgetPassword = "$baseUrl/forgot-password";
   static String dashboard = "$baseUrl/dashboard";
 
-  // ------------rooms
+  // ------------room_Type
   static String getRoomTypes = "$apiBaseUrl/room-types";
   static String storeRoomType = "$apiBaseUrl/room-types/store";
   static String updateRoomType = "$apiBaseUrl/room-types/update";
@@ -46,4 +47,11 @@ class Api {
   static String storeFacilityType = "$apiBaseUrl/facility/store";
   static String updateFacilityType = "$apiBaseUrl/facility/update";
   static String deleteFacilityType = "$apiBaseUrl/facility/delete";
+
+  // ---------------Rooms
+  // ----------facilities
+  static String getRooms = "$apiBaseUrl/rooms";
+  // static String storeFacilityType = "$apiBaseUrl/facility/store";
+  // static String updateFacilityType = "$apiBaseUrl/facility/update";
+  // static String deleteFacilityType = "$apiBaseUrl/facility/delete";
 }

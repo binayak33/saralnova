@@ -3,8 +3,8 @@ List<Aminity> amenitiesFromJson(List<dynamic> amenitiesJson) =>
         amenitiesJson.map((aminityJson) => Aminity.fromJson(aminityJson)));
 
 class Aminity {
-  int? id;
-  int? vendorId;
+  String? id;
+  String? vendorId;
   String? title;
   String? createdAt;
   String? updatedAt;

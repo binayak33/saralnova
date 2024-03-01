@@ -3,9 +3,8 @@ enum CRUDSTATE { ADD, UPDATE }
 
 //page states
 
-enum PageState {
-  LOADING,
-  EMPTY,
-  NORMAL,
-  ERROR,
-}
+enum PageState { LOADING, EMPTY, NORMAL, ERROR }
+
+
+
+enum StatusState{ Available, Occupied, Reserved}

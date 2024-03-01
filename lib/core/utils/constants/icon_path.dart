@@ -19,6 +19,7 @@ class IconPath {
   static const String calendar = "$basePath/calendar.svg";
   static const String roomDoor = "$basePath/room_door.svg";
   static const String personInfo = "$basePath/person_info.svg";
+  static const String down = "$basePath/down.svg";
 
   //Assets
   static const String finance = "$basePath/finance.svg";

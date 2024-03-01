@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Calendar/calendar_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/features/widgets/common_widgets/hotel_feature_widget.dart';
+import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
 
 class CalendarScreen extends StatelessWidget {
   static const String routeName = "/calender-screen";

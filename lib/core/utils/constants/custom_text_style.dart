@@ -213,6 +213,15 @@ class CustomTextStyles {
     );
   }
 
+  static TextStyle f22W600({Color? color}) {
+    return TextStyle(
+      fontFamily: 'Plus Jakarta Sans',
+      fontWeight: FontWeight.w600,
+      fontSize: 22,
+      color: color ?? AppColors.textColor,
+    );
+  }
+
   static TextStyle f48W500({Color? color}) {
     return TextStyle(
       color: color ?? AppColors.textColor,

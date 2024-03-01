@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/model/facility_model.dart';
-import 'package:saralnova/core/repo/facility_repo.dart';
+import 'package:saralnova/core/model/feature_model/facility_model.dart';
+import 'package:saralnova/core/repo/feature_repo/facility_repo.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/screens/Feature/facility_type/add_facility_screen.dart';
@@ -15,7 +15,7 @@ class FacilityController extends GetxController {
   RxList<Facility> facilitiesList = RxList();
   var crudState = CRUDSTATE.ADD.obs;
   var pageState = PageState.LOADING.obs;
-  RxnInt updateIndex = RxnInt();
+  RxnString updateIndex = RxnString();
 
   final facilityTitleController = TextEditingController();
   final facilityPriceController = TextEditingController();
@@ -86,7 +86,7 @@ class FacilityController extends GetxController {
       loading.show();
       FacilityRepo.updateFacilityType(
         facilityTitle: facilityTitleController.text,
-        facilityd: int.parse(updateIndex.value.toString()),
+        facilityd: updateIndex.value.toString(),
         price: int.parse(facilityPriceController.text),
         onSuccess: (room) {
           loading.hide();
@@ -107,7 +107,7 @@ class FacilityController extends GetxController {
     }
   }
 
-  void deleteFacility(int facilityId) async {
+  void deleteFacility(String facilityId) async {
     loading.show();
     // TODO: show confirmation while delete
     FacilityRepo.deleteFacilityType(
@@ -126,111 +126,4 @@ class FacilityController extends GetxController {
       },
     );
   }
-
-  // ------------------------------------
-  // ------------------------------------
-  // ------------------------------------
-  // ------------------------------------
-  // final facilityFormKey = GlobalKey<FormState>();
-  // final facilityTitleController = TextEditingController();
-  // final facilityPriceController = TextEditingController();
-  // var pageState = CRUDSTATE.ADD.obs;
-  // RxnInt updateFacilityIndex = RxnInt();
-
-  // RxList<Facility> facilites = RxList<Facility>.empty();
-
-  // void onSave() {
-  //   if (facilityFormKey.currentState!.validate()) {
-  //     var newFacility = Facility(
-  //       title: facilityTitleController.text,
-  //       price: facilityPriceController.text,
-  //     );
-  //     facilites.add(newFacility);
-  //     facilityTitleController.clear();
-  //     facilityPriceController.clear();
-  //     pageState.value = CRUDSTATE.ADD;
-  //     Get.back();
-  //   }
-  // }
-
-  // void onUpdate() {
-  //   if (facilityFormKey.currentState!.validate()) {
-  //     int index = updateFacilityIndex.value!;
-  //     facilites[index] = Facility(
-  //       title: facilityTitleController.text,
-  //       price: facilityPriceController.text,
-  //     );
-  //     facilityTitleController.clear();
-  //     facilityPriceController.clear();
-  //     pageState.value = CRUDSTATE.ADD;
-  //     Get.back();
-  //   }
-  // }
-
-  // openFacilityBottomSheet() async {
-  //   showModalBottomSheet(
-  //     isScrollControlled: true,
-  //     enableDrag: true,
-  //     context: Get.context!,
-  //     builder: (context) {
-  //       return Padding(
-  //         padding: EdgeInsets.only(
-  //           bottom: MediaQuery.of(context).viewInsets.bottom,
-  //         ),
-  //         child: Container(
-  //           // margin: const EdgeInsets.only(bottom: 10),
-  //           height: MediaQuery.of(context).size.height * 0.4,
-  //           padding: const EdgeInsets.symmetric(
-  //             horizontal: 16,
-  //           ),
-  //           child: Form(
-  //             key: facilityFormKey,
-  //             child: Column(
-  //               children: [
-  //                 const SizedBox(
-  //                   height: 20,
-  //                 ),
-  //                 SkyTextField(
-  //                   // fillColor: AppColors.fillColor,
-  //                   autofocus: true,
-  //                   hint: " Facility",
-  //                   controller: facilityTitleController,
-  //                   textInputAction: TextInputAction.done,
-  //                   textInputType: TextInputType.name,
-  //                   validator: (value) => Validator.validateEmpty(value!),
-  //                 ),
-  //                 const SizedBox(
-  //                   height: 10,
-  //                 ),
-  //                 SkyTextField(
-  //                   autofocus: true,
-  //                   hint: " Price",
-  //                   controller: facilityPriceController,
-  //                   textInputType: TextInputType.number,
-  //                   textInputAction: TextInputAction.done,
-  //                   inputFormatters: <TextInputFormatter>[
-  //                     FilteringTextInputFormatter.digitsOnly
-  //                   ],
-  //                   validator: (value) => Validator.validateEmpty(value!),
-  //                 ),
-  //                 const SizedBox(
-  //                   height: 10,
-  //                 ),
-  //                 pageState.value == CRUDSTATE.ADD
-  //                     ? SkyElevatedButton(
-  //                         onPressed: onSave,
-  //                         title: "Add Facility",
-  //                       )
-  //                     : SkyElevatedButton(
-  //                         onPressed: onUpdate,
-  //                         title: "Update  Facility",
-  //                       )
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 }
