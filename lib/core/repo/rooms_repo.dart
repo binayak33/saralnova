@@ -38,19 +38,20 @@ class RoomsRepo {
     required String roomTypeId,
     required String title,
     required String status,
-    required String amenities,
+    // required String amenities,
     required num roomRate,
-    required Function(Rooms room) onSuccess,
+    required Function(Rooms rooms) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
-      String url = Api.storeRoomType;
+      String url = Api.storeRooms;
+
       var body = {
         "room_type_id": roomTypeId,
         "title": title,
         "status": status,
         "rate": roomRate,
-        "selectedAmenities": amenities,
+        // "selectedAmenities": amenities,
       };
 
       http.Response response = await SkyRequest.post(
@@ -60,7 +61,46 @@ class RoomsRepo {
 
       var data = json.decode(response.body);
 
-      print(data);
+      if (data["status"] == true) {
+        var rooms = Rooms.fromJson(data['data']);
+        onSuccess(rooms);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.storeRooms, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> updateRoomType({
+    required String roomId,
+    required String roomTypeId,
+    required String roomTitle,
+    required String status,
+    required num rate,
+    // required String? amenities,
+    required Function(Rooms rooms) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.updateRooms;
+      var body = {
+        "id": roomId,
+        "room_type_id": roomTypeId,
+        "title": roomTitle,
+        "status": status,
+        "rate": rate,
+        // "selectedAmenities":amenities
+      };
+
+      http.Response response = await SkyRequest.post(
+        url,
+        body: body,
+      );
+
+      var data = json.decode(response.body);
+
       if (data["status"]) {
         var room = Rooms.fromJson(data['data']);
         onSuccess(room);
@@ -68,42 +108,10 @@ class RoomsRepo {
         onError(data['message']);
       }
     } catch (e, s) {
-      LogHelper.error(Api.storeRoomType, error: e, stackTrace: s);
+      LogHelper.error(Api.updateRooms, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }
-
-  // static Future<void> updateRoomType({
-  //   required String roomTitle,
-  //   required int roomId,
-  //   required Function(RoomType room) onSuccess,
-  //   required Function(String message) onError,
-  // }) async {
-  //   try {
-  //     String url = Api.updateRoomType;
-  //     var body = {
-  //       "id": roomId,
-  //       "title": roomTitle,
-  //     };
-
-  //     http.Response response = await SkyRequest.post(
-  //       url,
-  //       body: body,
-  //     );
-
-  //     var data = json.decode(response.body);
-
-  //     if (data["status"]) {
-  //       var room = RoomType.fromJson(data['data']);
-  //       onSuccess(room);
-  //     } else {
-  //       onError(data['message']);
-  //     }
-  //   } catch (e, s) {
-  //     LogHelper.error(Api.updateRoomType, error: e, stackTrace: s);
-  //     onError(Messages.error);
-  //   }
-  // }
 
   // static Future<void> deleteRoomType({
   //   required int roomId,

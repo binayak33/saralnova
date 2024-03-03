@@ -66,7 +66,16 @@ class RoomsScreen extends StatelessWidget {
                                     // c.crudState.value = CRUDSTATE.UPDATE;
                                     // c.titleRoomController.text =
                                     //     room.title.toString();
-                                    // c.openRoomsBottomSheet();
+
+                                    print("uupdate----------${room.title}");
+                                    Get.toNamed(
+                                      AddRoomsScreen.routeName,
+                                      arguments: {
+                                        "room": room,
+                                      },
+                                    );
+
+                                    // c.onEditClick(room);
                                   },
                                   backgroundColor: AppColors.orangeColor,
                                   foregroundColor: Colors.white,
@@ -93,12 +102,13 @@ class RoomsScreen extends StatelessWidget {
                               title: room.title,
                               price: room.rate.toString(),
                               roomType: room.roomTypeName,
+                              status: room.status,
                             )),
                       );
                     },
                   );
                 } else {
-                  return Center(
+                  return const Center(
                     child: Text("Error View"),
                   );
                 }
@@ -110,10 +120,6 @@ class RoomsScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
-          // c.titleRoomController.clear();
-          // c.openRoomsBottomSheet();
-
-          print("Go to add rooms screen");
           Get.toNamed(AddRoomsScreen.routeName);
         },
         child: Container(

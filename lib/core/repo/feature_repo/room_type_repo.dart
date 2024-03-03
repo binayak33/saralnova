@@ -21,7 +21,6 @@ class RoomTypeRepo {
 
       var data = json.decode(response.body);
 
-      print(data);
       if (data["status"]) {
         var rooms = roomTypeFromJson(data['data']);
         onSuccess(rooms);

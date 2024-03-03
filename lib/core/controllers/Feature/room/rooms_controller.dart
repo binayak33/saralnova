@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/core/model/feature_model/room_type_model.dart';
 import 'package:saralnova/core/repo/rooms_repo.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
@@ -24,11 +25,20 @@ class RoomsController extends GetxController {
   final roomTitleController = TextEditingController();
   final rateController = TextEditingController();
 
-  RxnString roomTypeId = RxnString();
+  Rxn<Rooms> rooms = Rxn();
+
+  Rxn<RoomType> roomType = Rxn();
 
   @override
   void onInit() {
     getAllRooms();
+
+    // var args = Get.arguments;
+    // if (args != null && args['room'] != null) {
+    //   rooms.value = args['room'];
+
+    //   print("-----------------------${args['room']}");
+    // }
     super.onInit();
   }
 
@@ -50,6 +60,26 @@ class RoomsController extends GetxController {
     );
   }
 
+  // void onEditClick(Rooms room) async {
+  //   var result = await Get.toNamed(AddRoomsScreen.routeName, arguments: {
+  //     "room": room,
+  //   });
+  //   print("0000000000000000000000-${result}");
+  //   try {
+  //     if (result != null) {
+  //       if ((result).containsKey("room")) {
+  //         rooms.value = result['room'];
+  //       } else {
+  //         return;
+  //       }
+  //     } else {
+  //       print("xxxxxxxxxxxxxx");
+  //     }
+  //   } catch (_) {
+  //     getAllRooms();
+  //   }
+  // }
+
   openRoomTypeBottomSheet() async {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -62,7 +92,8 @@ class RoomsController extends GetxController {
           child: RoomTypeBottomSheet(
             onSelectRoomType: (roomType) {
               roomTypeController.text = roomType.title.toString();
-              roomTypeId.value = roomType.id.toString();
+
+              this.roomType.value = roomType;
             },
           ),
         );
@@ -91,17 +122,20 @@ class RoomsController extends GetxController {
 
   void storeRoom() async {
     if (addRoomKey.currentState!.validate()) {
-      // print(roomTypeId.value);
-      if (roomTypeId.value != null) {
+      // print(roomType.value?.id);
+      // print(roomTitleController.text);
+      // print(roomStatusController.text);
+      // print(rateController.text);
+      if (roomType.value?.id != null) {
         loading.show();
         RoomsRepo.storeRoom(
-            roomTypeId: roomTypeId.value.toString(),
+            roomTypeId: (roomType.value!.id).toString(),
             title: roomTitleController.text,
             status: roomStatusController.text,
             roomRate: int.parse(
               rateController.text,
             ),
-            amenities: "DEMO",
+            // amenities: "DEMO",
             onSuccess: (room) {
               loading.hide();
               //TODO show page state so that loader will be displayed

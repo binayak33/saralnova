@@ -18,6 +18,14 @@ class AddRoomsScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Add Room"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                print(c.rooms.value);
+                print(c.rooms.value?.title);
+              },
+              icon: Icon(Icons.add))
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -98,11 +106,36 @@ class AddRoomsScreen extends StatelessWidget {
                   height: 30,
                 ),
                 Text(
-                  "Rate per night",
+                  "Amenities",
                   style: CustomTextStyles.f22W600(),
                 ),
-
-                // TODO
+                Wrap(
+                  alignment: WrapAlignment.start,
+                  runSpacing: 6,
+                  spacing: 6,
+                  children: List.generate(
+                    // c.features.length,
+                    10,
+                    (index) => ActionChip(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(6),
+                        ),
+                        side: BorderSide(color: AppColors.borderColor),
+                      ),
+                      labelPadding: const EdgeInsets.symmetric(
+                          horizontal: 4, vertical: 2),
+                      label: Text(
+                        // "${c.features[index].value}",
+                        "random",
+                        style: CustomTextStyles.f16W500(
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                      backgroundColor: AppColors.borderColor,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
