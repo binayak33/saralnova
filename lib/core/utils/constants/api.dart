@@ -53,5 +53,11 @@ class Api {
   static String getRooms = "$apiBaseUrl/rooms";
   static String storeRooms = "$apiBaseUrl/rooms/store";
   static String updateRooms = "$apiBaseUrl/rooms/update";
-  // static String deleteFacilityType = "$apiBaseUrl/facility/delete";
+  static String deleteRooms = "$apiBaseUrl/rooms/delete";
+
+  // ----------staff
+  static String getStaffs = "$apiBaseUrl/staffs";
+  static String storeStaffs = "$apiBaseUrl/staffs/store";
+  static String updateStaffs = "$apiBaseUrl/staffs/update";
+  static String deleteStaffs = "$apiBaseUrl/staffs/delete";
 }

@@ -19,6 +19,9 @@ class RoomTypeController extends GetxController {
 
   final titleRoomController = TextEditingController();
 
+  // RxnString updateIndex = RxnString();
+  Rxn<RoomType> roomType = Rxn();
+
   @override
   void onInit() {
     getAllRoomTypes();
@@ -64,8 +67,6 @@ class RoomTypeController extends GetxController {
     }
   }
 
-  RxnString updateIndex = RxnString();
-
   openRoomsBottomSheet() async {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -86,7 +87,8 @@ class RoomTypeController extends GetxController {
       loading.show();
       RoomTypeRepo.updateRoomType(
         roomTitle: titleRoomController.text,
-        roomId: updateIndex.value.toString(),
+        // roomId: updateIndex.value.toString(),
+        roomId: roomType.value!.id!,
         onSuccess: (room) {
           loading.hide();
           //TODO show page state so that loader will be displayed

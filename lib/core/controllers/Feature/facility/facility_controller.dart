@@ -15,7 +15,8 @@ class FacilityController extends GetxController {
   RxList<Facility> facilitiesList = RxList();
   var crudState = CRUDSTATE.ADD.obs;
   var pageState = PageState.LOADING.obs;
-  RxnString updateIndex = RxnString();
+  // RxnString updateIndex = RxnString();
+  Rxn<Facility> facility = Rxn();
 
   final facilityTitleController = TextEditingController();
   final facilityPriceController = TextEditingController();
@@ -86,7 +87,8 @@ class FacilityController extends GetxController {
       loading.show();
       FacilityRepo.updateFacilityType(
         facilityTitle: facilityTitleController.text,
-        facilityd: updateIndex.value.toString(),
+        // facilityd: updateIndex.value.toString(),
+        facilityd: facility.value!.id!,
         price: int.parse(facilityPriceController.text),
         onSuccess: (room) {
           loading.hide();

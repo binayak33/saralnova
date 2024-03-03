@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
+import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/core/utils/helpers/validators.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 
 class AddRoomsScreen extends StatelessWidget {
@@ -17,12 +19,20 @@ class AddRoomsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Add Room"),
+        title: Text(
+            c.crudState.value == CRUDSTATE.ADD ? "Add Room" : "Update Room"),
         actions: [
           IconButton(
               onPressed: () {
-                print(c.rooms.value);
-                print(c.rooms.value?.title);
+                print("room Type id-----${c.roomType.value?.id}");
+                print(c.roomType.value?.title);
+
+                // -------------------------
+
+                print(c.roomTypeController.text);
+                print(c.roomTitleController.text);
+                print(c.roomStatusController.text);
+                print(c.rateController.text);
               },
               icon: Icon(Icons.add))
         ],
@@ -67,6 +77,7 @@ class AddRoomsScreen extends StatelessWidget {
                   controller: c.roomTitleController,
                   textInputAction: TextInputAction.next,
                   textInputType: TextInputType.name,
+                  validator: (value) => Validator.validateEmpty(value!),
                 ),
                 const SizedBox(
                   height: 30,
@@ -98,6 +109,7 @@ class AddRoomsScreen extends StatelessWidget {
                   controller: c.rateController,
                   textInputAction: TextInputAction.next,
                   textInputType: TextInputType.number,
+                  validator: (value) => Validator.validateEmpty(value!),
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
                   ],
@@ -144,11 +156,7 @@ class AddRoomsScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
-          // c.titleRoomController.clear();
-          // c.openRoomsBottomSheet();
-          c.storeRoom();
-
-          //   TODO : function call garne get. back garne  garna vanda paila clear garne
+          c.crudState.value == CRUDSTATE.ADD ? c.storeRoom() : c.updateRoom();
         },
         child: Container(
           padding: const EdgeInsets.all(10),
@@ -157,7 +165,7 @@ class AddRoomsScreen extends StatelessWidget {
             color: AppColors.primary,
           ),
           child: Text(
-            "Save",
+            c.crudState.value == CRUDSTATE.ADD ? "Save" : "Update",
             style: CustomTextStyles.f16W600(
               color: AppColors.scaffoldColor,
             ),

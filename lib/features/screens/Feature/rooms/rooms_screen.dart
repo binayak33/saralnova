@@ -5,7 +5,6 @@ import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
-import 'package:saralnova/features/screens/Feature/rooms/add_rooms_screen.dart';
 import 'package:saralnova/features/widgets/app_widgets/rooms_widget.dart';
 
 class RoomsScreen extends StatelessWidget {
@@ -62,20 +61,7 @@ class RoomsScreen extends StatelessWidget {
                                 SlidableAction(
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    // c.updateIndex.value = room.id;
-                                    // c.crudState.value = CRUDSTATE.UPDATE;
-                                    // c.titleRoomController.text =
-                                    //     room.title.toString();
-
-                                    print("uupdate----------${room.title}");
-                                    Get.toNamed(
-                                      AddRoomsScreen.routeName,
-                                      arguments: {
-                                        "room": room,
-                                      },
-                                    );
-
-                                    // c.onEditClick(room);
+                                    c.onEditClick(room);
                                   },
                                   backgroundColor: AppColors.orangeColor,
                                   foregroundColor: Colors.white,
@@ -90,6 +76,7 @@ class RoomsScreen extends StatelessWidget {
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
                                     // c.deleteRoomType(room.id!);
+                                    c.deleteRoom(room.id!);
                                   },
                                   backgroundColor: AppColors.errorColor,
                                   foregroundColor: Colors.white,
@@ -120,7 +107,7 @@ class RoomsScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
-          Get.toNamed(AddRoomsScreen.routeName);
+          c.clearVariables();
         },
         child: Container(
           padding: const EdgeInsets.all(10),

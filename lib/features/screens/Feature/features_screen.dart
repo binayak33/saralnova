@@ -7,6 +7,7 @@ import 'package:saralnova/features/screens/Feature/aminity_type/aminities_screen
 import 'package:saralnova/features/screens/Feature/facility_type/facility_screen.dart';
 import 'package:saralnova/features/screens/Feature/room_type/room_type_screen.dart';
 import 'package:saralnova/features/screens/Feature/rooms/rooms_screen.dart';
+import 'package:saralnova/features/screens/Feature/staff/staff_screen.dart';
 
 class FeatureScreen extends StatelessWidget {
   static const String routeName = "/login-screen";
@@ -60,6 +61,14 @@ class FeatureScreen extends StatelessWidget {
                   title: const Text("View Rooms"),
                   onTap: () {
                     Get.toNamed(RoomsScreen.routeName);
+                  },
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  title: const Text("View staffs"),
+                  onTap: () {
+                    Get.toNamed(StaffScreen.routeName);
                   },
                 ),
               )

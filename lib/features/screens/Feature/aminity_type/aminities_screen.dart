@@ -62,7 +62,8 @@ class AmenitiesScreen extends StatelessWidget {
                                 SlidableAction(
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    c.updateIndex.value = amenity.id;
+                                    // c.updateIndex.value = amenity.id;
+                                    c.amenity.value = amenity;
                                     c.crudState.value = CRUDSTATE.UPDATE;
                                     c.titleAminityController.text =
                                         amenity.title.toString();

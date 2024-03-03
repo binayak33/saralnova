@@ -25,75 +25,7 @@ class CalendarScreen extends StatelessWidget {
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              ListView.builder(
-                itemCount: 10,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.splashBackgroundColor,
-                        borderRadius: BorderRadius.circular(4)),
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: Slidable(
-                        key: ValueKey(index),
-                        endActionPane: ActionPane(
-                          extentRatio: 0.5,
-                          motion: ScrollMotion(),
-                          children: [
-                            SlidableAction(
-                              padding: EdgeInsets.zero,
-                              onPressed: (value) {},
-                              backgroundColor: AppColors.orangeColor,
-                              foregroundColor: Colors.white,
-                              icon: Icons.edit,
-                              label: 'Edit',
-                            ),
-                            SlidableAction(
-                              borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(4),
-                                bottomRight: Radius.circular(4),
-                              ),
-                              padding: EdgeInsets.zero,
-                              onPressed: (value) {},
-                              backgroundColor: AppColors.errorColor,
-                              foregroundColor: Colors.white,
-                              icon: Icons.delete,
-                              label: 'Delete',
-                            ),
-                          ],
-                        ),
-                        child: HotelFeatureWidget(
-                          title: "hahaha",
-                        )),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: InkResponse(
-        radius: 20,
-        onTap: () {},
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: AppColors.primary,
-          ),
-          child: Text(
-            "Add",
-            style: CustomTextStyles.f16W600(
-              color: AppColors.scaffoldColor,
-            ),
-          ),
-        ),
-      ),
+      
     );
   }
 }

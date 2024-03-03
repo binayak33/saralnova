@@ -16,10 +16,11 @@ class AminityController extends GetxController {
   final aminityKey = GlobalKey<FormState>();
   final LogoLoading loading = LogoLoading();
 
-  RxList<Aminity> amenitiesList = RxList();
+  RxList<Amenity> amenitiesList = RxList();
   var crudState = CRUDSTATE.ADD.obs;
   var pageState = PageState.LOADING.obs;
-  RxnString updateIndex = RxnString();
+  // RxnString updateIndex = RxnString();
+  Rxn<Amenity> amenity = Rxn();
 
   final titleAminityController = TextEditingController();
 
@@ -126,7 +127,8 @@ class AminityController extends GetxController {
       loading.show();
       AminityRepo.updateAminityType(
         amenityTitle: titleAminityController.text,
-        amenityId: updateIndex.value.toString(),
+        // amenityId: updateIndex.value.toString(),
+        amenityId: amenity.value!.id!,
         onSuccess: (amenity) {
           loading.hide();
           //TODO show page state so that loader will be displayed

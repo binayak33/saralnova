@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/model/feature_model/room_type_model.dart';
@@ -9,6 +11,7 @@ import 'package:saralnova/features/screens/Feature/rooms/status_bottom_sheet.dar
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 
+import '../../../../features/screens/Feature/rooms/add_rooms_screen.dart';
 import '../../../model/rooms_model.dart';
 import '../../../utils/constants/enums.dart';
 
@@ -33,12 +36,8 @@ class RoomsController extends GetxController {
   void onInit() {
     getAllRooms();
 
-    // var args = Get.arguments;
-    // if (args != null && args['room'] != null) {
-    //   rooms.value = args['room'];
+    rateController.clear();
 
-    //   print("-----------------------${args['room']}");
-    // }
     super.onInit();
   }
 
@@ -60,25 +59,42 @@ class RoomsController extends GetxController {
     );
   }
 
-  // void onEditClick(Rooms room) async {
-  //   var result = await Get.toNamed(AddRoomsScreen.routeName, arguments: {
-  //     "room": room,
-  //   });
-  //   print("0000000000000000000000-${result}");
-  //   try {
-  //     if (result != null) {
-  //       if ((result).containsKey("room")) {
-  //         rooms.value = result['room'];
-  //       } else {
-  //         return;
-  //       }
-  //     } else {
-  //       print("xxxxxxxxxxxxxx");
-  //     }
-  //   } catch (_) {
-  //     getAllRooms();
-  //   }
-  // }
+  clearVariables() {
+    roomTypeController.clear();
+    roomStatusController.clear();
+    roomTitleController.clear();
+    rateController.clear();
+    rooms.value =
+        null; //disposing the model before user creates /updates the  rooms
+    roomType.value = null;
+
+    crudState.value = CRUDSTATE.ADD;
+    Get.toNamed(AddRoomsScreen.routeName);
+  }
+
+  RxnString updateIndex = RxnString();
+  void onEditClick(Rooms room) async {
+    Get.toNamed(
+      AddRoomsScreen.routeName,
+    );
+    rooms.value = room;
+
+    crudState.value = CRUDSTATE.UPDATE;
+
+    if (rooms.value != null && crudState.value == CRUDSTATE.UPDATE) {
+      print("====r t id ==${rooms.value?.roomTypeId}");
+      roomTypeController.text = rooms.value?.roomTypeName ?? " ";
+      // roomType.value?.id = rooms.value?.roomTypeId; id uta bata aauxa tara model chai null xa tesma set ganra mildaina
+      // if (roomType.value != null) {
+      //   roomType.value!.id = rooms.value?.roomTypeId;
+      // }
+      updateIndex.value = rooms.value?.roomTypeId;
+      roomTitleController.text = rooms.value?.title ?? " ";
+      roomStatusController.text = rooms.value?.status ?? " ";
+      rateController.text = (rooms.value?.rate?.toString() ?? "0.00");
+    }
+    update();
+  }
 
   openRoomTypeBottomSheet() async {
     showModalBottomSheet(
@@ -94,6 +110,9 @@ class RoomsController extends GetxController {
               roomTypeController.text = roomType.title.toString();
 
               this.roomType.value = roomType;
+              if (crudState.value == CRUDSTATE.UPDATE) {
+                updateIndex.value = roomType.id;
+              }
             },
           ),
         );
@@ -122,10 +141,6 @@ class RoomsController extends GetxController {
 
   void storeRoom() async {
     if (addRoomKey.currentState!.validate()) {
-      // print(roomType.value?.id);
-      // print(roomTitleController.text);
-      // print(roomStatusController.text);
-      // print(rateController.text);
       if (roomType.value?.id != null) {
         loading.show();
         RoomsRepo.storeRoom(
@@ -158,5 +173,50 @@ class RoomsController extends GetxController {
         SkySnackBar.error(title: "Room", message: Messages.error);
       }
     }
+  }
+
+  void updateRoom() async {
+    log("room id ${rooms.value!.id}");
+    log("update index:--------${updateIndex.value}");
+    if (addRoomKey.currentState!.validate()) {
+      loading.show();
+      RoomsRepo.updateRoomType(
+          roomId: (rooms.value?.id).toString(),
+          // roomTypeId: (roomType.value!.id).toString(),
+          roomTypeId: updateIndex.value.toString(),
+          roomTitle: roomTitleController.text,
+          status: roomStatusController.text,
+          rate: int.parse(
+            rateController.text,
+          ),
+          // amenities: "DEMO",
+          onSuccess: (room) {
+            loading.hide();
+            //TODO show page state so that loader will be displayed
+            getAllRooms();
+            roomTypeController.clear();
+            roomStatusController.clear();
+
+            roomTitleController.clear();
+            rateController.clear();
+            Get.back();
+          },
+          onError: (message) {
+            loading.hide();
+
+            SkySnackBar.error(title: "Room", message: message);
+          });
+    }
+  }
+
+  void deleteRoom(String roomIndex) {
+    RoomsRepo.deleteRoomType(
+        roomId: roomIndex,
+        onSuccess: (message) {
+          getAllRooms();
+          Get.back();
+          SkySnackBar.success(title: "Room", message: message);
+        },
+        onError: (message) {});
   }
 }

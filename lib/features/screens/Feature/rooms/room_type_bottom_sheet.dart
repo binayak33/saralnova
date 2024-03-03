@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/controllers/Feature/room/room_type_controller.dart';
+import 'package:saralnova/core/controllers/Feature/room_type/room_type_controller.dart';
 import 'package:saralnova/core/model/feature_model/room_type_model.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';

@@ -61,7 +61,8 @@ class FacilityScreen extends StatelessWidget {
                               SlidableAction(
                                 padding: EdgeInsets.zero,
                                 onPressed: (value) {
-                                  c.updateIndex.value = facility.id;
+                                  // c.updateIndex.value = facility.id;
+                                  c.facility.value = facility;
                                   c.crudState.value = CRUDSTATE.UPDATE;
                                   c.facilityTitleController.text =
                                       facility.title.toString();

@@ -1,8 +1,8 @@
-List<Aminity> amenitiesFromJson(List<dynamic> amenitiesJson) =>
-    List<Aminity>.from(
-        amenitiesJson.map((aminityJson) => Aminity.fromJson(aminityJson)));
+List<Amenity> amenitiesFromJson(List<dynamic> amenitiesJson) =>
+    List<Amenity>.from(
+        amenitiesJson.map((aminityJson) => Amenity.fromJson(aminityJson)));
 
-class Aminity {
+class Amenity {
   String? id;
   String? vendorId;
   String? title;
@@ -10,7 +10,7 @@ class Aminity {
   String? updatedAt;
   String? imageUrl;
 
-  Aminity(
+  Amenity(
       {this.id,
       this.vendorId,
       this.title,
@@ -18,7 +18,7 @@ class Aminity {
       this.updatedAt,
       this.imageUrl});
 
-  Aminity.fromJson(Map<String, dynamic> json) {
+  Amenity.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     vendorId = json['vendor_id'];
     title = json['title'];

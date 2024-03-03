@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/controllers/Feature/room_type/room_type_controller.dart';
+import 'package:saralnova/core/controllers/Feature/staff/staff_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
 
-class RoomTypeScreen extends StatelessWidget {
-  static const String routeName = "/roomtype-screen";
-  final c = Get.find<RoomTypeController>();
-  RoomTypeScreen({super.key});
+class StaffScreen extends StatelessWidget {
+  static const String routeName = "/staff-screen";
+  final c = Get.find<StaffController>();
+  StaffScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class RoomTypeScreen extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          "Room Type",
+          "Staff",
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
       ),
@@ -42,11 +42,10 @@ class RoomTypeScreen extends StatelessWidget {
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.builder(
-                    itemCount: c.roomTypes.length,
-                    physics: const ClampingScrollPhysics(),
+                    itemCount: c.staffList.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      var room = c.roomTypes[index];
+                      var staff = c.staffList[index];
                       return Container(
                         decoration: BoxDecoration(
                             color: AppColors.splashBackgroundColor,
@@ -61,12 +60,17 @@ class RoomTypeScreen extends StatelessWidget {
                                 SlidableAction(
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    // c.updateIndex.value = room.id.toString();
-                                    c.roomType.value = room;
+                                    // c.updateIndex.value = staff.id.toString();
+                                    c.staff.value = staff;
                                     c.crudState.value = CRUDSTATE.UPDATE;
-                                    c.titleRoomController.text =
-                                        room.title.toString();
-                                    c.openRoomsBottomSheet();
+                                    c.nameController.text =
+                                        staff.name.toString();
+
+                                    c.emailController.text =
+                                        staff.email.toString();
+                                    c.userNameController.text =
+                                        staff.username.toString();
+                                    c.openStaffBottomSheet();
                                   },
                                   backgroundColor: AppColors.orangeColor,
                                   foregroundColor: Colors.white,
@@ -80,7 +84,7 @@ class RoomTypeScreen extends StatelessWidget {
                                   ),
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    c.deleteRoomType(room.id!);
+                                    c.deleteStaff(staff.id!);
                                   },
                                   backgroundColor: AppColors.errorColor,
                                   foregroundColor: Colors.white,
@@ -90,13 +94,13 @@ class RoomTypeScreen extends StatelessWidget {
                               ],
                             ),
                             child: HotelFeatureWidget(
-                              title: room.title,
+                              title: staff.name,
                             )),
                       );
                     },
                   );
                 } else {
-                  return Center(
+                  return const Center(
                     child: Text("Error View"),
                   );
                 }
@@ -108,8 +112,7 @@ class RoomTypeScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
-          c.titleRoomController.clear();
-          c.openRoomsBottomSheet();
+          c.openStaffBottomSheet();
         },
         child: Container(
           padding: const EdgeInsets.all(10),
@@ -118,7 +121,7 @@ class RoomTypeScreen extends StatelessWidget {
             color: AppColors.primary,
           ),
           child: Text(
-            "Create",
+            "Add",
             style: CustomTextStyles.f16W600(
               color: AppColors.scaffoldColor,
             ),

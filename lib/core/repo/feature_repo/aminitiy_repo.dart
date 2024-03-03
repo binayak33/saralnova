@@ -11,7 +11,7 @@ import 'package:saralnova/core/utils/helpers/sky_requests.dart';
 class AminityRepo {
   // TODO make name correct
   static Future<void> getAminityTypes({
-    required Function(List<Aminity> amenities) onSuccess,
+    required Function(List<Amenity> amenities) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
@@ -39,7 +39,7 @@ class AminityRepo {
     required String title,
     // TODO : upload image
     File? image,
-    required Function(Aminity amenity) onSuccess,
+    required Function(Amenity amenity) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
@@ -58,7 +58,7 @@ class AminityRepo {
 
       print(data);
       if (data["status"]) {
-        var amenity = Aminity.fromJson(data['data']);
+        var amenity = Amenity.fromJson(data['data']);
         onSuccess(amenity);
       } else {
         onError(data['message']);
@@ -73,7 +73,7 @@ class AminityRepo {
     required String amenityTitle,
     required String amenityId,
     // required String imageUrl TODO
-    required Function(Aminity aminity) onSuccess,
+    required Function(Amenity aminity) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
@@ -91,7 +91,7 @@ class AminityRepo {
       var data = json.decode(response.body);
 
       if (data["status"]) {
-        var aminity = Aminity.fromJson(data['data']);
+        var aminity = Amenity.fromJson(data['data']);
         onSuccess(aminity);
       } else {
         onError(data['message']);
