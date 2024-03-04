@@ -80,7 +80,7 @@ class HomePageBox extends StatelessWidget {
                 icon ??
                     Icons
                         .error, // Default to an error icon if no icon is provided
-                size: 30,
+                size: 25,
               ),
             ),
           ],

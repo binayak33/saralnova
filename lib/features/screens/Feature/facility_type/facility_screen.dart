@@ -9,6 +9,7 @@ import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
+import 'package:saralnova/features/widgets/shimmers/feature_shimmer.dart';
 
 class FacilityScreen extends StatelessWidget {
   static const String routeName = "/facility";
@@ -36,9 +37,7 @@ class FacilityScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Center(
-                    child: LinearProgressIndicator(),
-                  );
+                  return FeatureShimmer.FacilitiesGrid();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
                     message: "Empty!!",
