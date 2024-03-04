@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
+import 'package:saralnova/core/controllers/Feature/room_type/room_type_controller.dart';
 import 'package:saralnova/core/utils/helpers/validators.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
@@ -8,7 +8,7 @@ import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 import '../../../../core/utils/constants/enums.dart';
 
 class AddRoomTypeScreen extends StatelessWidget {
-  final c = Get.find<RoomController>();
+  final c = Get.find<RoomTypeController>();
   AddRoomTypeScreen({super.key});
 
   @override

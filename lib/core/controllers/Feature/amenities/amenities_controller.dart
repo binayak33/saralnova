@@ -2,23 +2,25 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:saralnova/core/model/aminity_model.dart';
-import 'package:saralnova/core/repo/aminitiy_repo.dart';
+import 'package:saralnova/core/model/feature_model/aminity_model.dart';
+import 'package:saralnova/core/repo/feature_repo/aminitiy_repo.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/screens/Feature/aminity_type/add_aminity_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 
-class AminityController extends GetxController {
+class AmenityController extends GetxController {
   final aminityKey = GlobalKey<FormState>();
   final LogoLoading loading = LogoLoading();
 
-  RxList<Aminity> amenitiesList = RxList();
+  RxList<Amenity> amenitiesList = RxList();
   var crudState = CRUDSTATE.ADD.obs;
   var pageState = PageState.LOADING.obs;
-  RxnInt updateIndex = RxnInt();
+  // RxnString updateIndex = RxnString();
+  Rxn<Amenity> amenity = Rxn();
 
   final titleAminityController = TextEditingController();
 
@@ -90,7 +92,7 @@ class AminityController extends GetxController {
       AminityRepo.storeAmintyType(
           title: titleAminityController.text,
           image: pickedFile.value,
-          onSuccess: (room) {
+          onSuccess: (amenity) {
             loading.hide();
             //TODO show page state so that loader will be displayed
             getAllAmenities();
@@ -125,8 +127,9 @@ class AminityController extends GetxController {
       loading.show();
       AminityRepo.updateAminityType(
         amenityTitle: titleAminityController.text,
-        amenityId: int.parse(updateIndex.value.toString()),
-        onSuccess: (room) {
+        // amenityId: updateIndex.value.toString(),
+        amenityId: amenity.value!.id!,
+        onSuccess: (amenity) {
           loading.hide();
           //TODO show page state so that loader will be displayed
 
@@ -144,7 +147,7 @@ class AminityController extends GetxController {
     }
   }
 
-  void deleteAminity(int amenityId) async {
+  void deleteAminity(String amenityId) async {
     loading.show();
     // TODO: show confirmation while delete
     AminityRepo.deleteAminityType(

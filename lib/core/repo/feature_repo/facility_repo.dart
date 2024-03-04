@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:saralnova/core/model/facility_model.dart';
-import 'package:saralnova/core/model/room_model.dart';
+import 'package:saralnova/core/model/feature_model/facility_model.dart';
+import 'package:saralnova/core/model/feature_model/room_type_model.dart';
 import 'package:saralnova/core/utils/constants/api.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
@@ -69,7 +69,7 @@ class FacilityRepo {
 
   static Future<void> updateFacilityType({
     required String facilityTitle,
-    required int facilityd,
+    required String facilityd,
     required num price,
     required Function(Facility facility) onSuccess,
     required Function(String message) onError,
@@ -102,7 +102,7 @@ class FacilityRepo {
   }
 
   static Future<void> deleteFacilityType({
-    required int facilityId,
+    required String facilityId,
     required Function(String message) onSuccess,
     required Function(String message) onError,
   }) async {

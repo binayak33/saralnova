@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/core/controllers/Feature/room_type/room_type_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
-import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
-import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
 
-import '../../../../core/controllers/Feature/amenities/amenities_controller.dart';
-
-class AmenitiesScreen extends StatelessWidget {
-  static const String routeName = "/aminity-screen";
-  final c = Get.find<AmenityController>();
-  AmenitiesScreen({super.key});
+class RoomTypeScreen extends StatelessWidget {
+  static const String routeName = "/roomtype-screen";
+  final c = Get.find<RoomTypeController>();
+  RoomTypeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +21,11 @@ class AmenitiesScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         iconTheme: const IconThemeData(
-          color: AppColors.scaffoldColor,
+          color: AppColors.scaffoldColor, //change your color here
         ),
         centerTitle: true,
         title: Text(
-          "Add Amenity",
+          "Room Type",
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
       ),
@@ -42,25 +40,28 @@ class AmenitiesScreen extends StatelessWidget {
                     child: LinearProgressIndicator(),
                   );
                 } else if (c.pageState.value == PageState.EMPTY) {
+                  // return Center(
+                  //   child: Text("Empty"),
+                  // );
                   return EmptyView(
                     message: "Empty!!",
                     title: "Empty",
                     media: IconPath.empty,
-                    mediaSize: 500,
+                    mediaSize: 1000,
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.builder(
-                    itemCount: c.amenitiesList.length,
+                    itemCount: c.roomTypes.length,
                     physics: const ClampingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      var amenity = c.amenitiesList[index];
+                      var room = c.roomTypes[index];
                       return Container(
-                          decoration: BoxDecoration(
-                              color: AppColors.splashBackgroundColor,
-                              borderRadius: BorderRadius.circular(4)),
-                          margin: const EdgeInsets.only(bottom: 10),
-                          child: Slidable(
+                        decoration: BoxDecoration(
+                            color: AppColors.splashBackgroundColor,
+                            borderRadius: BorderRadius.circular(4)),
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: Slidable(
                             key: ValueKey(index),
                             endActionPane: ActionPane(
                               extentRatio: 0.5,
@@ -69,12 +70,12 @@ class AmenitiesScreen extends StatelessWidget {
                                 SlidableAction(
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    // c.updateIndex.value = amenity.id;
-                                    c.amenity.value = amenity;
+                                    // c.updateIndex.value = room.id.toString();
+                                    c.roomType.value = room;
                                     c.crudState.value = CRUDSTATE.UPDATE;
-                                    c.titleAminityController.text =
-                                        amenity.title.toString();
-                                    c.openAmenityBottomSheet();
+                                    c.titleRoomController.text =
+                                        room.title.toString();
+                                    c.openRoomsBottomSheet();
                                   },
                                   backgroundColor: AppColors.orangeColor,
                                   foregroundColor: Colors.white,
@@ -88,7 +89,7 @@ class AmenitiesScreen extends StatelessWidget {
                                   ),
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    c.deleteAminity(amenity.id!);
+                                    c.deleteRoomType(room.id!);
                                   },
                                   backgroundColor: AppColors.errorColor,
                                   foregroundColor: Colors.white,
@@ -97,28 +98,10 @@ class AmenitiesScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(4),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(4),
-                                    child: SkyNetworkImage(
-                                      imageUrl: amenity.imageUrl ?? "",
-                                      // imageUrl: "",
-                                      height: 70,
-                                      width: 70,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: HotelFeatureWidget(
-                                    title: amenity.title,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ));
+                            child: HotelFeatureWidget(
+                              title: room.title,
+                            )),
+                      );
                     },
                   );
                 } else {
@@ -135,9 +118,8 @@ class AmenitiesScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
-          c.titleAminityController.clear();
-          c.pickedFile.value = null; // Clearing the picked file value
-          c.openAmenityBottomSheet();
+          c.titleRoomController.clear();
+          c.openRoomsBottomSheet();
         },
         child: Container(
           padding: const EdgeInsets.all(10),

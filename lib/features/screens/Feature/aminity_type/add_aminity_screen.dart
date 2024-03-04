@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:saralnova/core/controllers/Feature/aminities/aminites_controller.dart';
+import 'package:saralnova/core/controllers/Feature/amenities/amenities_controller.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/helpers/image_helper.dart';
@@ -13,7 +13,7 @@ import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 import '../../../widgets/common_widgets/sky_elevated_button.dart';
 
 class AddAmenityScreen extends StatelessWidget {
-  final c = Get.find<AminityController>();
+  final c = Get.find<AmenityController>();
   AddAmenityScreen({super.key});
 
   @override

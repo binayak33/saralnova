@@ -19,9 +19,14 @@ class IconPath {
   static const String calendar = "$basePath/calendar.svg";
   static const String roomDoor = "$basePath/room_door.svg";
   static const String personInfo = "$basePath/person_info.svg";
+  static const String down = "$basePath/down.svg";
 
   //Assets
   static const String finance = "$basePath/finance.svg";
   static const String qr = "$basePath/qr.svg";
   static const String loadingJson = "$basePathAnim/saralnova-loading.json";
+
+  // vectors imgs
+  static const String somethingWentWrong = "$basePath/somethingWentWrong.svg";
+  static const String empty = "$basePath/Empty.svg";
 }

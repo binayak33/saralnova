@@ -1,16 +1,18 @@
-List<Room> roomFromJson(List<dynamic> roomsJson) =>
-    List<Room>.from(roomsJson.map((roomJson) => Room.fromJson(roomJson)));
+List<RoomType> roomTypeFromJson(List<dynamic> roomTypesJson) =>
+    List<RoomType>.from(
+        roomTypesJson.map((roomTypeJson) => RoomType.fromJson(roomTypeJson)));
 
-class Room {
-  int? id;
+class RoomType {
+  String? id;
   String? title;
-  int? vendorId;
+  String? vendorId;
   String? createdAt;
   String? updatedAt;
 
-  Room({this.id, this.title, this.vendorId, this.createdAt, this.updatedAt});
+  RoomType(
+      {this.id, this.title, this.vendorId, this.createdAt, this.updatedAt});
 
-  Room.fromJson(Map<String, dynamic> json) {
+  RoomType.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     vendorId = json['vendor_id'];

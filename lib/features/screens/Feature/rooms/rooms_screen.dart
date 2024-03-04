@@ -5,11 +5,11 @@ import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
-import 'package:saralnova/features/widgets/common_widgets/hotel_feature_widget.dart';
+import 'package:saralnova/features/widgets/app_widgets/rooms_widget.dart';
 
 class RoomsScreen extends StatelessWidget {
-  static const String routeName = "/roomtype-screen";
-  final c = Get.find<RoomController>();
+  static const String routeName = "/view-rooms";
+  final c = Get.find<RoomsController>();
   RoomsScreen({super.key});
 
   @override
@@ -22,7 +22,7 @@ class RoomsScreen extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          "Add Room Type",
+          "View Rooms",
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
       ),
@@ -42,10 +42,11 @@ class RoomsScreen extends StatelessWidget {
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.builder(
-                    itemCount: c.roomTypes.length,
+                    itemCount: c.roomsList.length,
                     shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
                     itemBuilder: (context, index) {
-                      var room = c.roomTypes[index];
+                      var room = c.roomsList[index];
                       return Container(
                         decoration: BoxDecoration(
                             color: AppColors.splashBackgroundColor,
@@ -60,11 +61,7 @@ class RoomsScreen extends StatelessWidget {
                                 SlidableAction(
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    c.updateIndex.value = room.id;
-                                    c.crudState.value = CRUDSTATE.UPDATE;
-                                    c.titleRoomController.text =
-                                        room.title.toString();
-                                    c.openRoomsBottomSheet();
+                                    c.onEditClick(room);
                                   },
                                   backgroundColor: AppColors.orangeColor,
                                   foregroundColor: Colors.white,
@@ -78,7 +75,8 @@ class RoomsScreen extends StatelessWidget {
                                   ),
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    c.deleteRoomType(room.id!);
+                                    // c.deleteRoomType(room.id!);
+                                    c.deleteRoom(room.id!);
                                   },
                                   backgroundColor: AppColors.errorColor,
                                   foregroundColor: Colors.white,
@@ -87,14 +85,17 @@ class RoomsScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: HotelFeatureWidget(
+                            child: RoomsWidget(
                               title: room.title,
+                              price: room.rate.toString(),
+                              roomType: room.roomTypeName,
+                              status: room.status,
                             )),
                       );
                     },
                   );
                 } else {
-                  return Center(
+                  return const Center(
                     child: Text("Error View"),
                   );
                 }
@@ -106,8 +107,7 @@ class RoomsScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
-          c.titleRoomController.clear();
-          c.openRoomsBottomSheet();
+          c.clearVariables();
         },
         child: Container(
           padding: const EdgeInsets.all(10),
