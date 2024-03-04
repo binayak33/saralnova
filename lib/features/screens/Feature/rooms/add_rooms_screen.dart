@@ -24,15 +24,7 @@ class AddRoomsScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                print("room Type id-----${c.roomType.value?.id}");
-                print(c.roomType.value?.title);
-
-                // -------------------------
-
-                print(c.roomTypeController.text);
-                print(c.roomTitleController.text);
-                print(c.roomStatusController.text);
-                print(c.rateController.text);
+                print(c.amenitiesDataList);
               },
               icon: Icon(Icons.add))
         ],
@@ -123,41 +115,63 @@ class AddRoomsScreen extends StatelessWidget {
                 ),
                 Obx(() {
                   if (c.amenityController.amenitiesList.isNotEmpty) {
-                    // var amenity;
-                    // for (var value in c.amenityController.amenitiesList) {
-                    //   amenity = value;
-                    // }
-                    // if (c.amenitiesList.isNotEmpty) {
-                    return Container(
-                      height: 100,
+                    return SizedBox(
+                      height: 300,
                       width: Get.width,
-                      color: Colors.red,
-                      child: Wrap(
-                        alignment: WrapAlignment.start,
-                        runSpacing: 6,
-                        spacing: 6,
-                        children: List.generate(
-                          c.amenityController.amenitiesList.length,
-                          (index) => ActionChip(
-                            avatar: const Icon(Icons.add),
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12),
-                              ),
-                              side: BorderSide(color: AppColors.borderColor),
+                      child: ListView(
+                        children: [
+                          Wrap(
+                            alignment: WrapAlignment.start,
+                            runSpacing: 6,
+                            spacing: 6,
+                            children: List.generate(
+                              c.amenityController.amenitiesList.length,
+                              (index) {
+                                var amenity =
+                                    c.amenityController.amenitiesList[index];
+                                return ActionChip(
+                                  color: c.amenitiesDataList.contains(amenity)
+                                      ? MaterialStateProperty.all<Color?>(
+                                          AppColors.bookingColor)
+                                      : MaterialStateProperty.all<Color?>(
+                                          Colors.transparent),
+                                  backgroundColor: AppColors.blackColor,
+                                  avatar: c.amenitiesDataList.contains(amenity)
+                                      ? const Icon(Icons.check)
+                                      : const Icon(Icons.add),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    side: const BorderSide(
+                                      color: AppColors.borderColor,
+                                    ),
+                                  ),
+                                  label: Text(
+                                    "${c.amenityController.amenitiesList[index].title}",
+                                    style: CustomTextStyles.f12W600(
+                                      color: AppColors.blackColor,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    //TODO  // c.amenitiesDataList.add(amenity);
+
+                                    if (c.amenitiesDataList.contains(amenity)) {
+                                      c.amenitiesDataList.remove(amenity);
+                                    } else {
+                                      c.amenitiesDataList.add(amenity);
+                                    }
+
+                                    // String title = amenity.title.toString();
+                                    // if (c.amenitiesDataList.contains(title)) {
+                                    //   c.amenitiesDataList.remove(title);
+                                    // } else {
+                                    //   c.amenitiesDataList.add(title);
+                                    // }
+                                  },
+                                );
+                              },
                             ),
-                            // labelPadding: const EdgeInsets.symmetric(
-                            //     horizontal: 1, vertical: 1),
-                            label: Text(
-                              "${c.amenityController.amenitiesList[index].title}",
-                              // amenity.title ?? '',
-                              style: CustomTextStyles.f12W600(
-                                color: AppColors.blackColor,
-                              ),
-                            ),
-                            backgroundColor: AppColors.borderColor,
-                          ),
-                        ),
+                          )
+                        ],
                       ),
                     );
                   } else {

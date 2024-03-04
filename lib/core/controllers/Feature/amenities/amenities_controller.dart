@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:saralnova/core/model/feature_model/aminity_model.dart';
+import 'package:saralnova/core/model/feature_model/amenity_model.dart';
 import 'package:saralnova/core/repo/feature_repo/aminitiy_repo.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';

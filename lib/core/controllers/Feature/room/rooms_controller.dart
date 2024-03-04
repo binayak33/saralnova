@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/amenities/amenities_controller.dart';
+import 'package:saralnova/core/model/feature_model/amenity_model.dart';
 import 'package:saralnova/core/model/feature_model/room_type_model.dart';
 import 'package:saralnova/core/repo/rooms_repo.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
@@ -35,6 +36,10 @@ class RoomsController extends GetxController {
 
   Rxn<RoomType> roomType = Rxn();
 
+  RxList<Amenity> amenitiesDataList = RxList();
+  // RxList<String> amenitiesDataList = RxList();
+
+  RxString ameinitiesDataString = RxString("");
   @override
   void onInit() {
     getAllRooms();
@@ -67,10 +72,11 @@ class RoomsController extends GetxController {
     roomStatusController.clear();
     roomTitleController.clear();
     rateController.clear();
+
     rooms.value =
         null; //disposing the model before user creates /updates the  rooms
     roomType.value = null;
-
+    amenitiesDataList.clear();
     crudState.value = CRUDSTATE.ADD;
     Get.toNamed(AddRoomsScreen.routeName);
   }
@@ -85,12 +91,9 @@ class RoomsController extends GetxController {
     crudState.value = CRUDSTATE.UPDATE;
 
     if (rooms.value != null && crudState.value == CRUDSTATE.UPDATE) {
-      print("====r t id ==${rooms.value?.roomTypeId}");
+      log("====roomTypeId ==${rooms.value?.roomTypeId}");
       roomTypeController.text = rooms.value?.roomTypeName ?? " ";
-      // roomType.value?.id = rooms.value?.roomTypeId; id uta bata aauxa tara model chai null xa tesma set ganra mildaina
-      // if (roomType.value != null) {
-      //   roomType.value!.id = rooms.value?.roomTypeId;
-      // }
+
       updateIndex.value = rooms.value?.roomTypeId;
       roomTitleController.text = rooms.value?.title ?? " ";
       roomStatusController.text = rooms.value?.status ?? " ";
@@ -145,6 +148,11 @@ class RoomsController extends GetxController {
   void storeRoom() async {
     if (addRoomKey.currentState!.validate()) {
       if (roomType.value?.id != null) {
+        String amenitiesString =
+            amenitiesDataList.map((amenity) => amenity.id!).join(',');
+
+        print("------->${amenitiesString}");
+
         loading.show();
         RoomsRepo.storeRoom(
             roomTypeId: (roomType.value!.id).toString(),
@@ -153,7 +161,7 @@ class RoomsController extends GetxController {
             roomRate: int.parse(
               rateController.text,
             ),
-            // amenities: "DEMO",
+            amenities: amenitiesString,
             onSuccess: (room) {
               loading.hide();
               //TODO show page state so that loader will be displayed

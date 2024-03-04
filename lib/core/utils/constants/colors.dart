@@ -29,7 +29,7 @@ class AppColors {
 
   //Rooms Colors
   static const Color reservedColor = Color(0xFF8F8F8F);
-  static const Color bookingColor = Color(0xFF44BEA5);
+  static const Color bookingColor = Color.fromRGBO(68, 190, 165, 1);
   static const Color occupiedColor = Color(0xFF5140B2);
   static const Color repairingColor = Color(0xFFF94F82);
 

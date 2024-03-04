@@ -38,7 +38,7 @@ class RoomsRepo {
     required String roomTypeId,
     required String title,
     required String status,
-    // required String amenities,
+    required String amenities,
     required num roomRate,
     required Function(Rooms rooms) onSuccess,
     required Function(String message) onError,
@@ -51,7 +51,7 @@ class RoomsRepo {
         "title": title,
         "status": status,
         "rate": roomRate,
-        // "selectedAmenities": amenities,
+        "selectedAmenities": amenities,
       };
 
       http.Response response = await SkyRequest.post(
