@@ -9,6 +9,7 @@ import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
+import 'package:saralnova/features/widgets/shimmers/feature_shimmer.dart';
 
 import '../../../../core/controllers/Feature/amenities/amenities_controller.dart';
 
@@ -38,9 +39,7 @@ class AmenitiesScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Center(
-                    child: LinearProgressIndicator(),
-                  );
+                  return FeatureShimmer.AminitiesGrid();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
                     message: "Empty!!",

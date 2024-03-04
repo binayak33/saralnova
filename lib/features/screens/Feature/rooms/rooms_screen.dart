@@ -6,6 +6,7 @@ import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/features/widgets/app_widgets/rooms_widget.dart';
+import 'package:saralnova/features/widgets/shimmers/feature_shimmer.dart';
 
 class RoomsScreen extends StatelessWidget {
   static const String routeName = "/view-rooms";
@@ -33,9 +34,7 @@ class RoomsScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Center(
-                    child: LinearProgressIndicator(),
-                  );
+                  return FeatureShimmer.ViewRoomsGrid();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return Center(
                     child: Text("Empty"),
