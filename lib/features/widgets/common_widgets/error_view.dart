@@ -16,7 +16,7 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget mediaWidget = Image.asset("assets/images/somethingWentWrong.png");
+    Widget mediaWidget = Image.asset("assets/images/somethingWentWrong.");
     if (media != null) {
       if (media!.contains("svg")) {
         mediaWidget = SvgPicture.asset(

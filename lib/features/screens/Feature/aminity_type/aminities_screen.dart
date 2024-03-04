@@ -5,7 +5,10 @@ import 'package:saralnova/core/controllers/Feature/aminities/aminites_controller
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
+import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
+import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/hotel_feature_widget.dart';
 
 class AmenitiesScreen extends StatelessWidget {
@@ -38,8 +41,11 @@ class AmenitiesScreen extends StatelessWidget {
                     child: LinearProgressIndicator(),
                   );
                 } else if (c.pageState.value == PageState.EMPTY) {
-                  return Center(
-                    child: Text("Empty"),
+                  return EmptyView(
+                    message: "Empty!!",
+                    title: "Empty",
+                    media: IconPath.empty,
+                    mediaSize: 500,
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.builder(
@@ -114,8 +120,9 @@ class AmenitiesScreen extends StatelessWidget {
                     },
                   );
                 } else {
-                  return Center(
-                    child: Text("Error View"),
+                  return ErrorView(
+                    title: "Something went wrong!!",
+                    media: IconPath.somethingWentWrong,
                   );
                 }
               })

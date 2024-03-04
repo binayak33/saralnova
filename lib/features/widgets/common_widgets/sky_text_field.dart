@@ -27,8 +27,7 @@ class SkyTextField extends StatelessWidget {
   final bool obscureText;
   final FocusNode? focusNode;
   final double borderRadius;
-    final List<TextInputFormatter>? inputFormatters;
-
+  final List<TextInputFormatter>? inputFormatters;
 
   const SkyTextField({
     Key? key,
@@ -91,7 +90,7 @@ class SkyTextField extends StatelessWidget {
         label: showLable
             ? Text(
                 hint,
-                style: CustomTextStyles.f16W400(color: theme.hintColor),
+                style: CustomTextStyles.f16W400(color: AppColors.hintTextColor),
               )
             : null,
         fillColor: fillColor ?? Colors.transparent,
