@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:saralnova/core/utils/constants/colors.dart';
 
 class EmptyView extends StatelessWidget {
   String title, message;
@@ -12,7 +13,8 @@ class EmptyView extends StatelessWidget {
       required this.title,
       this.media,
       this.widget,
-      this.mediaSize = 200});
+      this.mediaSize = 200
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +50,11 @@ class EmptyView extends StatelessWidget {
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18.0,
-                color: Colors.white),
+                color: AppColors.primary),
             textAlign: TextAlign.center,
           ),
           Text(message,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: AppColors.primary),
               textAlign: TextAlign.center),
           SizedBox(height: 24.0),
           widget ?? Container()

@@ -31,7 +31,8 @@ class HomeScreen extends StatelessWidget {
           ),
           itemBuilder: (context, index) {
             var data = c.dashboardList[index];
-            return HomePageBox(title: data.text, icon: data.icon);
+            return HomePageBox(
+                title: data.text, icon: data.icon, color: data.color);
           },
         ),
       ),
@@ -42,7 +43,8 @@ class HomeScreen extends StatelessWidget {
 class HomePageBox extends StatelessWidget {
   final String? title;
   final IconData? icon;
-  const HomePageBox({super.key, this.title, this.icon});
+  final Color? color;
+  const HomePageBox({super.key, this.title, this.icon, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class HomePageBox extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
+        color: color,
         boxShadow: [
           BoxShadow(
             color: Color.fromARGB(255, 41, 41, 41).withOpacity(0.3),
