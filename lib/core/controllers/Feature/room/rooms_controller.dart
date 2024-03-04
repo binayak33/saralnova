@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/core/controllers/Feature/amenities/amenities_controller.dart';
 import 'package:saralnova/core/model/feature_model/room_type_model.dart';
 import 'package:saralnova/core/repo/rooms_repo.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
@@ -16,6 +17,8 @@ import '../../../model/rooms_model.dart';
 import '../../../utils/constants/enums.dart';
 
 class RoomsController extends GetxController {
+  // final amenitiesList = Get.find<AmenityController>().amenitiesList;
+  final amenityController = Get.put(AmenityController());
   final addRoomKey = GlobalKey<FormState>();
   final LogoLoading loading = LogoLoading();
 

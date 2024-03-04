@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Calendar/calendar_controller.dart';
 import 'package:saralnova/core/controllers/Dashboard/dashboard_panel_controller.dart';
-import 'package:saralnova/core/controllers/Feature/aminities/aminites_controller.dart';
+import 'package:saralnova/core/controllers/Feature/amenities/amenities_controller.dart';
 import 'package:saralnova/core/controllers/Feature/facility/facility_controller.dart';
 import 'package:saralnova/core/controllers/Feature/feature_controller.dart';
 import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
@@ -60,7 +60,7 @@ final List<GetPage> pages = [
     name: AmenitiesScreen.routeName,
     page: () => AmenitiesScreen(),
     binding: BindingsBuilder(() {
-      Get.lazyPut(() => AminityController());
+      Get.lazyPut(() => AmenityController());
     }),
   ),
   GetPage(

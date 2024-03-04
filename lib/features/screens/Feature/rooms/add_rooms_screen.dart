@@ -121,33 +121,51 @@ class AddRoomsScreen extends StatelessWidget {
                   "Amenities",
                   style: CustomTextStyles.f22W600(),
                 ),
-                Wrap(
-                  alignment: WrapAlignment.start,
-                  runSpacing: 6,
-                  spacing: 6,
-                  children: List.generate(
-                    // c.features.length,
-                    10,
-                    (index) => ActionChip(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(6),
+                Obx(() {
+                  if (c.amenityController.amenitiesList.isNotEmpty) {
+                    // var amenity;
+                    // for (var value in c.amenityController.amenitiesList) {
+                    //   amenity = value;
+                    // }
+                    // if (c.amenitiesList.isNotEmpty) {
+                    return Container(
+                      height: 100,
+                      width: Get.width,
+                      color: Colors.red,
+                      child: Wrap(
+                        alignment: WrapAlignment.start,
+                        runSpacing: 6,
+                        spacing: 6,
+                        children: List.generate(
+                          c.amenityController.amenitiesList.length,
+                          (index) => ActionChip(
+                            avatar: const Icon(Icons.add),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                              side: BorderSide(color: AppColors.borderColor),
+                            ),
+                            // labelPadding: const EdgeInsets.symmetric(
+                            //     horizontal: 1, vertical: 1),
+                            label: Text(
+                              "${c.amenityController.amenitiesList[index].title}",
+                              // amenity.title ?? '',
+                              style: CustomTextStyles.f12W600(
+                                color: AppColors.blackColor,
+                              ),
+                            ),
+                            backgroundColor: AppColors.borderColor,
+                          ),
                         ),
-                        side: BorderSide(color: AppColors.borderColor),
                       ),
-                      labelPadding: const EdgeInsets.symmetric(
-                          horizontal: 4, vertical: 2),
-                      label: Text(
-                        // "${c.features[index].value}",
-                        "random",
-                        style: CustomTextStyles.f16W500(
-                          color: AppColors.blackColor,
-                        ),
-                      ),
-                      backgroundColor: AppColors.borderColor,
-                    ),
-                  ),
-                ),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                })
               ],
             ),
           ),

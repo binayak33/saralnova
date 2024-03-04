@@ -12,7 +12,7 @@ import 'package:saralnova/features/screens/Feature/aminity_type/add_aminity_scre
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 
-class AminityController extends GetxController {
+class AmenityController extends GetxController {
   final aminityKey = GlobalKey<FormState>();
   final LogoLoading loading = LogoLoading();
 
