@@ -1,3 +1,6 @@
 import 'package:get/get.dart';
 
-class GuestController extends GetxController {}
+
+class GuestController extends GetxController {
+  
+}

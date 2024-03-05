@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/feature_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
+import 'package:saralnova/features/screens/Feature/Booking/booking_screen.dart';
 import 'package:saralnova/features/screens/Feature/aminity_type/aminities_screen.dart';
 import 'package:saralnova/features/screens/Feature/facility_type/facility_screen.dart';
 import 'package:saralnova/features/screens/Feature/room_type/room_type_screen.dart';
@@ -69,6 +70,14 @@ class FeatureScreen extends StatelessWidget {
                   title: const Text("View staffs"),
                   onTap: () {
                     Get.toNamed(StaffScreen.routeName);
+                  },
+                ),
+              ),
+               Card(
+                child: ListTile(
+                  title: const Text("Booking"),
+                  onTap: () {
+                    Get.toNamed(BookingScreen.routeName);
                   },
                 ),
               )

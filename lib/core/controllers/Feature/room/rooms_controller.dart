@@ -168,7 +168,7 @@ class RoomsController extends GetxController {
               getAllRooms();
               roomTypeController.clear();
               roomStatusController.clear();
-
+  
               roomTitleController.clear();
               rateController.clear();
               Get.back();
