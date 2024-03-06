@@ -1,8 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/features/screens/Feature/rooms/room_type_bottom_sheet.dart';
+
 enum BookingState { DATEROOMS, OPTIONS, INFORMATION, CONFIRM }
 
-class BookingController extends GetxController{
-var bookingState = BookingState.DATEROOMS.obs;
+class BookingController extends GetxController {
+  var bookingState = BookingState.DATEROOMS.obs;
+
+  final roomTypeController = TextEditingController();
+  RxInt guestNumber = RxInt(0);
+
+  onIncrement() {
+    if (guestNumber.value >= 0) {
+      print("hahaha");
+
+      guestNumber.value += 1;
+    }
+  }
+
+  onDecrement() {
+    if (guestNumber.value > 0) {
+      guestNumber.value -= 1;
+    }
+  }
 
   var activeIndex = 0.obs; // Track active index
 
@@ -36,5 +56,28 @@ var bookingState = BookingState.DATEROOMS.obs;
       activeIndex.value -= 1;
       setActiveIndex(activeIndex.value);
     }
+  }
+
+  openRoomTypeBottomSheet() async {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: Get.context!,
+        builder: (context) {
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: RoomTypeBottomSheet(
+              onSelectRoomType: (roomType) {
+                roomTypeController.text = roomType.title.toString();
+
+                //     this.roomType.value = roomType;
+                // if (crudState.value == CRUDSTATE.UPDATE) {
+                //   updateIndex.value = roomType.id;
+                // }
+              },
+            ),
+          );
+        });
   }
 }
