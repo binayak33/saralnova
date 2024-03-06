@@ -29,8 +29,16 @@ class BookingScreen extends StatelessWidget {
           "Booking",
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                c.onsubmit();
+              },
+              icon: Icon(Icons.add))
+        ],
       ),
       body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Column(
@@ -46,7 +54,8 @@ class BookingScreen extends StatelessWidget {
 
                   iconWidth: 40,
                   iconHeight: 40,
-                  activeIndex: c.activeIndex.value,
+                  // activeIndex: c.activeIndex.value,
+                  activeIndex: c.currentIndex,
                   verticalGap: 25,
                   inActiveBarColor: AppColors.borderColor,
                   // stepperList: c.stepperData,
@@ -126,51 +135,88 @@ class BookingScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Obx(() {
-                // Render widgets based on booking state
-                switch (c.bookingState.value) {
-                  case BookingState.DATEROOMS:
-                    return DateRoomScreen();
-                  case BookingState.OPTIONS:
-                    return OptionsScreen();
-                  case BookingState.INFORMATION:
-                    return InformationScreen();
-                  case BookingState.CONFIRM:
-                    return ConfirmScreen();
-                  default:
-                    return Container(); // Handle default case
-                }
-              }),
+              // Obx(() {
+              //   switch (c.bookingState.value) {
+              //     case BookingState.DATEROOMS:
+              //       return DateRoomScreen();
+              //     case BookingState.OPTIONS:
+              //       return OptionsScreen();
+              //     case BookingState.INFORMATION:
+              //       return InformationScreen();
+              //     case BookingState.CONFIRM:
+              //       return ConfirmScreen();
+              //     default:
+              //       return Container(); // Handle default case
+              //   }
+              // }),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: Get.height,
+                width: Get.width,
+                child: PageView(
+                  controller: c.pageController,
+                  onPageChanged: (value) {
+                    c.changeIndex(value);
+                  },
+                  children: [
+                    DateRoomScreen(),
+                    OptionsScreen(),
+                    InformationScreen(),
+                    ConfirmScreen(),
+                  ],
+                ),
+              ),
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: SkyElevatedButton(
-                        width: 30,
-                        onPressed: () {
-                          c.onBack();
-                        },
-                        title: "Back"),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: SkyElevatedButton(
-                        width: 30,
-                        onPressed: () {
-                          // c.setActiveIndex(1);
-                          c.onNext();
-                        },
-                        title: "Next"),
-                  ),
-                ],
-              ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(
+          left: 8.0,
+          right: 8,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Text("haha"),
+
+            Expanded(
+              flex: 2,
+              child: Container(
+                height: 40, //TODO: fix the height issue on device preview
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Estimated Cost",
+                      style:
+                          CustomTextStyles.f16W500(color: AppColors.blackColor),
+                    ),
+                    Text(
+                      "Rs.3000",
+                      style: CustomTextStyles.f16W600(color: AppColors.primary),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Flexible(
+              child: SkyElevatedButton(
+                  height: 30,
+                  onPressed: () {
+                    c.onNext();
+                  },
+                  title: "Next"),
+            ),
+          ],
         ),
       ),
     );
