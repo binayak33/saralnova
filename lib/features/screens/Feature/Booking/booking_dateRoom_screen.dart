@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/controllers/Feature/booking/booking_controller.dart';
-import 'package:saralnova/core/utils/constants/colors.dart';
-import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/constants/icon_path.dart';
-import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
+import 'package:saralnova/core/utils/helpers/validators.dart';
+import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
+
+import '../../../../core/controllers/Feature/booking/booking_controller.dart';
+import '../../../../core/utils/constants/colors.dart';
+import '../../../../core/utils/constants/custom_text_style.dart';
+import '../../../../core/utils/constants/icon_path.dart';
+import '../../../widgets/common_widgets/sky_text_field.dart';
 
 class DateRoomScreen extends StatelessWidget {
   final c = Get.put(BookingController());
+
   DateRoomScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // padding: const EdgeInsets.symmetric(horizontal: 16),
+    return Form(
+      key: c.dateRoomKey,
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SkyTextField(
@@ -24,6 +28,7 @@ class DateRoomScreen extends StatelessWidget {
             textInputType: TextInputType.emailAddress,
             readOnly: true,
             controller: c.roomTypeController,
+            // validator: (value) => Validator.validateEmpty(value!),
             suffixIconPath: IconPath.down,
             onTap: () {
               c.openRoomTypeBottomSheet();
@@ -33,12 +38,19 @@ class DateRoomScreen extends StatelessWidget {
             height: 10,
           ),
           SkyTextField(
-            hint: "Check-IN Check-OUT",
+            hint: "Check-In Check-Out",
             textInputAction: TextInputAction.next,
             textInputType: TextInputType.emailAddress,
             readOnly: true,
-            controller: c.roomTypeController,
-            onTap: () {},
+            validator: (value) => Validator.validateEmpty(value!),
+            controller: c.checkInOutRangeController,
+            suffixIcon: const Icon(
+              Icons.calendar_month,
+              color: AppColors.primary,
+            ),
+            onTap: () {
+              c.openCalendarBottomSheet();
+            },
           ),
           const SizedBox(
             height: 10,
@@ -50,7 +62,7 @@ class DateRoomScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Exptected Guest Count"),
+                const Text("Exptected Guest Count"),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -71,9 +83,9 @@ class DateRoomScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               shape: BoxShape.rectangle,
-                              color: AppColors.reservedColor,
+                              color: AppColors.fillColor,
                             ),
-                            child: const Icon(Icons.minimize_outlined),
+                            child: SvgPicture.asset(IconPath.minus),
                           ),
                         ),
                         const SizedBox(
@@ -88,9 +100,9 @@ class DateRoomScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               shape: BoxShape.rectangle,
-                              color: AppColors.reservedColor,
+                              color: AppColors.fillColor,
                             ),
-                            child: const Icon(Icons.add),
+                            child: SvgPicture.asset(IconPath.plus),
                           ),
                         ),
                       ],
@@ -100,6 +112,68 @@ class DateRoomScreen extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
+          SkyElevatedButton(
+            onPressed: () {
+              c.getAvailableRooms();
+            },
+            title: "Search Available Rooms",
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Obx(() {
+            if (c.pageState.value == PageState.EMPTY) {
+              return const SizedBox();
+            } else if (c.pageState.value == PageState.LOADING) {
+              return const Text("Loading available rooms....");
+              //TODO shimmer
+            } else if (c.pageState.value == PageState.NORMAL) {
+              return Obx(
+                () => Flexible(
+                  child: SizedBox(
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        itemCount: c.availableRoomList.length,
+                        scrollDirection: Axis.vertical,
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 100,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 2,
+                        ),
+                        itemBuilder: (context, index) {
+                          var availableRoom = c.availableRoomList[index];
+                          return Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.primary,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                10,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                availableRoom.title ?? "",
+                                style: CustomTextStyles.f14W600(
+                                    color: AppColors.primary),
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
+                ),
+              );
+            } else {
+              return Text("No available rooms");
+              //TODO No Available rooms  error svg pictrue
+            }
+          }),
         ],
       ),
     );

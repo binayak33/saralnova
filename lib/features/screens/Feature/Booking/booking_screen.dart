@@ -23,6 +23,9 @@ class BookingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: AppColors.scaffoldColor,
+        ),
         centerTitle: true,
         backgroundColor: AppColors.primary,
         title: Text(
@@ -37,123 +40,120 @@ class BookingScreen extends StatelessWidget {
               icon: Icon(Icons.add))
         ],
       ),
-      body: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: Column(
-            children: [
-              Obx(
-                () => AnotherStepper(
-                  inverted: true,
-                  key: UniqueKey(),
-                  scrollPhysics: const NeverScrollableScrollPhysics(),
-                  stepperDirection: Axis.horizontal,
-                  barThickness: 2,
-                  activeBarColor: AppColors.primary,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: Column(
+          children: [
+            Obx(
+              () => AnotherStepper(
+                inverted: true,
+                key: UniqueKey(),
+                scrollPhysics: const NeverScrollableScrollPhysics(),
+                stepperDirection: Axis.horizontal,
+                barThickness: 2,
+                activeBarColor: AppColors.primary,
 
-                  iconWidth: 40,
-                  iconHeight: 40,
-                  // activeIndex: c.activeIndex.value,
-                  activeIndex: c.currentIndex,
-                  verticalGap: 25,
-                  inActiveBarColor: AppColors.borderColor,
-                  // stepperList: c.stepperData,
-                  stepperList: [
-                    StepperData(
-                        title: StepperText(
-                          "Date & Rooms",
-                          textStyle: const TextStyle(
-                            color: Colors.black,
-                          ),
+                iconWidth: 40,
+                iconHeight: 40,
+                // activeIndex: c.activeIndex.value,
+                activeIndex: c.currentIndex,
+                verticalGap: 25,
+                inActiveBarColor: AppColors.borderColor,
+                // stepperList: c.stepperData,
+                stepperList: [
+                  StepperData(
+                      title: StepperText(
+                        "Date & Rooms",
+                        textStyle: const TextStyle(
+                          color: Colors.black,
                         ),
-                        iconWidget: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: //TODO active value ko color when the first form is validated then make color primary else dark
-                                  c.bookingState.value == BookingState.DATEROOMS
-                                      ? AppColors.primary
-                                      : AppColors.borderColor,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
-                          child: SvgPicture.asset(IconPath.calendar),
-                        )),
-                    StepperData(
-                        title: StepperText(
-                          "Options",
-                          textStyle: const TextStyle(
-                            color: Colors.black,
-                          ),
+                      ),
+                      iconWidget: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: //TODO active value ko color when the first form is validated then make color primary else dark
+                                c.bookingState.value == BookingState.DATEROOMS
+                                    ? AppColors.primary
+                                    : AppColors.borderColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10))),
+                        child: SvgPicture.asset(IconPath.calendar),
+                      )),
+                  StepperData(
+                      title: StepperText(
+                        "Options",
+                        textStyle: const TextStyle(
+                          color: Colors.black,
                         ),
-                        iconWidget: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color:
-                                  c.bookingState.value == BookingState.OPTIONS
-                                      ? AppColors.primary
-                                      : AppColors.borderColor,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
-                          child: SvgPicture.asset(IconPath.list),
-                        )),
-                    StepperData(
-                        title: StepperText(
-                          "Information",
-                          textStyle: const TextStyle(
-                            color: Colors.black,
-                          ),
+                      ),
+                      iconWidget: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: c.bookingState.value == BookingState.OPTIONS
+                                ? AppColors.primary
+                                : AppColors.borderColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10))),
+                        child: SvgPicture.asset(IconPath.list),
+                      )),
+                  StepperData(
+                      title: StepperText(
+                        "Information",
+                        textStyle: const TextStyle(
+                          color: Colors.black,
                         ),
-                        iconWidget: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: c.bookingState.value ==
-                                      BookingState.INFORMATION
-                                  ? AppColors.primary
-                                  : AppColors.borderColor,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
-                          child: SvgPicture.asset(IconPath.info),
-                        )),
-                    StepperData(
-                        title: StepperText(
-                          "Confirm",
-                          textStyle: const TextStyle(
-                            color: Colors.black,
-                          ),
+                      ),
+                      iconWidget: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color:
+                                c.bookingState.value == BookingState.INFORMATION
+                                    ? AppColors.primary
+                                    : AppColors.borderColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10))),
+                        child: SvgPicture.asset(IconPath.info),
+                      )),
+                  StepperData(
+                      title: StepperText(
+                        "Confirm",
+                        textStyle: const TextStyle(
+                          color: Colors.black,
                         ),
-                        iconWidget: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color:
-                                  c.bookingState.value == BookingState.CONFIRM
-                                      ? AppColors.primary
-                                      : AppColors.borderColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: SvgPicture.asset(IconPath.check),
-                        )),
-                  ],
-                ),
+                      ),
+                      iconWidget: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: c.bookingState.value == BookingState.CONFIRM
+                                ? AppColors.primary
+                                : AppColors.borderColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: SvgPicture.asset(IconPath.check),
+                      )),
+                ],
               ),
-              // Obx(() {
-              //   switch (c.bookingState.value) {
-              //     case BookingState.DATEROOMS:
-              //       return DateRoomScreen();
-              //     case BookingState.OPTIONS:
-              //       return OptionsScreen();
-              //     case BookingState.INFORMATION:
-              //       return InformationScreen();
-              //     case BookingState.CONFIRM:
-              //       return ConfirmScreen();
-              //     default:
-              //       return Container(); // Handle default case
-              //   }
-              // }),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: Get.height,
+            ),
+            // Obx(() {
+            //   switch (c.bookingState.value) {
+            //     case BookingState.DATEROOMS:
+            //       return DateRoomScreen();
+            //     case BookingState.OPTIONS:
+            //       return OptionsScreen();
+            //     case BookingState.INFORMATION:
+            //       return InformationScreen();
+            //     case BookingState.CONFIRM:
+            //       return ConfirmScreen();
+            //     default:
+            //       return Container(); // Handle default case
+            //   }
+            // }),
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: SizedBox(
+                // height: Get.height,
                 width: Get.width,
                 child: PageView(
                   controller: c.pageController,
@@ -168,11 +168,11 @@ class BookingScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: Padding(
@@ -209,13 +209,14 @@ class BookingScreen extends StatelessWidget {
               width: 10,
             ),
             Flexible(
-              child: SkyElevatedButton(
+                child: Obx(
+              () => SkyElevatedButton(
                   height: 30,
                   onPressed: () {
                     c.onNext();
                   },
-                  title: "Next"),
-            ),
+                  title: c.currentIndex < 3 ? "Next" : "Book"),
+            )),
           ],
         ),
       ),

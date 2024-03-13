@@ -22,7 +22,7 @@ class CountryBottomSheet extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Select Room Type",
+            "Select Country",
             style: CustomTextStyles.f16W600(color: AppColors.blackColor),
           ),
           const Divider(
@@ -36,9 +36,8 @@ class CountryBottomSheet extends StatelessWidget {
               shrinkWrap: true,
               itemCount: c.countries.length,
               itemBuilder: (context, index) {
-                // var country = c.countryData[index];
-                // var countryName = country.entries.first.value;
                 var country = c.countries[index];
+                print("----country---${country}");
 
                 return ListTile(
                   onTap: () {

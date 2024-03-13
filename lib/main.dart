@@ -13,6 +13,7 @@ void main() async {
   Get.put(CoreController());
   runApp(const SNStayApp());
 }
+//TODO: network check if connection is or not
 
 class SNStayApp extends StatelessWidget {
   const SNStayApp({super.key});

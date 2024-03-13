@@ -16,6 +16,8 @@ class IconPath {
   static const String list = "$basePath/list.svg";
   static const String info = "$basePath/info.svg";
   static const String check = "$basePath/check.svg";
+  static const String minus = "$basePath/minus.svg";
+  static const String plus = "$basePath/plus.svg";
 
   //Bottom Nav Icons
   static const String home = "$basePath/home.svg";
