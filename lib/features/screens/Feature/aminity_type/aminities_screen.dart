@@ -39,7 +39,7 @@ class AmenitiesScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return FeatureShimmer.AminitiesGrid();
+                  return FeatureShimmer.AmenitiesGrid();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
                     message: "Empty!!",

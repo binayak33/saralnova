@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:saralnova/core/model/feature_model/focusmodel.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 
@@ -59,15 +61,19 @@ class SkyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    FocusModel focusModel = Provider.of<FocusModel>(context);
+    // FocusNode focusNode = FocusNode();
     return TextFormField(
+      focusNode: focusModel.focusNode,
       onTapOutside: (event) {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
       },
+
+      
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      focusNode: focusNode,
       inputFormatters: inputFormatters,
       obscureText: obscureText,
       autofocus: autofocus!,
@@ -78,13 +84,20 @@ class SkyTextField extends StatelessWidget {
       keyboardType: textInputType,
       textInputAction: textInputAction,
       maxLines: 1,
-      validator: (validator != null) ? validator : null,
+      // validator: (validator != null) ? validator : null,
+      validator: (value) {
+        if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+          return null;
+        }
+      },
       controller: (controller != null) ? controller : null,
       // onChanged: (text) {
       //   if (onValueChange != null) {
       //     onValueChange!(text);
       //   }
       // },
+
+      
       onChanged: onValueChange,
       decoration: InputDecoration(
         label: showLable
@@ -257,6 +270,7 @@ class ContainerTextField extends StatelessWidget {
                     ),
                   ),
                 ),
+               
               ],
             ),
           );

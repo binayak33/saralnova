@@ -50,61 +50,52 @@ class AddRoomsScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  "Room Type",
-                  style: CustomTextStyles.f16W400(),
-                ),
-                SkyTextField(
+                ContainerTextField(
                   hint: "Select a type",
                   controller: c.roomTypeController,
                   textInputAction: TextInputAction.next,
                   textInputType: TextInputType.name,
                   readOnly: true,
-                  suffixIconPath: IconPath.down,
                   onTap: () {
                     c.openRoomTypeBottomSheet();
                   },
+                  icon: '',
+                  text: 'Room Type',
                 ),
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  "Room Title",
-                  style: CustomTextStyles.f16W400(),
-                ),
-                SkyTextField(
+
+                ContainerTextField(
                   hint: "Select a type",
                   controller: c.roomTitleController,
                   textInputAction: TextInputAction.next,
                   textInputType: TextInputType.name,
                   validator: (value) => Validator.validateEmpty(value!),
+                  icon: '',
+                  text: 'Room Title',
                 ),
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  "Room Status",
-                  style: CustomTextStyles.f16W400(),
-                ),
-                SkyTextField(
+
+                ContainerTextField(
                   hint: "Select status",
                   controller: c.roomStatusController,
                   textInputAction: TextInputAction.next,
                   textInputType: TextInputType.name,
-                  suffixIconPath: IconPath.down,
                   onTap: () {
                     c.showStatus();
                   },
                   readOnly: true,
+                  icon: '',
+                  text: 'Room Status',
                 ),
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  "Rate per night",
-                  style: CustomTextStyles.f16W400(),
-                ),
-                SkyTextField(
+
+                ContainerTextField(
                   hint: "Enter rate",
                   controller: c.rateController,
                   textInputAction: TextInputAction.next,
@@ -113,14 +104,16 @@ class AddRoomsScreen extends StatelessWidget {
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
                   ],
+                  icon: '',
+                  text: 'Rate per night',
                 ),
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  "Amenities",
-                  style: CustomTextStyles.f22W600(),
-                ),
+                // Text(
+                //   "Amenities",
+                //   style: CustomTextStyles.f22W600(),
+                // ),
                 Obx(() {
                   if (c.amenityController.amenitiesList.isNotEmpty) {
                     // var amenity;

@@ -37,7 +37,7 @@ class RoomTypeScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return FeatureShimmer.roomTypeGrid();
+                  return FeatureShimmer.RoomTypeGrid();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   // return Center(
                   //   child: Text("Empty"),

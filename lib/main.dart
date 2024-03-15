@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
+import 'package:saralnova/core/model/feature_model/focusmodel.dart';
 
 import 'core/controllers/Splash/core_controller.dart';
 import 'core/utils/config/pages.dart';
@@ -11,7 +13,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   Get.put(CoreController());
-  runApp(const SNStayApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => FocusModel()),
+      ],
+      child: const SNStayApp(),
+    ),
+  );
 }
 
 class SNStayApp extends StatelessWidget {
