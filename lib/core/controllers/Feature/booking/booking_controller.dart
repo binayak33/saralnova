@@ -378,18 +378,35 @@ class BookingController extends GetxController {
   }
 
   final RxInt _currentIndex = 0.obs;
+  RxBool currentIndexEnabled = RxBool(false);
 
   int get currentIndex => _currentIndex.value;
   changeIndex(int value) {
-    pageController.jumpToPage(value);
+    pageController.animateToPage(
+      value,
+      duration: const Duration(
+        milliseconds: 200,
+      ),
+      curve: Curves.easeInOutCubicEmphasized,
+    );
     _currentIndex.value = value;
   }
 
-  onNext() {
-    if (currentIndex >= 0 && currentIndex < 3) {
-      _currentIndex.value += 1;
-      setActiveIndex(currentIndex);
-      changeIndex(currentIndex);
+  // onNext() {
+  //   if (currentIndex >= 0 && currentIndex < 3) {
+  //     _currentIndex.value += 1;
+  //     setActiveIndex(currentIndex);
+  //     changeIndex(currentIndex);
+  //   }
+  // }
+  void onNext() {
+    switch (currentIndex) {
+      case 0:
+        if (dateRoomKey.currentState!.validate()) {
+          _currentIndex.value++;
+          changeIndex(currentIndex);
+          currentIndexEnabled.value = true;
+        }
     }
   }
 

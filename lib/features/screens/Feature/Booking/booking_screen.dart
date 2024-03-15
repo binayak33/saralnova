@@ -71,10 +71,13 @@ class BookingScreen extends StatelessWidget {
                       iconWidget: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                            color: //TODO active value ko color when the first form is validated then make color primary else dark
-                                c.bookingState.value == BookingState.DATEROOMS
-                                    ? AppColors.primary
-                                    : AppColors.borderColor,
+                            // color: //TODO active value ko color when the first form is validated then make color primary else dark
+                            //     c.bookingState.value == BookingState.DATEROOMS
+                            //         ? AppColors.primary
+                            //         : AppColors.borderColor,
+                            color: c.currentIndex >= 0
+                                ? AppColors.primary
+                                : AppColors.borderColor,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
                         child: SvgPicture.asset(IconPath.calendar),
@@ -89,11 +92,17 @@ class BookingScreen extends StatelessWidget {
                       iconWidget: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                            color: c.bookingState.value == BookingState.OPTIONS
-                                ? AppColors.primary
-                                : AppColors.borderColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
+                          // color: c.bookingState.value == BookingState.OPTIONS
+                          //     ? AppColors.primary
+                          //     : AppColors.borderColor,
+
+                          color: c.currentIndex >= 1
+                              ? AppColors.primary
+                              : AppColors.borderColor,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
                         child: SvgPicture.asset(IconPath.list),
                       )),
                   StepperData(
@@ -106,10 +115,9 @@ class BookingScreen extends StatelessWidget {
                       iconWidget: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                            color:
-                                c.bookingState.value == BookingState.INFORMATION
-                                    ? AppColors.primary
-                                    : AppColors.borderColor,
+                            color: c.currentIndex >= 2
+                                ? AppColors.primary
+                                : AppColors.borderColor,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
                         child: SvgPicture.asset(IconPath.info),
@@ -124,7 +132,7 @@ class BookingScreen extends StatelessWidget {
                       iconWidget: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                            color: c.bookingState.value == BookingState.CONFIRM
+                            color: c.currentIndex >= 3
                                 ? AppColors.primary
                                 : AppColors.borderColor,
                             borderRadius:
@@ -153,7 +161,6 @@ class BookingScreen extends StatelessWidget {
             ),
             Expanded(
               child: SizedBox(
-                // height: Get.height,
                 width: Get.width,
                 child: PageView(
                   controller: c.pageController,
