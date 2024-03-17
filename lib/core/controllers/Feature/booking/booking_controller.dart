@@ -9,6 +9,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../features/widgets/common_widgets/loading_dialog.dart';
 import '../../../../features/widgets/common_widgets/sky_snack_bar.dart';
+import '../../../model/feature_model/facility_model.dart';
 import '../../../model/feature_model/room_type_model.dart';
 import '../../../model/rooms_model.dart';
 import '../../../repo/feature_repo/booking_repo.dart';
@@ -18,6 +19,18 @@ enum BookingState { DATEROOMS, OPTIONS, INFORMATION, CONFIRM }
 enum PageState { EMPTY, LOADING, NORMAL, ERROR }
 
 class BookingController extends GetxController {
+  //universal states and variables
+  final dateRoomKey = GlobalKey<FormState>();
+  final informationFormKey = GlobalKey<FormState>();
+  var bookingState = BookingState.DATEROOMS.obs;
+  var pageState = PageState.EMPTY.obs;
+  PageController pageController = PageController();
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
   List<CountryModel> countries = [
     {'key': 'AF', 'country': 'Afghanistan'},
     {'key': 'AX', 'country': 'Åland Islands'},
@@ -279,35 +292,10 @@ class BookingController extends GetxController {
     );
   }).toList();
 
-  openCountryBottomSheet() async {
-    showModalBottomSheet(
-        isScrollControlled: true,
-        context: Get.context!,
-        builder: (context) {
-          return Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
-            child: CountryBottomSheet(
-              onSelectCountry: (country) {
-                countryController.text = country.countryName.toString();
-
-                this.country.value = country;
-                // if (crudState.value == CRUDSTATE.UPDATE) {
-                //   updateIndex.value = roomType.id;
-                // }
-              },
-            ),
-          );
-        });
-  }
-
-  var bookingState = BookingState.DATEROOMS.obs;
-  var pageState = PageState.EMPTY.obs;
-  PageController pageController = PageController();
+  //date & forms screen index variables,sheets,lists
 
   final roomTypeController = TextEditingController();
-  final countryController = TextEditingController();
+
   RxInt guestNumber = RxInt(1);
 
   onIncrement() {
@@ -321,37 +309,6 @@ class BookingController extends GetxController {
       guestNumber.value -= 1;
     }
   }
-
-  setActiveIndex(int index) {
-    switch (index) {
-      case 0:
-        bookingState.value = BookingState.DATEROOMS;
-        break;
-      case 1:
-        bookingState.value = BookingState.OPTIONS;
-        break;
-      case 2:
-        bookingState.value = BookingState.INFORMATION;
-        break;
-      default:
-        bookingState.value = BookingState.CONFIRM;
-        break;
-    }
-  }
-
-  // onNext() {
-  //   if (activeIndex.value >= 0 && activeIndex.value < 3) {
-  //     activeIndex.value += 1;
-  //     setActiveIndex(activeIndex.value);
-  //   }
-  // }
-
-  // onBack() {
-  //   if (activeIndex.value > 0 && activeIndex.value <= 3) {
-  //     activeIndex.value -= 1;
-  //     setActiveIndex(activeIndex.value);
-  //   }
-  // }
 
   Rxn<RoomType> roomType = Rxn();
   openRoomTypeBottomSheet() async {
@@ -392,13 +349,15 @@ class BookingController extends GetxController {
     _currentIndex.value = value;
   }
 
-  // onNext() {
-  //   if (currentIndex >= 0 && currentIndex < 3) {
-  //     _currentIndex.value += 1;
-  //     setActiveIndex(currentIndex);
-  //     changeIndex(currentIndex);
-  //   }
-  // }
+  onBack() {
+    if (currentIndex > 0 && currentIndex <= 3) {
+      print('---------current Index-------${currentIndex}');
+      _currentIndex.value -= 1;
+      // setActiveIndex(activeIndex.value);
+      changeIndex(currentIndex);
+    }
+  }
+
   void onNext() {
     switch (currentIndex) {
       case 0:
@@ -407,18 +366,28 @@ class BookingController extends GetxController {
           changeIndex(currentIndex);
           currentIndexEnabled.value = true;
         }
+      case 1:
+        _currentIndex.value++;
+        changeIndex(currentIndex);
+        currentIndexEnabled.value = true;
+      case 2:
+        if (informationFormKey.currentState!.validate()) {
+          _currentIndex.value++;
+          changeIndex(currentIndex);
+          currentIndexEnabled.value = true;
+        }
+      case 3:
+        _currentIndex.value++;
+        changeIndex(currentIndex);
+      // currentIndexEnabled.value = true;
     }
   }
-
-  Rxn<CountryModel> country = Rxn();
 
   void onsubmit() async {
     // print(country.value?.key);
     // print(country.value?.countryName);
 
     // ---------------------------print dates
-    print("--page state----${pageState.value}");
-    print("list-----${availableRoomList}");
     // print("--strtdate-----${startFromDate.value}");
 
     // print("--enddate-----${endToDate.value}");
@@ -462,7 +431,6 @@ class BookingController extends GetxController {
   ];
 
   //open calanader bottom sheet
-
   RxString selectedDate = RxString("");
   RxString dateCount = RxString("");
   RxString range = RxString("");
@@ -507,9 +475,9 @@ class BookingController extends GetxController {
   }
 
   //search available rooms
-  // RxBool isVisible = RxBool(false);
   RxList<Rooms> availableRoomList = RxList();
-  final dateRoomKey = GlobalKey<FormState>();
+  RxList<Rooms> bookedRoomList = RxList();//rooms that are selected from available sheets
+  
   final LogoLoading loading = LogoLoading();
   void getAvailableRooms() async {
     if (dateRoomKey.currentState!.validate()) {
@@ -543,6 +511,41 @@ class BookingController extends GetxController {
         },
       );
     }
+  }
+
+  //options screen index
+
+  RxList<Facility> facilitiesList = RxList(); //TODO yesko id matra pathaune
+
+  //Information screen Index :
+  final nameController = TextEditingController();
+  final contactController = TextEditingController();
+  final emailController = TextEditingController();
+  final addressController = TextEditingController();
+  Rxn<CountryModel> country = Rxn();
+  final countryController = TextEditingController();
+
+  openCountryBottomSheet() async {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: Get.context!,
+        builder: (context) {
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: CountryBottomSheet(
+              onSelectCountry: (country) {
+                countryController.text = country.countryName.toString();
+
+                this.country.value = country;
+                // if (crudState.value == CRUDSTATE.UPDATE) {
+                //   updateIndex.value = roomType.id;
+                // }
+              },
+            ),
+          );
+        });
   }
 }
 

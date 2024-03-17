@@ -147,22 +147,25 @@ class DateRoomScreen extends StatelessWidget {
                         ),
                         itemBuilder: (context, index) {
                           var availableRoom = c.availableRoomList[index];
-                          return Container(
-                            padding: const EdgeInsets.all(6),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColors.primary,
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                10,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                availableRoom.title ?? "",
-                                style: CustomTextStyles.f14W600(
-                                    color: AppColors.primary),
-                              ),
+
+                          return Obx(
+                            () => AvailableRoomBox(
+                              title: availableRoom.title,
+                              value: c.bookedRoomList.contains(availableRoom),
+                              onTap: () {
+                                if (c.bookedRoomList != null &&
+                                    c.bookedRoomList.contains(availableRoom)) {
+                                  c.bookedRoomList.remove(availableRoom);
+                                } else {
+                                  c.bookedRoomList.add(availableRoom);
+                                }
+                                // c.bookedRoomList.add(availableRoom);
+                                // c.availableRoomList.clear();
+                                // c.bookedRoomList.clear();
+
+                                print(
+                                    "-----booked room------${c.bookedRoomList}");
+                              },
                             ),
                           );
                         }),
@@ -170,11 +173,57 @@ class DateRoomScreen extends StatelessWidget {
                 ),
               );
             } else {
-              return Text("No available rooms");
+              return const Text("No available rooms");
               //TODO No Available rooms  error svg pictrue
             }
           }),
         ],
+      ),
+    );
+  }
+}
+
+class AvailableRoomBox extends StatelessWidget {
+  final String? title;
+  // final void Function(Rooms room)? onTap;
+  final void Function()? onTap;
+  final bool? value;
+  const AvailableRoomBox({
+    super.key,
+    required this.title,
+    this.onTap,
+    this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      // onTap: () {
+      //   if (onTap != null && value == true) {
+      //     onTap!(room);
+      //   }
+      // },
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: value == true ? AppColors.primary : AppColors.scaffoldColor,
+          border: Border.all(
+            color: value == true ? Colors.transparent : AppColors.primary,
+          ),
+          borderRadius: BorderRadius.circular(
+            10,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            title ?? "",
+            style: CustomTextStyles.f14W600(
+                color: value == true
+                    ? AppColors.scaffoldColor
+                    : AppColors.primary),
+          ),
+        ),
       ),
     );
   }

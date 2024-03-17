@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/booking/booking_controller.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
+import 'package:saralnova/features/screens/Feature/Booking/book_success_screen.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_confirm_screen.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_dateRoom_screen.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_information_screen.dart';
@@ -55,9 +56,8 @@ class BookingScreen extends StatelessWidget {
 
                 iconWidth: 40,
                 iconHeight: 40,
-                // activeIndex: c.activeIndex.value,
                 activeIndex: c.currentIndex,
-                verticalGap: 25,
+                // verticalGap: 25,
                 inActiveBarColor: AppColors.borderColor,
                 // stepperList: c.stepperData,
                 stepperList: [
@@ -71,10 +71,6 @@ class BookingScreen extends StatelessWidget {
                       iconWidget: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                            // color: //TODO active value ko color when the first form is validated then make color primary else dark
-                            //     c.bookingState.value == BookingState.DATEROOMS
-                            //         ? AppColors.primary
-                            //         : AppColors.borderColor,
                             color: c.currentIndex >= 0
                                 ? AppColors.primary
                                 : AppColors.borderColor,
@@ -92,10 +88,6 @@ class BookingScreen extends StatelessWidget {
                       iconWidget: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          // color: c.bookingState.value == BookingState.OPTIONS
-                          //     ? AppColors.primary
-                          //     : AppColors.borderColor,
-
                           color: c.currentIndex >= 1
                               ? AppColors.primary
                               : AppColors.borderColor,
@@ -142,20 +134,6 @@ class BookingScreen extends StatelessWidget {
                 ],
               ),
             ),
-            // Obx(() {
-            //   switch (c.bookingState.value) {
-            //     case BookingState.DATEROOMS:
-            //       return DateRoomScreen();
-            //     case BookingState.OPTIONS:
-            //       return OptionsScreen();
-            //     case BookingState.INFORMATION:
-            //       return InformationScreen();
-            //     case BookingState.CONFIRM:
-            //       return ConfirmScreen();
-            //     default:
-            //       return Container(); // Handle default case
-            //   }
-            // }),
             const SizedBox(
               height: 10,
             ),
@@ -164,14 +142,16 @@ class BookingScreen extends StatelessWidget {
                 width: Get.width,
                 child: PageView(
                   controller: c.pageController,
+                  physics: NeverScrollableScrollPhysics(),
                   onPageChanged: (value) {
-                    c.changeIndex(value);
+                    c.changeIndex(value); //TODO validate when swipe
                   },
                   children: [
                     DateRoomScreen(),
                     OptionsScreen(),
                     InformationScreen(),
                     ConfirmScreen(),
+                    BookSuccessScreen()
                   ],
                 ),
               ),
@@ -212,6 +192,25 @@ class BookingScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            // if (c.currentIndex > 0)
+            //   Flexible(
+
+            Obx(() {
+              if (c.currentIndex > 0 && c.currentIndex <= 3) {
+                return Flexible(
+                  child: SkyElevatedButton(
+                    height: 30,
+                    onPressed: () {
+                      c.onBack();
+                    },
+                    title: "Back",
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
+            }),
             const SizedBox(
               width: 10,
             ),

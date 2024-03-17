@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/booking/booking_controller.dart';
+import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 
 class ConfirmScreen extends StatelessWidget {
-  final c = Get.put(BookingController());
+  // final c = Get.put(BookingController());
+  final c = Get.find<BookingController>();
   ConfirmScreen({super.key});
 
   @override
@@ -14,30 +16,44 @@ class ConfirmScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ListView.separated(
-          //     physics: const NeverScrollableScrollPhysics(),
-          //     itemCount: 14,
-          //     shrinkWrap: true,
-          //     scrollDirection: Axis.vertical,
-          //     separatorBuilder: (context, index) {
-          //       return const SizedBox(
-          //         height: 10,
-          //       );
-          //     },
-          //     itemBuilder: (context, index) {
-          //       return OptionsListTile(
-          //         title: "Breakfast 200",
-          //       );
-          //     })
-
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Check-In : 2024-02-28"),
-              Text("Check-Out : 2024-02-28")
-            ],
+          const Divider(
+            color: AppColors.blackColor,
+            height: 20,
+            // endIndent: 10,
+            // indent: 10,
           ),
-
+          Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                RichText(
+                  text: TextSpan(
+                      text: 'Check-In: ',
+                      style: CustomTextStyles.f14W400(),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: ' ${c.startFromDate.toString()}',
+                          style: CustomTextStyles.f16W600(),
+                        )
+                      ]),
+                ),
+                RichText(
+                  text: TextSpan(
+                      text: 'Check-Out: ',
+                      style: CustomTextStyles.f14W400(),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: ' ${c.endToDate.toString()}',
+                          style: CustomTextStyles.f16W600(),
+                        )
+                      ]),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
           Text(
             "Booking Summary",
             style: CustomTextStyles.f16W500(),

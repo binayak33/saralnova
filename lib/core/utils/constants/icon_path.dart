@@ -34,4 +34,5 @@ class IconPath {
   // vectors imgs
   static const String somethingWentWrong = "$basePath/somethingWentWrong.svg";
   static const String empty = "$basePath/Empty.svg";
+  static const String successBook = "$basePath/success_book.svg";
 }

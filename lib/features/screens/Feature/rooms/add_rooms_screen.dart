@@ -65,7 +65,8 @@ class AddRoomsScreen extends StatelessWidget {
                   style: CustomTextStyles.f16W400(),
                 ),
                 SkyTextField(
-                  hint: "Select a type",
+                  hint:
+                      "Room Title", //TODO room title should not have more than 12 characters because it does overflow in available rooms screen
                   controller: c.roomTitleController,
                   textInputAction: TextInputAction.next,
                   textInputType: TextInputType.name,

@@ -1,8 +1,20 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:saralnova/core/controllers/Feature/booking/booking_controller.dart';
+import 'package:saralnova/core/controllers/Feature/facility/facility_controller.dart';
+import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
+import 'package:saralnova/core/utils/helpers/log_helper.dart';
+
+import '../../../../core/utils/constants/icon_path.dart';
+import '../../../widgets/common_widgets/empty_view.dart';
 
 class OptionsScreen extends StatelessWidget {
-  const OptionsScreen({super.key});
+  final facilityController = Get.find<FacilityController>();
+  final bookingController = Get.find<BookingController>();
+  OptionsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,21 +23,45 @@ class OptionsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 14,
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              separatorBuilder: (context, index) {
-                return const SizedBox(
-                  height: 10,
-                );
-              },
-              itemBuilder: (context, index) {
-                return OptionsListTile(
-                  title: "Breakfast 200",
-                );
-              })
+          Obx(() {
+            if (facilityController.facilitiesList.isNotEmpty) {
+              return ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: facilityController.facilitiesList.length,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 10,
+                  );
+                },
+                itemBuilder: (context, index) {
+                  var facility = facilityController.facilitiesList[index];
+
+                  return Obx(() => OptionsListTile(
+                        title: facility.title.toString(),
+                        value:
+                            bookingController.facilitiesList.contains(facility),
+                        onChange: (value) {
+                          log("${bookingController.facilitiesList}");
+                          if (value != null && value) {
+                            bookingController.facilitiesList.add(facility);
+                          } else {
+                            bookingController.facilitiesList.remove(facility);
+                          }
+                        },
+                      ));
+                },
+              );
+            } else {
+              return EmptyView(
+                message: "Empty!!",
+                title: "Empty",
+                media: IconPath.empty,
+                mediaSize: 500,
+              );
+            }
+          })
         ],
       ),
     );
@@ -34,24 +70,46 @@ class OptionsScreen extends StatelessWidget {
 
 class OptionsListTile extends StatelessWidget {
   final String title;
+  final bool value;
+  final void Function(bool?)? onChange;
 
   const OptionsListTile({
     super.key,
     required this.title,
+    required this.value,
+    this.onChange,
   });
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Card(
       child: ListTile(
         title: Text(
           title,
           style: CustomTextStyles.f14W400(),
         ),
-        trailing: Radio(
-          value: "1",
-          groupValue: "1",
-          onChanged: (value) {},
+        trailing: Checkbox(
+          visualDensity: VisualDensity.comfortable,
+          value: value,
+          side: MaterialStateBorderSide.resolveWith(
+            (states) => BorderSide(
+              color: value
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.onSurfaceVariant,
+              strokeAlign: 5,
+              width: .8,
+            ),
+          ),
+          fillColor: MaterialStateColor.resolveWith(
+            (states) => theme.primaryColor,
+          ),
+          activeColor: AppColors.primary,
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+          onChanged: onChange,
         ),
       ),
     );

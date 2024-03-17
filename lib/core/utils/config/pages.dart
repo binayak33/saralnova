@@ -101,6 +101,7 @@ final List<GetPage> pages = [
     page: () => BookingScreen(),
     binding: BindingsBuilder(() {
       Get.lazyPut(() => BookingController());
+      Get.lazyPut(() => FacilityController());
     }),
   ),
   // GetPage(
