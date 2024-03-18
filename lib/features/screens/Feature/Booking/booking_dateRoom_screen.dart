@@ -156,12 +156,11 @@ class DateRoomScreen extends StatelessWidget {
                                 if (c.bookedRoomList != null &&
                                     c.bookedRoomList.contains(availableRoom)) {
                                   c.bookedRoomList.remove(availableRoom);
+                                  c.calculateEstimatedCost();
                                 } else {
                                   c.bookedRoomList.add(availableRoom);
+                                  c.calculateEstimatedCost();
                                 }
-                                // c.bookedRoomList.add(availableRoom);
-                                // c.availableRoomList.clear();
-                                // c.bookedRoomList.clear();
 
                                 print(
                                     "-----booked room------${c.bookedRoomList}");
@@ -185,7 +184,6 @@ class DateRoomScreen extends StatelessWidget {
 
 class AvailableRoomBox extends StatelessWidget {
   final String? title;
-  // final void Function(Rooms room)? onTap;
   final void Function()? onTap;
   final bool? value;
   const AvailableRoomBox({
@@ -198,11 +196,7 @@ class AvailableRoomBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () {
-      //   if (onTap != null && value == true) {
-      //     onTap!(room);
-      //   }
-      // },
+      
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(6),

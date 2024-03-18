@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +27,8 @@ class BookingController extends GetxController {
   var bookingState = BookingState.DATEROOMS.obs;
   var pageState = PageState.EMPTY.obs;
   PageController pageController = PageController();
+
+  RxInt estimatedCost = RxInt(0);
 
   @override
   void onInit() {
@@ -351,7 +355,6 @@ class BookingController extends GetxController {
 
   onBack() {
     if (currentIndex > 0 && currentIndex <= 3) {
-      print('---------current Index-------${currentIndex}');
       _currentIndex.value -= 1;
       // setActiveIndex(activeIndex.value);
       changeIndex(currentIndex);
@@ -361,10 +364,13 @@ class BookingController extends GetxController {
   void onNext() {
     switch (currentIndex) {
       case 0:
-        if (dateRoomKey.currentState!.validate()) {
+        if (dateRoomKey.currentState!.validate() && bookedRoomList.isNotEmpty) {
           _currentIndex.value++;
           changeIndex(currentIndex);
           currentIndexEnabled.value = true;
+        } else {
+          SkySnackBar.error(
+              title: "Booking", message: "Please select the available rooms");
         }
       case 1:
         _currentIndex.value++;
@@ -384,23 +390,9 @@ class BookingController extends GetxController {
   }
 
   void onsubmit() async {
-    // print(country.value?.key);
-    // print(country.value?.countryName);
-
-    // ---------------------------print dates
-    // print("--strtdate-----${startFromDate.value}");
-
-    // print("--enddate-----${endToDate.value}");
-
-    // print("00000000000000");
-    // print("--selectedDate-----${selectedDate.value}");
-    // print("--dateCount-----${dateCount.value}");
-    // print("--range-----${range.value}");
-    // print("--rangeCount-----${rangeCount.value}");
-
-    // print("---roomType----${roomType.value}");
-    // print("---roomType--id--${roomType.value?.id}");
-    // print("---roomType--txt--${roomTypeController.text}");
+    print(bookedRoomList);
+    print("---start date---- ${startFromDate}");
+    print("---end date---- ${endToDate}");
   }
 
   List<Country>? dataList = [
@@ -439,6 +431,27 @@ class BookingController extends GetxController {
   RxString endToDate = RxString("");
   final checkInOutRangeController = TextEditingController();
 
+  int? daysCount;
+
+  int calculateDaysCount() {
+    DateTime startDate = DateTime.parse(startFromDate.value);
+    DateTime endDate = DateTime.parse(endToDate.value);
+    daysCount = endDate.difference(startDate).inDays;
+    log("-----------Days count-------------${daysCount}");
+    return daysCount ?? 0;
+  }
+
+  int calculateEstimatedCost() {
+    calculateDaysCount();
+    estimatedCost.value = 0; // Reset estimatedCost to 0
+
+    for (Rooms room in bookedRoomList) {
+      estimatedCost.value += (room.rate ?? 0) * (daysCount ?? 0);
+    }
+
+    return estimatedCost.value;
+  }
+
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     if (args.value is PickerDateRange) {
       DateTime startDate = args.value.startDate;
@@ -476,8 +489,9 @@ class BookingController extends GetxController {
 
   //search available rooms
   RxList<Rooms> availableRoomList = RxList();
-  RxList<Rooms> bookedRoomList = RxList();//rooms that are selected from available sheets
-  
+  RxList<Rooms> bookedRoomList =
+      RxList(); //rooms that are selected from available sheets
+
   final LogoLoading loading = LogoLoading();
   void getAvailableRooms() async {
     if (dateRoomKey.currentState!.validate()) {

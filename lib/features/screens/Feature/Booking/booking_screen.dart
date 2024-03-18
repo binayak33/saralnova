@@ -38,7 +38,7 @@ class BookingScreen extends StatelessWidget {
               onPressed: () {
                 c.onsubmit();
               },
-              icon: Icon(Icons.add))
+              icon: const Icon(Icons.add))
         ],
       ),
       body: Padding(
@@ -184,9 +184,12 @@ class BookingScreen extends StatelessWidget {
                       style:
                           CustomTextStyles.f16W500(color: AppColors.blackColor),
                     ),
-                    Text(
-                      "Rs.3000",
-                      style: CustomTextStyles.f16W600(color: AppColors.primary),
+                    Obx(
+                      () => Text(
+                        "Rs. ${c.estimatedCost}",
+                        style:
+                            CustomTextStyles.f16W600(color: AppColors.primary),
+                      ),
                     ),
                   ],
                 ),
