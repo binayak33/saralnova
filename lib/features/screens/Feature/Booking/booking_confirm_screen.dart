@@ -11,6 +11,8 @@ class ConfirmScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int index = 0;
+
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
       child: Column(
@@ -58,6 +60,9 @@ class ConfirmScreen extends StatelessWidget {
             "Booking Summary",
             style: CustomTextStyles.f16W500(),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           SizedBox(
             width: double.infinity,
             child: DataTable(
@@ -67,50 +72,59 @@ class ConfirmScreen extends StatelessWidget {
               columnSpacing: 10,
               columns: const [
                 DataColumn(
-                  label: Text("S.N"),
+                  label: Expanded(child: Center(child: Text("S.N"))),
                 ),
                 DataColumn(
-                  label: Text("Country"),
+                  label: Expanded(
+                      child: Center(child: Text("Room Title(x Days)"))),
                 ),
                 DataColumn(
-                  label: Text("Rate"),
+                  label: Expanded(child: Center(child: Text("Rate"))),
                 ),
                 DataColumn(
-                  label: Text("Total"),
+                  label: Expanded(child: Center(child: Text("Total"))),
                 ),
               ],
-              rows: (c.dataList ?? [])
-                  .map(
-                    (data) => DataRow(
-                      cells: [
-                        DataCell(Container(
-                          width: 10,
-                          child: Text(
-                            "1",
-                          ),
-                        )),
-                        DataCell(Container(
-                          width: 100,
-                          child: Text(
-                            data.country,
-                          ),
-                        )),
-                        DataCell(Container(
-                          width: 50,
-                          child: Text(
-                            data.totalDeaths.toString(),
-                          ),
-                        )),
-                        DataCell(Container(
-                          width: 30,
-                          child: Text(
-                            data.totalConfirmed.toString(),
-                          ),
-                        )),
-                      ],
+              rows: (c.bookedRoomList ?? []).asMap().entries.map((entry) {
+                final index = entry.key + 1;
+                final room = entry.value;
+                return DataRow(
+                  cells: [
+                    DataCell(
+                      SizedBox(
+                        width: 10,
+                        child: Text(
+                          index.toString(),
+                        ),
+                      ),
                     ),
-                  )
-                  .toList(),
+                    DataCell(
+                      SizedBox(
+                        width: 100,
+                        child: Text(
+                          '${room.title}',
+                        ),
+                      ),
+                    ),
+                    DataCell(
+                      SizedBox(
+                        width: 50,
+                        child: Text(
+                          '${room.rate ?? 0}',
+                        ),
+                      ),
+                    ),
+                    DataCell(
+                      SizedBox(
+                        width: 30,
+                        child: Text(
+                          '${((room.rate) * (c.daysCount))}',
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }).toList(),
             ),
           ),
           const SizedBox(
@@ -119,7 +133,104 @@ class ConfirmScreen extends StatelessWidget {
           Text(
             "Options Summary",
             style: CustomTextStyles.f16W500(),
-          )
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                sortColumnIndex: 1,
+                showCheckboxColumn: false,
+                border: TableBorder.all(width: 1),
+                columnSpacing: 10,
+                columns: const [
+                  DataColumn(
+                    label: Expanded(
+                        child: Center(
+                            child: Text("S.N", textAlign: TextAlign.center))),
+                  ),
+                  DataColumn(
+                    label: Expanded(
+                        child: Center(
+                            child: Text("Title(x Days)",
+                                textAlign: TextAlign.center))),
+                  ),
+                  DataColumn(
+                    label: Expanded(
+                        child: Center(
+                            child: Text("Rate", textAlign: TextAlign.center))),
+                  ),
+                  DataColumn(
+                    label: Expanded(
+                        child: Center(
+                            child: Text("Guest No.",
+                                textAlign: TextAlign.center))),
+                  ),
+                  DataColumn(
+                    label: Expanded(
+                        child: Center(
+                            child: Text("Total", textAlign: TextAlign.center))),
+                  ),
+                ],
+                rows: (c.facilitiesList ?? []).asMap().entries.map((entry) {
+                  final index = entry.key + 1;
+                  final facility = entry.value;
+                  return DataRow(
+                    cells: [
+                      DataCell(
+                        SizedBox(
+                          width: 10,
+                          child: Text(
+                            index.toString(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SizedBox(
+                          width: 100,
+                          child: Text(
+                            '${facility.title}',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SizedBox(
+                          width: 50,
+                          child: Text(
+                            '${facility.price ?? 0}',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SizedBox(
+                          width: 50,
+                          child: Text(
+                            '${c.guestNumber}',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        SizedBox(
+                          width: 30,
+                          child: Text(
+                            '${(facility.price) * (c.daysCount)}',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
         ],
       ),
     );

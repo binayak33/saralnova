@@ -64,7 +64,6 @@ class Api {
   //---------booking
   static String searchAvailableRooms =
       "$apiBaseUrl/hotel-booking/get-available-rooms";
-  // static String storeStaffs = "$apiBaseUrl/staffs/store";
-  // static String updateStaffs = "$apiBaseUrl/staffs/update";
-  // static String deleteStaffs = "$apiBaseUrl/staffs/delete";
+  static String createHotelBooking =
+      "$apiBaseUrl/hotel-booking/bookings/create";
 }

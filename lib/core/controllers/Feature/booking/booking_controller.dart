@@ -12,6 +12,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../../../../features/widgets/common_widgets/loading_dialog.dart';
 import '../../../../features/widgets/common_widgets/sky_snack_bar.dart';
 import '../../../model/feature_model/facility_model.dart';
+import '../../../model/feature_model/request_model/store_request_model.dart';
 import '../../../model/feature_model/room_type_model.dart';
 import '../../../model/rooms_model.dart';
 import '../../../repo/feature_repo/booking_repo.dart';
@@ -368,59 +369,41 @@ class BookingController extends GetxController {
           _currentIndex.value++;
           changeIndex(currentIndex);
           currentIndexEnabled.value = true;
+          // calculateDaysCount();
         } else {
           SkySnackBar.error(
               title: "Booking", message: "Please select the available rooms");
         }
+        break;
+
       case 1:
         _currentIndex.value++;
         changeIndex(currentIndex);
         currentIndexEnabled.value = true;
+        break;
+
       case 2:
         if (informationFormKey.currentState!.validate()) {
           _currentIndex.value++;
           changeIndex(currentIndex);
           currentIndexEnabled.value = true;
         }
-      case 3:
-        _currentIndex.value++;
-        changeIndex(currentIndex);
-      // currentIndexEnabled.value = true;
+        break;
+
+      case 3: // confirm screen(table wala)
+        // _currentIndex.value++;
+        // changeIndex(currentIndex);
+        // currentIndexEnabled.value = true;
+        // storeBooking(storeBookingModel);
+        storeBooking();
+
+        break;
     }
   }
 
   void onsubmit() async {
-    print(bookedRoomList);
-    print("---start date---- ${startFromDate}");
-    print("---end date---- ${endToDate}");
+    print("----bookedRooms----${bookedRoomList}");
   }
-
-  List<Country>? dataList = [
-    Country(
-      id: "1",
-      country: "Afghanistan",
-      totalConfirmed: 12345,
-      totalDeaths: 567,
-    ),
-    Country(
-      id: "2",
-      country: "Albania",
-      totalConfirmed: 45678,
-      totalDeaths: 890,
-    ),
-    Country(
-      id: "3",
-      country: "Algeria",
-      totalConfirmed: 78901,
-      totalDeaths: 234,
-    ),
-    Country(
-      id: "4",
-      country: "Andorra",
-      totalConfirmed: 23456,
-      totalDeaths: 678,
-    ),
-  ];
 
   //open calanader bottom sheet
   RxString selectedDate = RxString("");
@@ -430,27 +413,6 @@ class BookingController extends GetxController {
   RxString startFromDate = RxString("");
   RxString endToDate = RxString("");
   final checkInOutRangeController = TextEditingController();
-
-  int? daysCount;
-
-  int calculateDaysCount() {
-    DateTime startDate = DateTime.parse(startFromDate.value);
-    DateTime endDate = DateTime.parse(endToDate.value);
-    daysCount = endDate.difference(startDate).inDays;
-    log("-----------Days count-------------${daysCount}");
-    return daysCount ?? 0;
-  }
-
-  int calculateEstimatedCost() {
-    calculateDaysCount();
-    estimatedCost.value = 0; // Reset estimatedCost to 0
-
-    for (Rooms room in bookedRoomList) {
-      estimatedCost.value += (room.rate ?? 0) * (daysCount ?? 0);
-    }
-
-    return estimatedCost.value;
-  }
 
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     if (args.value is PickerDateRange) {
@@ -561,31 +523,103 @@ class BookingController extends GetxController {
           );
         });
   }
-}
 
-class Country {
-  final String id;
-  final String country;
-  final int totalConfirmed;
-  final int totalDeaths;
-  Country({
-    required this.id,
-    required this.country,
-    required this.totalConfirmed,
-    required this.totalDeaths,
-  });
+  int? daysCount;
 
-  factory Country.fromJson(Map<String, dynamic> json) => Country(
-        id: json["ID"],
-        country: json["Country"],
-        totalConfirmed: json["TotalConfirmed"],
-        totalDeaths: json["TotalDeaths"],
-      );
+  int calculateDaysCount() {
+    DateTime startDate = DateTime.parse(startFromDate.value);
+    DateTime endDate = DateTime.parse(endToDate.value);
+    daysCount = endDate.difference(startDate).inDays;
+    log("-----------Days count-------------${daysCount}");
+    return daysCount ?? 0;
+  }
 
-  Map<String, dynamic> toJson() => {
-        "ID": id,
-        "Country": country,
-        "TotalConfirmed": totalConfirmed,
-        "TotalDeaths": totalDeaths,
-      };
+  int calculateEstimatedCost() {
+    calculateDaysCount();
+    estimatedCost.value = 0; // Reset estimatedCost to 0
+
+    for (Rooms room in bookedRoomList) {
+      estimatedCost.value += (room.rate ?? 0) * (daysCount ?? 0);
+    }
+
+    for (Facility facility in facilitiesList) {
+      estimatedCost.value +=
+          ((facility.price ?? 0) * (guestNumber.value) * (daysCount ?? 0))
+              .toInt();
+      // (facility.price ?? 0) * (guestNumber.value) * (daysCount ?? 0);
+    }
+
+    return estimatedCost.value;
+  }
+
+  // void storeBooking(StoreBookingRequestModel? storeBookingModel) async {
+  //   BookingRepo.createBooking(
+  //       storeBookingmodel: storeBookingModel,
+  //       onSuccess: (booking) {
+  //         //TODO call get api while navigating
+  //         Get.offNamed(BookingScreen.routeName);
+  //       },
+  //       onError: (message) {
+  //         SkySnackBar.error(title: "Booking", message: message);
+  //       });
+  // }
+
+  void storeBooking() async {
+    List<int> facilityIds =
+        facilitiesList.map((facility) => int.parse(facility.id!)).toList();
+
+    List<int> roomIds =
+        bookedRoomList.map((room) => int.parse(room.id!)).toList();
+
+    // log("----ids----${facilityIds}");
+    log("----roomIds----${roomIds}");
+
+    loading.show();
+    StoreBookingRequestModel requestModel = StoreBookingRequestModel(
+      guestData: GuestData(
+        name: nameController.text,
+        contact: contactController.text,
+        email: emailController.text,
+        address: addressController.text,
+        nationality: countryController.text,
+        // citizenship: "6456211022",
+        // passport: "5631145655",
+        // purposeOfVisit: "Leisure",
+      ),
+      bookingData: BookingData(
+        checkin: startFromDate.value.toString(),
+        checkout: endToDate.value.toString(),
+        totalAmount: int.parse(estimatedCost.value.toString()),
+        // paidAmount: "012000",
+        // discount: "020",
+        // advanceAmount: 0,
+        // subtotal: 12347128,
+        // remainingAmount: 12335108,
+        // paymentStatus: "Partial",
+        // source: "none",
+        guestCount: int.parse(guestNumber.value.toString()),
+        // specialRequests: "Beautiful Beautiful",
+        // isPackage: 0,
+        // facilities: [9, 10],
+        facilities: facilityIds,
+      ),
+      // rooms: [4, 5],
+      rooms: roomIds,
+    );
+    BookingRepo.createBooking(
+        storeBookingmodel: requestModel,
+        onSuccess: (booking, message) {
+          //TODO call get api while navigating
+          // Get.offNamed(BookingScreen.routeName);
+          loading.hide();
+          _currentIndex.value++;
+          changeIndex(currentIndex);
+          SkySnackBar.error(title: "Booking", message: message);
+        },
+        onError: (message) {
+          loading.hide();
+
+          SkySnackBar.error(title: "Booking", message: message);
+        });
+  }
 }

@@ -6,7 +6,6 @@ import 'package:saralnova/core/controllers/Feature/booking/booking_controller.da
 import 'package:saralnova/core/controllers/Feature/facility/facility_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/helpers/log_helper.dart';
 
 import '../../../../core/utils/constants/icon_path.dart';
 import '../../../widgets/common_widgets/empty_view.dart';
@@ -38,19 +37,24 @@ class OptionsScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var facility = facilityController.facilitiesList[index];
 
-                  return Obx(() => OptionsListTile(
-                        title: facility.title.toString(),
-                        value:
-                            bookingController.facilitiesList.contains(facility),
-                        onChange: (value) {
-                          log("${bookingController.facilitiesList}");
-                          if (value != null && value) {
-                            bookingController.facilitiesList.add(facility);
-                          } else {
-                            bookingController.facilitiesList.remove(facility);
-                          }
-                        },
-                      ));
+                  return Obx(
+                    () => OptionsListTile(
+                      title: facility.title.toString(),
+                      price: facility.price.toString(),
+                      value:
+                          bookingController.facilitiesList.contains(facility),
+                      onChange: (value) {
+                        log("${bookingController.facilitiesList}");
+                        if (value != null && value) {
+                          bookingController.facilitiesList.add(facility);
+                          bookingController.calculateEstimatedCost();
+                        } else {
+                          bookingController.facilitiesList.remove(facility);
+                          bookingController.calculateEstimatedCost();
+                        }
+                      },
+                    ),
+                  );
                 },
               );
             } else {
@@ -70,12 +74,14 @@ class OptionsScreen extends StatelessWidget {
 
 class OptionsListTile extends StatelessWidget {
   final String title;
+  final String price;
   final bool value;
   final void Function(bool?)? onChange;
 
   const OptionsListTile({
     super.key,
     required this.title,
+    required this.price,
     required this.value,
     this.onChange,
   });
@@ -88,7 +94,11 @@ class OptionsListTile extends StatelessWidget {
       child: ListTile(
         title: Text(
           title,
-          style: CustomTextStyles.f14W400(),
+          style: CustomTextStyles.f18W500(),
+        ),
+        subtitle: Text(
+          "Rs. $price",
+          style: CustomTextStyles.f14W500(),
         ),
         trailing: Checkbox(
           visualDensity: VisualDensity.comfortable,

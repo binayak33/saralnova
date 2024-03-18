@@ -37,6 +37,7 @@ class BookingScreen extends StatelessWidget {
           IconButton(
               onPressed: () {
                 c.onsubmit();
+                c.storeBooking();
               },
               icon: const Icon(Icons.add))
         ],
@@ -217,15 +218,17 @@ class BookingScreen extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            Flexible(
-                child: Obx(
-              () => SkyElevatedButton(
-                  height: 30,
-                  onPressed: () {
-                    c.onNext();
-                  },
-                  title: c.currentIndex < 3 ? "Next" : "Book"),
-            )),
+
+            if (c.currentIndex != 4)
+              Flexible(
+                  child: Obx(
+                () => SkyElevatedButton(
+                    height: 30,
+                    onPressed: () {
+                      c.onNext();
+                    },
+                    title: c.currentIndex < 3 ? "Next" : "Book"),
+              )),
           ],
         ),
       ),
