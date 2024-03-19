@@ -2,10 +2,17 @@ import 'guest_model.dart';
 import 'payment_model.dart';
 import 'room_occupancies_model.dart';
 
+List<Booking> bookingsFromJson(List<dynamic> bookingsJson) =>
+    List<Booking>.from(
+      bookingsJson.map(
+        (bookingJson) => Booking.fromJson(bookingJson),
+      ),
+    );
+
 class Booking {
-  int? id;
-  int? vendorId;
-  int? guestId;
+  String? id;
+  String? vendorId;
+  String? guestId;
   String? checkin;
   String? checkout;
   int? totalAmount;
@@ -23,7 +30,7 @@ class Booking {
   String? updatedAt;
   String? status;
   String? cancelledAt;
-  int? isPackage;
+  // bool? isPackage;
   Payments? payments;
   // List<String>? extraPayments;//TODO fix this type
   Guest? guest;
@@ -50,16 +57,16 @@ class Booking {
       this.updatedAt,
       this.status,
       this.cancelledAt,
-      this.isPackage,
+      // this.isPackage,
       this.payments,
       // this.extraPayments,
       this.guest,
       this.roomOccupancies});
 
   Booking.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    vendorId = json['vendor_id'];
-    guestId = json['guest_id'];
+    id = json['id'].toString();
+    vendorId = json['vendor_id'].toString();
+    guestId = json['guest_id'].toString();
     checkin = json['checkin'];
     checkout = json['checkout'];
     totalAmount = json['total_amount'];
@@ -77,7 +84,7 @@ class Booking {
     updatedAt = json['updated_at'];
     status = json['status'];
     cancelledAt = json['cancelled_at'];
-    isPackage = json['is_package'];
+    // isPackage = json['is_package'];
     payments = json['payments'] != null
         ? new Payments.fromJson(json['payments'])
         : null;
@@ -87,7 +94,7 @@ class Booking {
     //     extraPayments!.add(new String.fromJson(v));
     //   });
     // }
-    guest = json['guest'] != null ? new Guest.fromJson(json['guest']) : null;
+    guest = json['guests'] != null ? new Guest.fromJson(json['guests']) : null;
     if (json['room_occupancies'] != null) {
       roomOccupancies = <RoomOccupancies>[];
       json['room_occupancies'].forEach((v) {
@@ -118,7 +125,7 @@ class Booking {
     data['updated_at'] = this.updatedAt;
     data['status'] = this.status;
     data['cancelled_at'] = this.cancelledAt;
-    data['is_package'] = this.isPackage;
+    // data['is_package'] = this.isPackage;
     if (this.payments != null) {
       data['payments'] = this.payments!.toJson();
     }
@@ -127,7 +134,7 @@ class Booking {
     //       this.extraPayments!.map((v) => v.toJson()).toList();
     // }
     if (this.guest != null) {
-      data['guest'] = this.guest!.toJson();
+      data['guests'] = this.guest!.toJson();
     }
     if (this.roomOccupancies != null) {
       data['room_occupancies'] =
@@ -136,4 +143,3 @@ class Booking {
     return data;
   }
 }
-

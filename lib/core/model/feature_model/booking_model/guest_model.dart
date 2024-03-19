@@ -1,6 +1,6 @@
 class Guest {
-  int? id;
-  int? vendorId;
+  String? id;
+  String? vendorId;
   String? name;
   String? contact;
   String? email;
@@ -33,8 +33,8 @@ class Guest {
       this.updatedAt});
 
   Guest.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    vendorId = json['vendor_id'];
+    id = json['id'].toString();
+    vendorId = json['vendor_id'].toString();
     name = json['name'];
     contact = json['contact'];
     email = json['email'];

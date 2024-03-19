@@ -13,6 +13,7 @@ import 'package:saralnova/core/controllers/Home/home_controller.dart';
 import 'package:saralnova/core/controllers/Splash/splash_controller.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_screen.dart';
+import 'package:saralnova/features/screens/Feature/Booking/create_booking_screen.dart';
 import 'package:saralnova/features/screens/Feature/aminity_type/aminities_screen.dart';
 import 'package:saralnova/features/screens/Feature/facility_type/facility_screen.dart';
 import 'package:saralnova/features/screens/Feature/room_type/room_type_screen.dart';
@@ -97,11 +98,19 @@ final List<GetPage> pages = [
   ),
 
   GetPage(
+    name: CreateBookingScreen.routeName,
+    page: () => CreateBookingScreen(),
+    binding: BindingsBuilder(() {
+      // Get.lazyPut(() => BookingController());
+      Get.lazyPut(() => FacilityController());
+    }),
+  ),
+  GetPage(
     name: BookingScreen.routeName,
     page: () => BookingScreen(),
     binding: BindingsBuilder(() {
       Get.lazyPut(() => BookingController());
-      Get.lazyPut(() => FacilityController());
+      // Get.lazyPut(() => FacilityController());
     }),
   ),
   // GetPage(

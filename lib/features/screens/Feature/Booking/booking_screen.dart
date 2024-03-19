@@ -1,19 +1,18 @@
-import 'package:another_stepper/dto/stepper_data.dart';
-import 'package:another_stepper/widgets/another_stepper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/booking/booking_controller.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/features/screens/Feature/Booking/book_success_screen.dart';
-import 'package:saralnova/features/screens/Feature/Booking/booking_confirm_screen.dart';
-import 'package:saralnova/features/screens/Feature/Booking/booking_dateRoom_screen.dart';
-import 'package:saralnova/features/screens/Feature/Booking/booking_information_screen.dart';
-import 'package:saralnova/features/screens/Feature/Booking/booking_options_screen.dart';
+import 'package:saralnova/core/utils/helpers/date_helper.dart';
+import 'package:saralnova/features/screens/Feature/Booking/create_booking_screen.dart';
+import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
+import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 
+import '../../../../core/model/feature_model/booking_model/booking_model.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/icon_path.dart';
-import '../../../widgets/common_widgets/sky_elevated_button.dart';
+import '../../../widgets/common_widgets/custom_alert_dialog.dart';
 
 class BookingScreen extends StatelessWidget {
   static const String routeName = "/booking-screen";
@@ -33,204 +32,338 @@ class BookingScreen extends StatelessWidget {
           "Booking",
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                c.onsubmit();
-                c.storeBooking();
-              },
-              icon: const Icon(Icons.add))
-        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        child: Column(
-          children: [
-            Obx(
-              () => AnotherStepper(
-                inverted: true,
-                key: UniqueKey(),
-                scrollPhysics: const NeverScrollableScrollPhysics(),
-                stepperDirection: Axis.horizontal,
-                barThickness: 2,
-                activeBarColor: AppColors.primary,
+      body: SingleChildScrollView(
+        controller: c.scrollController,
+        key: const PageStorageKey("Bookings"),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Obx(() {
+                if (c.pageState.value == PageState.LOADING) {
+                  return const Center(
+                    child: LinearProgressIndicator(),
+                  );
+                } else if (c.pageState.value == PageState.EMPTY) {
+                  return EmptyView(
+                    message: "Empty!!",
+                    title: "Empty",
+                    media: IconPath.empty,
+                    mediaSize: Get.height / 2,
+                  );
+                } else if (c.pageState.value == PageState.NORMAL) {
+                  return ListView.builder(
+                    key: Key('builder}'), //attention
+                    itemCount: c.bookingList.length,
+                    physics: const ClampingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      var booking = c.bookingList[index];
 
-                iconWidth: 40,
-                iconHeight: 40,
-                activeIndex: c.currentIndex,
-                // verticalGap: 25,
-                inActiveBarColor: AppColors.borderColor,
-                // stepperList: c.stepperData,
-                stepperList: [
-                  StepperData(
-                      title: StepperText(
-                        "Date & Rooms",
-                        textStyle: const TextStyle(
-                          color: Colors.black,
+                      print("------gn--${booking.guest?.name}");
+                      return BookingTile(
+                        index: index + 1,
+                        booking: booking,
+                      );
+                    },
+                  );
+                } else {
+                  return const ErrorView(
+                    errorTitle: "Something went wrong!!",
+                    errorMessage: "Something went wrong",
+                    imagePath: IconPath.errorimg,
+                  );
+                }
+              }),
+              Obx(
+                () => c.nextPageUrl.value != null
+                    ? const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(
+                          // child: CircularProgressIndicator(),
+                          child: CupertinoActivityIndicator(),
                         ),
-                      ),
-                      iconWidget: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: c.currentIndex >= 0
-                                ? AppColors.primary
-                                : AppColors.borderColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
-                        child: SvgPicture.asset(IconPath.calendar),
-                      )),
-                  StepperData(
-                      title: StepperText(
-                        "Options",
-                        textStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      iconWidget: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: c.currentIndex >= 1
-                              ? AppColors.primary
-                              : AppColors.borderColor,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        child: SvgPicture.asset(IconPath.list),
-                      )),
-                  StepperData(
-                      title: StepperText(
-                        "Information",
-                        textStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      iconWidget: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: c.currentIndex >= 2
-                                ? AppColors.primary
-                                : AppColors.borderColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
-                        child: SvgPicture.asset(IconPath.info),
-                      )),
-                  StepperData(
-                      title: StepperText(
-                        "Confirm",
-                        textStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      iconWidget: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: c.currentIndex >= 3
-                                ? AppColors.primary
-                                : AppColors.borderColor,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: SvgPicture.asset(IconPath.check),
-                      )),
+                      )
+                    : Container(),
+              )
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Create"),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        foregroundColor: AppColors.scaffoldColor,
+        backgroundColor: AppColors.primary,
+        onPressed: () {
+          Get.toNamed(CreateBookingScreen.routeName);
+        },
+        // child: Text("Create")
+      ),
+    );
+  }
+}
+
+class BookingTile extends StatelessWidget {
+  final Booking booking;
+  final int index;
+
+  BookingTile({
+    super.key,
+    required this.booking,
+    required this.index,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    return Container(
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        border: Border.all(color: AppColors.borderColor),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: Column(children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "S.N: $index ",
+                    style:
+                        CustomTextStyles.f12W400(color: AppColors.blackColor),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    "#${booking.id}",
+                    style:
+                        CustomTextStyles.f12W600(color: AppColors.blackColor),
+                  ),
                 ],
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: SizedBox(
-                width: Get.width,
-                child: PageView(
-                  controller: c.pageController,
-                  physics: NeverScrollableScrollPhysics(),
-                  onPageChanged: (value) {
-                    c.changeIndex(value); //TODO validate when swipe
-                  },
+              const SizedBox(
+                height: 8,
+              ),
+              RichText(
+                text: TextSpan(
+                  text: "Guest Name:   ",
+                  style: CustomTextStyles.f14W400(color: AppColors.borderColor),
                   children: [
-                    DateRoomScreen(),
-                    OptionsScreen(),
-                    InformationScreen(),
-                    ConfirmScreen(),
-                    BookSuccessScreen()
+                    TextSpan(
+                        text: booking.guest?.name ?? "",
+                        style: CustomTextStyles.f16W500())
                   ],
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-          left: 8.0,
-          right: 8,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Text("haha"),
-
-            Expanded(
-              flex: 2,
-              child: Container(
-                height: 40, //TODO: fix the height issue on device preview
+              const SizedBox(
+                height: 4,
+              ),
+              RichText(
+                text: TextSpan(
+                  text: "Check-In:   ",
+                  style: CustomTextStyles.f14W400(color: AppColors.borderColor),
+                  children: [
+                    TextSpan(
+                      text: (booking.checkout != null
+                          ? DateTimeHelper.prettyDateWithDay(booking.checkin)! +
+                              " 12:00:00 AM"
+                          : ""),
+                      style: CustomTextStyles.f11W400(),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              RichText(
+                text: TextSpan(
+                  text: "Check-Out:   ",
+                  style: CustomTextStyles.f14W400(color: AppColors.borderColor),
+                  children: [
+                    TextSpan(
+                      text: (booking.checkout != null
+                          ? DateTimeHelper.prettyDateWithDay(
+                                  booking.checkout)! +
+                              " 12:00:00 AM"
+                          : ""),
+                      style: CustomTextStyles.f11W400(),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Estimated Cost",
-                      style:
-                          CustomTextStyles.f16W500(color: AppColors.blackColor),
-                    ),
-                    Obx(
-                      () => Text(
-                        "Rs. ${c.estimatedCost}",
-                        style:
-                            CustomTextStyles.f16W600(color: AppColors.primary),
+                    RichText(
+                      text: TextSpan(
+                        text: "Payment Status: ",
+                        style: CustomTextStyles.f14W400(
+                            color: AppColors.borderColor),
+                        children: [
+                          TextSpan(
+                            text: booking.paymentStatus ?? "",
+                            style: CustomTextStyles.f14W500(),
+                          )
+                        ],
                       ),
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: "Total Amt : ",
+                        style: CustomTextStyles.f14W400(
+                            color: AppColors.borderColor),
+                        children: [
+                          TextSpan(
+                            text: (booking.totalAmount != null
+                                ? "Rs. ${booking.totalAmount.toString()}"
+                                : ""),
+                            style: CustomTextStyles.f14W500(),
+                          )
+                        ],
+                      ),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: "Remaining Amt: ",
+                        style: CustomTextStyles.f14W400(
+                            color: AppColors.borderColor),
+                        children: [
+                          TextSpan(
+                            text: (booking.remainingAmount != null
+                                ? "Rs. ${booking.remainingAmount.toString()}"
+                                : ""),
+                            style: CustomTextStyles.f14W500(),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: "Gest count:   ",
+                        style: CustomTextStyles.f14W400(
+                            color: AppColors.borderColor),
+                        children: [
+                          TextSpan(
+                            text: (booking.guestCount != null
+                                ? booking.guestCount.toString()
+                                : ""),
+                            style: CustomTextStyles.f14W500(),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: "Status:   ",
+                        style: CustomTextStyles.f14W400(
+                            color: AppColors.borderColor),
+                        children: [
+                          TextSpan(
+                            text: booking.status ?? "",
+                            style: CustomTextStyles.f14W500(),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 4,
                     ),
                   ],
                 ),
               ),
-            ),
-
-            // if (c.currentIndex > 0)
-            //   Flexible(
-
-            Obx(() {
-              if (c.currentIndex > 0 && c.currentIndex <= 3) {
-                return Flexible(
-                  child: SkyElevatedButton(
-                    height: 30,
-                    onPressed: () {
-                      c.onBack();
-                    },
-                    title: "Back",
-                  ),
-                );
-              } else {
-                return const SizedBox();
-              }
-            }),
-            const SizedBox(
-              width: 10,
-            ),
-
-            if (c.currentIndex != 4)
-              Flexible(
-                  child: Obx(
-                () => SkyElevatedButton(
-                    height: 30,
-                    onPressed: () {
-                      c.onNext();
-                    },
-                    title: c.currentIndex < 3 ? "Next" : "Book"),
-              )),
-          ],
-        ),
+              const SizedBox(
+                width: 12,
+              ),
+              Column(
+                children: [
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(8),
+                  //   child: SkyNetworkImage(
+                  //     imageUrl: "",
+                  //     height: 100,
+                  //     width: 100,
+                  //   ),
+                  // ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundColor: AppColors.orangeColor,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: SvgPicture.asset(
+                            IconPath.edit,
+                            height: 18,
+                            width: 18,
+                            colorFilter: const ColorFilter.mode(
+                                Colors.white, BlendMode.srcIn),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      CircleAvatar(
+                          radius: 15,
+                          backgroundColor: AppColors.errorColor,
+                          child: IconButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext ctx) {
+                                    return CustomAlertDialog(
+                                        title: "Do you really want to delete ?",
+                                        message: "You cannot undo this action",
+                                        // onConfirm: onConfirmDelete,
+                                        onConfirm: () {},
+                                        confirmText: "Yes");
+                                  });
+                            },
+                            icon: SvgPicture.asset(
+                              IconPath.delete,
+                              colorFilter: const ColorFilter.mode(
+                                  Colors.white, BlendMode.srcIn),
+                            ),
+                          )),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          )
+        ]),
       ),
     );
   }

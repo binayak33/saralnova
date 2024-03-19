@@ -26,7 +26,7 @@ class Rooms {
     title = json['title'];
     status = json['status'];
     rate = json['rate'];
-    roomTypeId = json['room_type_id'];
+    roomTypeId = json['room_type_id'].toString();
     roomTypeName = json['room_type_name'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -45,4 +45,3 @@ class Rooms {
     return data;
   }
 }
-

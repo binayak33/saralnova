@@ -23,6 +23,14 @@ class CustomTextStyles {
       color: color ?? AppColors.textColor,
     );
   }
+   static TextStyle f11W400({Color? color}) {
+    return TextStyle(
+      fontFamily: 'Plus Jakarta Sans',
+      fontWeight: FontWeight.w400,
+      fontSize: 11,
+      color: color ?? AppColors.textColor,
+    );
+  }
 
   static TextStyle f13W400({Color? color}) {
     return TextStyle(

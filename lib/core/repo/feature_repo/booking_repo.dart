@@ -49,12 +49,8 @@ class BookingRepo {
   }) async {
     try {
       String url = Api.createHotelBooking;
-      // String body = json.encode(storeBookingmodel.toString());
-      // http.Response response = await SkyRequest.post(url, body: body);
-
-      // var body = json.encode(storeBookingmodel);
-      http.Response response =
-          await SkyRequest.post(url, body: storeBookingmodel?.toJson());
+      var body = storeBookingmodel?.toJson();
+      http.Response response = await SkyRequest.post(url, body: body);
       var data = json.decode(response.body);
 
       if (data['status']) {
@@ -67,6 +63,34 @@ class BookingRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.createHotelBooking, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> getAllBookings({
+    //TODO pagination
+    String? nextPageUrl,
+    required Function(List<Booking> bookings, String? nextPageUrl) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = nextPageUrl ?? Api.getAllBookings;
+      http.Response response = await SkyRequest.get(url);
+
+      var data = json.decode(response.body);
+      if (data['status']) {
+        var bookings = bookingsFromJson(data['data']['data']);
+        var nextPageUrl = data['data']['next_page_url'];
+
+        LogHelper.warning('$bookings');
+        LogHelper.error('$nextPageUrl');
+
+        onSuccess(bookings, nextPageUrl);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.getAllBookings, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

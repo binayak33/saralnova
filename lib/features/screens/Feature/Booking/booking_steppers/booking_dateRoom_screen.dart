@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/utils/helpers/validators.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
 
-import '../../../../core/controllers/Feature/booking/booking_controller.dart';
-import '../../../../core/utils/constants/colors.dart';
-import '../../../../core/utils/constants/custom_text_style.dart';
-import '../../../../core/utils/constants/icon_path.dart';
-import '../../../widgets/common_widgets/sky_text_field.dart';
+import '../../../../../core/controllers/Feature/booking/booking_controller.dart';
+import '../../../../../core/utils/constants/colors.dart';
+import '../../../../../core/utils/constants/custom_text_style.dart';
+import '../../../../../core/utils/constants/icon_path.dart';
+import '../../../../widgets/common_widgets/sky_text_field.dart';
 
 class DateRoomScreen extends StatelessWidget {
   final c = Get.put(BookingController());

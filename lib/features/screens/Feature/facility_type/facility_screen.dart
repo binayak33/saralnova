@@ -107,8 +107,9 @@ class FacilityScreen extends StatelessWidget {
                   );
                 } else {
                   return ErrorView(
-                    title: "Something went wrong!!",
-                    media: IconPath.somethingWentWrong,
+                    errorTitle: "Something went wrong!!",
+                    errorMessage: "Something went wrong",
+                    imagePath: IconPath.somethingWentWrong,
                   );
                 }
               })

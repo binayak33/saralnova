@@ -7,8 +7,8 @@ import 'package:saralnova/core/controllers/Feature/facility/facility_controller.
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 
-import '../../../../core/utils/constants/icon_path.dart';
-import '../../../widgets/common_widgets/empty_view.dart';
+import '../../../../../core/utils/constants/icon_path.dart';
+import '../../../../widgets/common_widgets/empty_view.dart';
 
 class OptionsScreen extends StatelessWidget {
   final facilityController = Get.find<FacilityController>();

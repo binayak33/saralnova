@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:saralnova/core/model/country_model.dart';
+import 'package:saralnova/core/model/feature_model/booking_model/booking_model.dart';
+import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_bottom_sheets.dart/booking_calandar_bottom_sheet.dart';
-import 'package:saralnova/features/screens/Feature/Booking/booking_country_screen.dart';
+import 'package:saralnova/features/screens/Feature/Booking/booking_bottom_sheets.dart/booking_country_screen.dart';
 import 'package:saralnova/features/screens/Feature/rooms/room_type_bottom_sheet.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -22,18 +24,65 @@ enum BookingState { DATEROOMS, OPTIONS, INFORMATION, CONFIRM }
 enum PageState { EMPTY, LOADING, NORMAL, ERROR }
 
 class BookingController extends GetxController {
+  //controllers
+  final ScrollController scrollController = ScrollController();
+
   //universal states and variables
   final dateRoomKey = GlobalKey<FormState>();
   final informationFormKey = GlobalKey<FormState>();
   var bookingState = BookingState.DATEROOMS.obs;
-  var pageState = PageState.EMPTY.obs;
+  var pageState = PageState.LOADING.obs;
   PageController pageController = PageController();
-
+  RxList<Booking> bookingList = RxList();
+  RxBool isLoadingMore = RxBool(false);
+  RxnString nextPageUrl = RxnString();
   RxInt estimatedCost = RxInt(0);
 
   @override
   void onInit() {
+    getAllBookings();
+    initScrollListener();
+
     super.onInit();
+  }
+
+  initScrollListener() {
+    scrollController.addListener(() {
+      if (scrollController.offset >=
+              scrollController.position.maxScrollExtent &&
+          !scrollController.position.outOfRange) {
+        LogHelper.debug("Scroll end reached");
+        if (nextPageUrl.value != null && !isLoadingMore.value) {
+          getAllBookings(loadMore: true);
+        }
+      }
+    });
+  }
+
+  void getAllBookings({bool loadMore = false}) async {
+    if (!loadMore) {
+      bookingList.clear();
+    } else {
+      isLoadingMore.value = true;
+    }
+    BookingRepo.getAllBookings(
+      nextPageUrl: nextPageUrl.value,
+      onSuccess: (bookings, nextPageUrl) {
+        if (bookings.isEmpty) {
+          pageState.value = PageState.EMPTY;
+        } else {
+          pageState.value = PageState.NORMAL;
+          bookingList.addAll(bookings);
+          this.nextPageUrl.value = nextPageUrl;
+          isLoadingMore.value = false;
+        }
+      },
+      onError: (message) {
+        pageState.value = PageState.ERROR;
+        LogHelper.error(message);
+        isLoadingMore.value = false;
+      },
+    );
   }
 
   List<CountryModel> countries = [
@@ -614,7 +663,7 @@ class BookingController extends GetxController {
           loading.hide();
           _currentIndex.value++;
           changeIndex(currentIndex);
-          SkySnackBar.error(title: "Booking", message: message);
+          SkySnackBar.success(title: "Booking", message: message);
         },
         onError: (message) {
           loading.hide();

@@ -14,6 +14,9 @@ class IconPath {
   static const String arrowLeftCircle = "$basePath/arrow-left-circle.svg";
   static const String camera = "$basePath/camera.svg";
   static const String list = "$basePath/list.svg";
+  static const String edit = "$basePath/edit.svg";
+  static const String delete = "$basePath/delete.svg";
+
   static const String info = "$basePath/info.svg";
   static const String check = "$basePath/check.svg";
   static const String minus = "$basePath/minus.svg";
@@ -34,5 +37,7 @@ class IconPath {
   // vectors imgs
   static const String somethingWentWrong = "$basePath/somethingWentWrong.svg";
   static const String empty = "$basePath/Empty.svg";
+  static const String errorimg = "$basePath/errorimg.svg";
+
   static const String successBook = "$basePath/success_book.svg";
 }

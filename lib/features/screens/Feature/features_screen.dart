@@ -73,7 +73,7 @@ class FeatureScreen extends StatelessWidget {
                   },
                 ),
               ),
-               Card(
+              Card(
                 child: ListTile(
                   title: const Text("Booking"),
                   onTap: () {
