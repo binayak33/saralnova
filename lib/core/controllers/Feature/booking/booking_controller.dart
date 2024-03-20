@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:saralnova/core/model/country_model.dart';
 import 'package:saralnova/core/model/feature_model/booking_model/booking_model.dart';
+import 'package:saralnova/core/utils/enums/app_enums.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_bottom_sheets.dart/booking_calandar_bottom_sheet.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_bottom_sheets.dart/booking_country_screen.dart';
@@ -18,10 +19,6 @@ import '../../../model/feature_model/request_model/store_request_model.dart';
 import '../../../model/feature_model/room_type_model.dart';
 import '../../../model/rooms_model.dart';
 import '../../../repo/feature_repo/booking_repo.dart';
-
-enum BookingState { DATEROOMS, OPTIONS, INFORMATION, CONFIRM }
-
-enum PageState { EMPTY, LOADING, NORMAL, ERROR }
 
 class BookingController extends GetxController {
   //controllers
@@ -663,6 +660,7 @@ class BookingController extends GetxController {
           loading.hide();
           _currentIndex.value++;
           changeIndex(currentIndex);
+          getAllBookings();
           SkySnackBar.success(title: "Booking", message: message);
         },
         onError: (message) {

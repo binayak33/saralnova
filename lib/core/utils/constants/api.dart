@@ -1,7 +1,8 @@
 class Api {
   // static const String baseUrl = "https://stay.saralnova.com";
   // static const String baseUrl = "http://192.168.100.36:8003";
-  static const String baseUrl = "http://192.168.1.109:8003";
+  // static const String baseUrl = "http://192.168.1.109:8003";
+  static const String baseUrl = "http://192.168.1.106:8888";
 
   // static String get baseUrl {
   //   final apiMode = dotenv.env['API_MODE'];
@@ -67,4 +68,14 @@ class Api {
   static String getAllBookings = "$apiBaseUrl/hotel-booking/bookings";
   static String createHotelBooking =
       "$apiBaseUrl/hotel-booking/bookings/create";
+
+  // --restaurants
+  // ----restaurant category
+  static String getCategory = "$apiBaseUrl/restaurant/category";
+  static String storeCategory = "$apiBaseUrl/restaurant/category/store";
+  static String updateCategory = "$apiBaseUrl/restaurant/category/update";
+  static String deleteCategory = "$apiBaseUrl/restaurant/category/delete";
+
+  //----restaurant variants
+  static String getVariants = "$apiBaseUrl/restaurant/variants";
 }

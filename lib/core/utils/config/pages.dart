@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Calendar/calendar_controller.dart';
 import 'package:saralnova/core/controllers/Dashboard/dashboard_panel_controller.dart';
+import 'package:saralnova/core/controllers/Feature/activity_log/activity_log_controller.dart';
 import 'package:saralnova/core/controllers/Feature/amenities/amenities_controller.dart';
 import 'package:saralnova/core/controllers/Feature/booking/booking_controller.dart';
 import 'package:saralnova/core/controllers/Feature/facility/facility_controller.dart';
 import 'package:saralnova/core/controllers/Feature/feature_controller.dart';
+import 'package:saralnova/core/controllers/Feature/restaurant/category/category_controller.dart';
+import 'package:saralnova/core/controllers/Feature/restaurant/variants/variant_controller.dart';
 import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
 import 'package:saralnova/core/controllers/Feature/room_type/room_type_controller.dart';
 import 'package:saralnova/core/controllers/Feature/staff/staff_controller.dart';
@@ -14,8 +17,11 @@ import 'package:saralnova/core/controllers/Splash/splash_controller.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_screen.dart';
 import 'package:saralnova/features/screens/Feature/Booking/create_booking_screen.dart';
+import 'package:saralnova/features/screens/Feature/activity_log/activity_log_screen.dart';
 import 'package:saralnova/features/screens/Feature/aminity_type/aminities_screen.dart';
 import 'package:saralnova/features/screens/Feature/facility_type/facility_screen.dart';
+import 'package:saralnova/features/screens/Feature/restaurant/category/category_screen.dart';
+import 'package:saralnova/features/screens/Feature/restaurant/variants/variants_screen.dart';
 import 'package:saralnova/features/screens/Feature/room_type/room_type_screen.dart';
 import 'package:saralnova/features/screens/Feature/rooms/add_rooms_screen.dart';
 import 'package:saralnova/features/screens/Feature/rooms/rooms_screen.dart';
@@ -113,13 +119,29 @@ final List<GetPage> pages = [
       // Get.lazyPut(() => FacilityController());
     }),
   ),
-  // GetPage(
-  //   name: RoomDetailsScreen.routeName,
-  //   page: () => RoomDetailsScreen(),
-  //   binding: BindingsBuilder(
-  //     () => Get.lazyPut(() => RoomDetailsController()),
-  //   ),
-  // ),
+  GetPage(
+    name: ActivityLogScreen.routeName,
+    page: () => ActivityLogScreen(),
+    binding: BindingsBuilder(
+      () => Get.lazyPut(() => ActivityLogController()),
+    ),
+  ),
+
+  GetPage(
+    name: CategoryScreen.routeName,
+    page: () => CategoryScreen(),
+    binding: BindingsBuilder(
+      () => Get.lazyPut(() => CategoryController()),
+    ),
+  ),
+
+  GetPage(
+    name: VariantScreen.routeName,
+    page: () => VariantScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => VariantController());
+    }),
+  ),
   // GetPage(
   //   name: FinanceScreen.routeName,
   //   page: () => FinanceScreen(),

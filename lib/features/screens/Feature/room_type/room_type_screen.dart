@@ -5,8 +5,8 @@ import 'package:saralnova/core/controllers/Feature/room_type/room_type_controlle
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
-import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 
@@ -47,7 +47,7 @@ class RoomTypeScreen extends StatelessWidget {
                     message: "Empty!!",
                     title: "Empty",
                     media: IconPath.empty,
-                    mediaSize: 1000,
+                    mediaSize: Get.height / 2,
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.builder(
@@ -105,7 +105,7 @@ class RoomTypeScreen extends StatelessWidget {
                     },
                   );
                 } else {
-                   return ErrorView(
+                  return ErrorView(
                     errorTitle: "Something went wrong!!",
                     errorMessage: "Something went wrong",
                     imagePath: IconPath.somethingWentWrong,

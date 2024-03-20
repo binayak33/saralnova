@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/controllers/Feature/staff/staff_controller.dart';
+import 'package:saralnova/core/controllers/Feature/restaurant/category/category_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
-import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 
-class StaffScreen extends StatelessWidget {
-  static const String routeName = "/staff-screen";
-  final c = Get.find<StaffController>();
-  StaffScreen({super.key});
+import '../../../../widgets/app_widgets/hotel_feature_widget.dart';
+
+class CategoryScreen extends StatelessWidget {
+  static const String routeName = "/category-screen";
+  final c = Get.find<CategoryController>();
+  CategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        iconTheme: const IconThemeData(
-          color: AppColors.scaffoldColor, //change your color here
-        ),
         centerTitle: true,
-        title: Text(
-          "Staff",
-          style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
-        ),
+        title: const Text("Category"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -48,10 +42,11 @@ class StaffScreen extends StatelessWidget {
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.builder(
-                    itemCount: c.staffList.length,
+                    itemCount: c.restaurantCategorylist.length,
+                    physics: const ClampingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      var staff = c.staffList[index];
+                      var category = c.restaurantCategorylist[index];
                       return Container(
                         decoration: BoxDecoration(
                             color: AppColors.splashBackgroundColor,
@@ -66,17 +61,11 @@ class StaffScreen extends StatelessWidget {
                                 SlidableAction(
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    // c.updateIndex.value = staff.id.toString();
-                                    c.staff.value = staff;
+                                    c.category.value = category;
                                     c.crudState.value = CRUDSTATE.UPDATE;
-                                    c.nameController.text =
-                                        staff.name.toString();
-
-                                    c.emailController.text =
-                                        staff.email.toString();
-                                    c.userNameController.text =
-                                        staff.username.toString();
-                                    c.openStaffBottomSheet();
+                                    c.categoryController.text =
+                                        category.title.toString();
+                                    c.openCategoryBottomSheet();
                                   },
                                   backgroundColor: AppColors.orangeColor,
                                   foregroundColor: Colors.white,
@@ -90,7 +79,7 @@ class StaffScreen extends StatelessWidget {
                                   ),
                                   padding: EdgeInsets.zero,
                                   onPressed: (value) {
-                                    c.deleteStaff(staff.id!);
+                                    c.deleteRestaurantCategory(category.id!);
                                   },
                                   backgroundColor: AppColors.errorColor,
                                   foregroundColor: Colors.white,
@@ -100,7 +89,7 @@ class StaffScreen extends StatelessWidget {
                               ],
                             ),
                             child: HotelFeatureWidget(
-                              title: staff.name,
+                              title: category.title,
                             )),
                       );
                     },
@@ -120,7 +109,8 @@ class StaffScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
-          c.openStaffBottomSheet();
+          c.categoryController.clear();
+          c.openCategoryBottomSheet();
         },
         child: Container(
           padding: const EdgeInsets.all(10),
@@ -129,7 +119,7 @@ class StaffScreen extends StatelessWidget {
             color: AppColors.primary,
           ),
           child: Text(
-            "Add",
+            "Create",
             style: CustomTextStyles.f16W600(
               color: AppColors.scaffoldColor,
             ),
