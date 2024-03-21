@@ -21,7 +21,6 @@ class RestaurantRepo {
       );
 
       var data = json.decode(response.body);
-//TODO api null check on a boolean fix this
       if (data["status"]) {
         var categories = restaurantCategoriesJson(data['data']);
         onSuccess(categories);
@@ -149,6 +148,95 @@ class RestaurantRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.getVariants, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> storeRestaurantVariants({
+    required Variant? variantModel,
+    required Function(Variant variant) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.storeVariants;
+
+      var body = variantModel?.toJson();
+      http.Response response = await SkyRequest.post(
+        url,
+        body: body,
+      );
+
+      var data = json.decode(response.body);
+
+      if (data["status"]) {
+        var variant = Variant.fromJson(data['data']);
+        onSuccess(variant);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.storeVariants, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> deleteRestaurantVariants({
+    // required String variantsId,
+    required Variant? variantModel,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.deleteVariants;
+      // var body = {
+      //   "id": categoryId,
+      // };
+      var body = variantModel?.toJson();
+
+      http.Response response = await SkyRequest.post(
+        url,
+        body: body,
+      );
+
+      var data = json.decode(response.body);
+
+      if (data["status"]) {
+        String msg = data['message'];
+        onSuccess(msg);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.deleteVariants, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> updateRestaurantVariant({
+    required Variant? variantModel,
+    required Function(Variant variant) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.updateVariants;
+
+      var body = variantModel?.toJson();
+
+      http.Response response = await SkyRequest.post(
+        url,
+        body: body,
+      );
+
+      var data = json.decode(response.body);
+
+      if (data["status"]) {
+        var variant = Variant.fromJson(data['data']);
+        onSuccess(variant);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.updateVariants, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

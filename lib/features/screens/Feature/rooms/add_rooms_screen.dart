@@ -21,13 +21,6 @@ class AddRoomsScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
             c.crudState.value == CRUDSTATE.ADD ? "Add Room" : "Update Room"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                print(c.amenitiesDataList);
-              },
-              icon: Icon(Icons.add))
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

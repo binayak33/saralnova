@@ -11,7 +11,9 @@ import 'package:saralnova/features/screens/Feature/restaurant/category/category_
 import 'package:saralnova/features/screens/Feature/restaurant/variants/variants_screen.dart';
 import 'package:saralnova/features/screens/Feature/room_type/room_type_screen.dart';
 import 'package:saralnova/features/screens/Feature/rooms/rooms_screen.dart';
+import 'package:saralnova/features/screens/Feature/space/space_screen.dart';
 import 'package:saralnova/features/screens/Feature/staff/staff_screen.dart';
+import 'package:saralnova/features/screens/Feature/tables/tables_screen.dart';
 
 class FeatureScreen extends StatelessWidget {
   static const String routeName = "/login-screen";
@@ -111,7 +113,27 @@ class FeatureScreen extends StatelessWidget {
                     Get.toNamed(VariantScreen.routeName);
                   },
                 ),
-              )
+              ),
+              Text("Tables features below"),
+              const SizedBox(
+                height: 10,
+              ),
+              Card(
+                child: ListTile(
+                  title: const Text("Space"),
+                  onTap: () {
+                    Get.toNamed(SpaceScreen.routeName);
+                  },
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  title: const Text("Tables"),
+                  onTap: () {
+                    Get.toNamed(TablesScreen.routeName);
+                  },
+                ),
+              ),
             ],
           ),
         ),

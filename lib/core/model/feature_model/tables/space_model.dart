@@ -1,34 +1,30 @@
-List<Variant> restaurantVariantsJson(List<dynamic> variantsJson) =>
-    List<Variant>.from(
-        variantsJson.map((variantJson) => Variant.fromJson(variantJson)));
+List<Space> tableSpaceJson(List<dynamic> spacesJson) =>
+    List<Space>.from(spacesJson.map((spaceJson) => Space.fromJson(spaceJson)));
 
-class Variant {
+class Space {
   String? id;
-  String? title;
   String? vendorId;
-  int? price;
-  String? type;
+  String? name;
   String? description;
+  num? tableCount;
   String? createdAt;
   String? updatedAt;
 
-  Variant(
+  Space(
       {this.id,
-      this.title,
       this.vendorId,
-      this.price,
-      this.type,
+      this.name,
       this.description,
       this.createdAt,
+      this.tableCount,
       this.updatedAt});
 
-  Variant.fromJson(Map<String, dynamic> json) {
+  Space.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    title = json['title'];
     vendorId = json['vendor_id'];
-    price = json['price'];
-    type = json['type'];
+    name = json['name'];
     description = json['description'];
+    tableCount = json['table_count'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -37,18 +33,16 @@ class Variant {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     // data['id'] = this.id;
     if (id != null) data['id'] = this.id;
-    data['title'] = this.title;
-    if (title != null) data['title'] = this.title;
+
     // data['vendor_id'] = this.vendorId;
-    if (vendorId != null) data["vendor_id"] = this.vendorId;
-
-    // data['price'] = this.price;
-    if (price != null) data['price'] = this.price;
-
-    // data['type'] = this.type;
-    if (type != null) data['type'] = this.type;
+    if (vendorId != null) data['vendor_id'] = this.vendorId;
+    // data['name'] = this.name;
+    if (name != null) data['name'] = this.name;
     // data['description'] = this.description;
     if (description != null) data['description'] = this.description;
+    // data['table_count'] = this.tableCount;
+    if (tableCount != null) data['table_count'] = this.tableCount;
+
     // data['created_at'] = this.createdAt;
     // data['updated_at'] = this.updatedAt;
     return data;

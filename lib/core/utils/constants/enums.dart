@@ -8,3 +8,5 @@ enum PageState { LOADING, EMPTY, NORMAL, ERROR }
 
 
 enum StatusState{ Available, Occupied, Reserved}
+
+enum VariantState{ Variant, Addon }

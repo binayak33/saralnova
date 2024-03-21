@@ -6,6 +6,7 @@ import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/features/screens/Feature/restaurant/variants/add_variant_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
@@ -20,16 +21,97 @@ class VariantScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Category"),
+        title: const Text("Variants"),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                          onTap: () {
+                            c.restaurantState.value = RestaurantState.VARIANT;
+                          },
+                          child: Obx(
+                            () => Container(
+                              decoration: BoxDecoration(
+                                color: c.restaurantState.value ==
+                                        RestaurantState.VARIANT
+                                    ? AppColors.primary
+                                    : AppColors.borderColor,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                    10,
+                                  ),
+                                  bottomLeft: Radius.circular(
+                                    10,
+                                  ),
+                                ),
+                              ),
+                              padding: const EdgeInsets.all(10),
+                              child: Center(
+                                child: Text(
+                                  "Variants",
+                                  style: CustomTextStyles.f14W600(
+                                    color: c.restaurantState.value ==
+                                            RestaurantState.VARIANT
+                                        ? AppColors.scaffoldColor
+                                        : AppColors.primary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                          onTap: () {
+                            c.restaurantState.value = RestaurantState.ADDONS;
+                          },
+                          child: Obx(
+                            () => Container(
+                              decoration: BoxDecoration(
+                                  color: c.restaurantState.value ==
+                                          RestaurantState.ADDONS
+                                      ? AppColors.primary
+                                      : AppColors.borderColor,
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(
+                                      10,
+                                    ),
+                                    bottomRight: Radius.circular(
+                                      10,
+                                    ),
+                                  )),
+                              padding: const EdgeInsets.all(10),
+                              child: Center(
+                                child: Text(
+                                  "Addons",
+                                  style: CustomTextStyles.f14W600(
+                                    color: c.restaurantState.value ==
+                                            RestaurantState.ADDONS
+                                        ? AppColors.scaffoldColor
+                                        : AppColors.primary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Center(
+                  return const Center(
                     child: LinearProgressIndicator(),
                   );
                 } else if (c.pageState.value == PageState.EMPTY) {
@@ -40,21 +122,73 @@ class VariantScreen extends StatelessWidget {
                     mediaSize: Get.height / 2,
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
-                  return ListView.builder(
-                    itemCount: c.restaurantVariantlist.length,
-                    physics: const ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      var variant = c.restaurantVariantlist[index];
-                      return RestaurantVariantTile(
-                        index: index + 1,
-                        title: variant.title,
-                        price: variant.price.toString(),
-                      );
-                    },
-                  );
+                  if (c.restaurantState.value == RestaurantState.VARIANT) {
+                    return c.filteredVariantList.isNotEmpty
+                        ? ListView.separated(
+                            itemCount: c.filteredVariantList.length,
+                            physics: const ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                height: 10,
+                              );
+                            },
+                            itemBuilder: (context, index) {
+                              var variant = c.filteredVariantList[index];
+                              return RestaurantVariantTile(
+                                index: index + 1,
+                                title: variant.title,
+                                price: variant.price.toString(),
+                                type: variant.type,
+                                onEdit: () => c.onEditClick(variant),
+                                onConfirmDelete: () {
+                                  c.deleteRestaurantVariant(
+                                      variant.id.toString());
+                                },
+                              );
+                            },
+                          )
+                        : EmptyView(
+                            message: "Empty!!",
+                            title: "Empty",
+                            media: IconPath.empty,
+                            mediaSize: Get.height / 2,
+                          );
+                  } else {
+                    return c.filteredAddonsList.isNotEmpty
+                        ? ListView.separated(
+                            itemCount: c.filteredAddonsList.length,
+                            physics: const ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                height: 10,
+                              );
+                            },
+                            itemBuilder: (context, index) {
+                              var addOn = c.filteredAddonsList[index];
+                              return RestaurantVariantTile(
+                                index: index + 1,
+                                title: addOn.title,
+                                price: addOn.price.toString(),
+                                type: addOn.type,
+                                onEdit: () => c.onEditClick(addOn),
+                                onConfirmDelete: () {
+                                  c.deleteRestaurantVariant(
+                                      addOn.id.toString());
+                                },
+                              );
+                            },
+                          )
+                        : EmptyView(
+                            message: "Empty!!",
+                            title: "Empty",
+                            media: IconPath.empty,
+                            mediaSize: Get.height / 2,
+                          );
+                  }
                 } else {
-                  return ErrorView(
+                  return const ErrorView(
                     errorTitle: "Something went wrong!!",
                     errorMessage: "Something went wrong",
                     imagePath: IconPath.somethingWentWrong,
@@ -68,8 +202,8 @@ class VariantScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
-          // c.categoryController.clear();
-          // c.openCategoryBottomSheet();
+          c.crudState.value = CRUDSTATE.ADD;
+          Get.toNamed(AddVariantScreen.routeName);
         },
         child: Container(
           padding: const EdgeInsets.all(10),
@@ -93,9 +227,18 @@ class RestaurantVariantTile extends StatelessWidget {
   final int index;
   final String? title;
   final String? price;
-  //TODO make 2 functions to edit and delete
-  const RestaurantVariantTile(
-      {super.key, required this.index, this.title, this.price});
+  final String? type;
+  final Function() onConfirmDelete;
+  final Function() onEdit;
+  const RestaurantVariantTile({
+    super.key,
+    required this.index,
+    this.title,
+    this.price,
+    this.type,
+    required this.onConfirmDelete,
+    required this.onEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +272,18 @@ class RestaurantVariantTile extends StatelessWidget {
           ),
           RichText(
             text: TextSpan(
+              text: "Type:   ",
+              style: CustomTextStyles.f14W400(color: AppColors.borderColor),
+              children: [
+                TextSpan(text: type ?? "", style: CustomTextStyles.f16W500())
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          RichText(
+            text: TextSpan(
               text: "Price:   ",
               style: CustomTextStyles.f14W400(color: AppColors.borderColor),
               children: [
@@ -144,7 +299,7 @@ class RestaurantVariantTile extends StatelessWidget {
                 radius: 15,
                 backgroundColor: AppColors.orangeColor,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: onEdit,
                   icon: SvgPicture.asset(
                     IconPath.edit,
                     height: 18,
@@ -168,8 +323,7 @@ class RestaurantVariantTile extends StatelessWidget {
                             return CustomAlertDialog(
                                 title: "Do you really want to delete ?",
                                 message: "You cannot undo this action",
-                                // onConfirm: onConfirmDelete,
-                                onConfirm: () {},
+                                onConfirm: onConfirmDelete,
                                 confirmText: "Yes");
                           });
                     },

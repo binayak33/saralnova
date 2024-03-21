@@ -1,19 +1,21 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class Api {
   // static const String baseUrl = "https://stay.saralnova.com";
   // static const String baseUrl = "http://192.168.100.36:8003";
   // static const String baseUrl = "http://192.168.1.109:8003";
-  static const String baseUrl = "http://192.168.1.106:8888";
+  // static const String baseUrl = "http://192.168.1.106:8888";
 
-  // static String get baseUrl {
-  //   final apiMode = dotenv.env['API_MODE'];
-  //   if (apiMode == "live") {
-  //     return "https://stay.saralnova.com";
-  //   } else if (apiMode == "uat") {
-  //     return "https://stay.saralnova.com";
-  //   } else {
-  //     return dotenv.env['API_LOCAL_URL'] ?? "http://0.0.0.0:8000";
-  //   }
-  // }
+  static String get baseUrl {
+    final apiMode = dotenv.env['API_MODE'];
+    if (apiMode == "live") {
+      return "https://stay.saralnova.com";
+    } else if (apiMode == "uat") {
+      return "https://stay.saralnova.com";
+    } else {
+      return dotenv.env['API_LOCAL_URL'] ?? "http://0.0.0.0:8000";
+    }
+  }
 
   static String apiBaseUrl = "$baseUrl/api/v1";
 
@@ -78,4 +80,23 @@ class Api {
 
   //----restaurant variants
   static String getVariants = "$apiBaseUrl/restaurant/variants";
+  static String storeVariants = "$apiBaseUrl/restaurant/variants/store";
+  static String updateVariants = "$apiBaseUrl/restaurant/variants/update";
+  static String deleteVariants = "$apiBaseUrl/restaurant/variants/delete";
+
+// ------------tables
+  static String getTables = "$apiBaseUrl/restaurant/tables";
+  static String getAvailableTables = "$apiBaseUrl/restaurant/available-tables";
+  static String storeTables = "$apiBaseUrl/restaurant/tables/store";
+  static String updateTables = "$apiBaseUrl/restaurant/tables/update";
+  static String deleteTable = "$apiBaseUrl/restaurant/tables/delete";
+
+  // static String storeTable = "$apiBaseUrl/restaurant/variants/store";
+  // static String updateTable = "$apiBaseUrl/restaurant/variants/update";
+
+  // ------------space
+  static String getSpaces = "$apiBaseUrl/restaurant/space";
+  static String storeSpace = "$apiBaseUrl/restaurant/space/store";
+  static String updateSpace = "$apiBaseUrl/restaurant/space/update";
+  static String deleteSpace = "$apiBaseUrl/restaurant/space/delete";
 }

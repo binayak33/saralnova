@@ -95,7 +95,7 @@ class CategoryScreen extends StatelessWidget {
                     },
                   );
                 } else {
-                  return ErrorView(
+                  return const ErrorView(
                     errorTitle: "Something went wrong!!",
                     errorMessage: "Something went wrong",
                     imagePath: IconPath.somethingWentWrong,
