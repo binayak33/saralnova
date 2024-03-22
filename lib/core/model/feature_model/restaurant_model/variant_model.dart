@@ -35,19 +35,12 @@ class Variant {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    // data['id'] = this.id;
     if (id != null) data['id'] = this.id;
     data['title'] = this.title;
     if (title != null) data['title'] = this.title;
-    // data['vendor_id'] = this.vendorId;
     if (vendorId != null) data["vendor_id"] = this.vendorId;
-
-    // data['price'] = this.price;
     if (price != null) data['price'] = this.price;
-
-    // data['type'] = this.type;
     if (type != null) data['type'] = this.type;
-    // data['description'] = this.description;
     if (description != null) data['description'] = this.description;
     // data['created_at'] = this.createdAt;
     // data['updated_at'] = this.updatedAt;

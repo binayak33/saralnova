@@ -16,6 +16,7 @@ import 'package:saralnova/core/controllers/Feature/table/table_controller.dart';
 import 'package:saralnova/core/controllers/Guest/guest_controller.dart';
 import 'package:saralnova/core/controllers/Home/home_controller.dart';
 import 'package:saralnova/core/controllers/Splash/splash_controller.dart';
+import 'package:saralnova/core/controllers/menu/add_menu_controller.dart';
 import 'package:saralnova/core/controllers/menu/menu_controller.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_screen.dart';
@@ -38,6 +39,7 @@ import 'package:saralnova/features/screens/Feature/tables/tables_screen.dart';
 import 'package:saralnova/features/screens/Splash/splash_screen.dart';
 
 import '../../../features/screens/Auth/login_screen.dart';
+import '../../../features/screens/Feature/menu/add_menu_screen.dart';
 import '../../controllers/Auth/login_controller.dart';
 
 final List<GetPage> pages = [
@@ -196,26 +198,12 @@ final List<GetPage> pages = [
       Get.lazyPut(() => MenuRestaurantController());
     }),
   ),
-  // GetPage(
-  //   name: FinanceScreen.routeName,
-  //   page: () => FinanceScreen(),
-  //   binding: BindingsBuilder(
-  //     () => Get.lazyPut(() => FincanceController()),
-  //   ),
-  // ),
-  // GetPage(
-  //   name: ExpenseScreen.routeName,
-  //   page: () => ExpenseScreen(),
-  //   binding: BindingsBuilder(
-  //     () => Get.lazyPut(() => ExpenseController()),
-  //   ),
-  // ),
-  // GetPage(
-  //   name: BrowserView.routeName,
-  //   page: () => BrowserView(),
-  //   binding: BindingsBuilder(
-  //     () =>
-  //         Get.lazyPut(() => BrowserController(type: BrowserType.ForgetPasswrd)),
-  //   ),
-  // ),
+
+   GetPage(
+    name: AddMenuScreen.routeName,
+    page: () => AddMenuScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => AddMenuController());
+    }),
+  ),
 ];

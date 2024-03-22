@@ -11,6 +11,7 @@ import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 import '../../../../core/controllers/menu/menu_controller.dart';
 import '../../../../core/utils/helpers/sky_network_image.dart';
 import '../../../widgets/common_widgets/custom_alert_dialog.dart';
+import 'add_menu_screen.dart';
 
 class MenuScreen extends StatelessWidget {
   static const String routeName = "/menu-screen";
@@ -62,7 +63,6 @@ class MenuScreen extends StatelessWidget {
                         price: menu.price.toString(),
                         imageUrl: menu.imageUrl,
                         onEdit: () {},
-                        // onConfirmDelete: () {},
                         onConfirmDelete: () => c.deleteRestaurantMenu(menu.id!),
                       );
                     },
@@ -81,7 +81,9 @@ class MenuScreen extends StatelessWidget {
       ),
       floatingActionButton: InkResponse(
         radius: 20,
-        onTap: () {},
+        onTap: () {
+          Get.toNamed(AddMenuScreen.routeName);
+        },
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
