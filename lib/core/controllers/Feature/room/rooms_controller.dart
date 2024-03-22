@@ -117,7 +117,8 @@ class RoomsController extends GetxController {
 
               this.roomType.value = roomType;
               if (crudState.value == CRUDSTATE.UPDATE) {
-                updateIndex.value = roomType.id;
+                updateIndex.value = roomType
+                    .id; //instaed of new variable id assing  the id to roomType
               }
             },
           ),
@@ -168,7 +169,7 @@ class RoomsController extends GetxController {
               getAllRooms();
               roomTypeController.clear();
               roomStatusController.clear();
-  
+
               roomTitleController.clear();
               rateController.clear();
               Get.back();

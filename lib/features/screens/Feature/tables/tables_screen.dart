@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/features/screens/Feature/tables/add_tables_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
@@ -83,8 +84,10 @@ class TablesScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
+          c.statusController.clear();
+          c.spaceController.clear();
           c.crudState.value = CRUDSTATE.ADD;
-          // Get.toNamed(AddTableScreen.routeName);
+          Get.toNamed(AddTablesScreen.routeName);
         },
         child: Container(
           padding: const EdgeInsets.all(10),
@@ -160,6 +163,18 @@ class TableTile extends StatelessWidget {
               style: CustomTextStyles.f14W400(color: AppColors.borderColor),
               children: [
                 TextSpan(text: space ?? "", style: CustomTextStyles.f16W500())
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          RichText(
+            text: TextSpan(
+              text: "Status:   ",
+              style: CustomTextStyles.f14W400(color: AppColors.borderColor),
+              children: [
+                TextSpan(text: status ?? "", style: CustomTextStyles.f16W500())
               ],
             ),
           ),

@@ -37,16 +37,17 @@ class TableModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['vendor_id'] = this.vendorId;
-    data['space_id'] = this.spaceId;
-    data['space_name'] = this.spaceName;
+    // data['id'] = this.id;
+    if (id != null) data['id'] = this.id;
+    if (vendorId != null) data['vendor_id'] = this.vendorId;
+    if (spaceId != null) data['space_id'] = this.spaceId;
+    if (spaceName != null) data['space_name'] = this.spaceName;
 
-    data['name'] = this.name;
-    data['capacity'] = this.capacity;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    if (name != null) data['name'] = this.name;
+    if (capacity != null) data['capacity'] = this.capacity;
+    if (status != null) data['status'] = this.status;
+    // data['created_at'] = this.createdAt;
+    // data['updated_at'] = this.updatedAt;
     return data;
   }
 }

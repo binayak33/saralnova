@@ -33,62 +33,62 @@ class TableRepo {
     }
   }
 
-  // static Future<void> storeRestaurantCategory({
-  //   // required String title,
-  //   required Space? space,
-  //   required Function(Space space) onSuccess,
-  //   required Function(String message) onError,
-  // }) async {
-  //   try {
-  //     String url = Api.storeSpace;
-  //     var body = space?.toJson();
+  static Future<void> storeTable({
+    // required String title,
+    required TableModel? tableModel,
+    required Function(TableModel table) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.storeTables;
+      var body = tableModel?.toJson();
 
-  //     http.Response response = await SkyRequest.post(
-  //       url,
-  //       body: body,
-  //     );
+      http.Response response = await SkyRequest.post(
+        url,
+        body: body,
+      );
 
-  //     var data = json.decode(response.body);
+      var data = json.decode(response.body);
 
-  //     if (data["status"]) {
-  //       var space = Space.fromJson(data['data']);
-  //       onSuccess(space);
-  //     } else {
-  //       onError(data['message']);
-  //     }
-  //   } catch (e, s) {
-  //     LogHelper.error(Api.storeSpace, error: e, stackTrace: s);
-  //     onError(Messages.error);
-  //   }
-  // }
+      if (data["status"]) {
+        var table = TableModel.fromJson(data['data']);
+        onSuccess(table);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.storeTables, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
 
-  // static Future<void> updateSpace({
-  //   required Space? spaceModel,
-  //   required Function(Space space) onSuccess,
-  //   required Function(String message) onError,
-  // }) async {
-  //   try {
-  //     String url = Api.updateSpace;
-  //     var body = spaceModel?.toJson();
+  static Future<void> updateTable({
+    required TableModel? tableModel,
+    required Function(TableModel table) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.updateTables;
+      var body = tableModel?.toJson();
 
-  //     http.Response response = await SkyRequest.post(
-  //       url,
-  //       body: body,
-  //     );
+      http.Response response = await SkyRequest.post(
+        url,
+        body: body,
+      );
 
-  //     var data = json.decode(response.body);
+      var data = json.decode(response.body);
 
-  //     if (data["status"]) {
-  //       var space = Space.fromJson(data['data']);
-  //       onSuccess(space);
-  //     } else {
-  //       onError(data['message']);
-  //     }
-  //   } catch (e, s) {
-  //     LogHelper.error(Api.updateSpace, error: e, stackTrace: s);
-  //     onError(Messages.error);
-  //   }
-  // }
+      if (data["status"]) {
+        var table = TableModel.fromJson(data['data']);
+        onSuccess(table);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.updateTables, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
 
   static Future<void> deleteTable({
     required tableId,

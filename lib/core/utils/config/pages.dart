@@ -31,6 +31,7 @@ import 'package:saralnova/features/screens/Feature/rooms/rooms_screen.dart';
 import 'package:saralnova/features/screens/Feature/space/add_space_screen.dart';
 import 'package:saralnova/features/screens/Feature/space/space_screen.dart';
 import 'package:saralnova/features/screens/Feature/staff/staff_screen.dart';
+import 'package:saralnova/features/screens/Feature/tables/add_tables_screen.dart';
 import 'package:saralnova/features/screens/Feature/tables/tables_screen.dart';
 import 'package:saralnova/features/screens/Splash/splash_screen.dart';
 
@@ -176,6 +177,14 @@ final List<GetPage> pages = [
     page: () => TablesScreen(),
     binding: BindingsBuilder(() {
       Get.lazyPut(() => TableController());
+    }),
+  ),
+
+  GetPage(
+    name: AddTablesScreen.routeName,
+    page: () => AddTablesScreen(),
+    binding: BindingsBuilder(() {
+      // Get.lazyPut(() => RoomsController());
     }),
   ),
   // GetPage(
