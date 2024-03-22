@@ -18,6 +18,8 @@ class TableController extends GetxController {
   var crudState = CRUDSTATE.ADD.obs;
   var pageState = PageState.LOADING.obs;
   RxList<TableModel> tablesList = RxList();
+  RxList<TableModel> availableTableList = RxList();
+
   final nameController = TextEditingController();
   final capcityController = TextEditingController();
   final statusController = TextEditingController();
@@ -28,6 +30,7 @@ class TableController extends GetxController {
   @override
   void onInit() {
     getAllTables();
+    getAllAvailableTables();  
     super.onInit();
   }
 
@@ -39,6 +42,24 @@ class TableController extends GetxController {
           pageState.value = PageState.EMPTY;
         } else {
           tablesList.addAll(tables);
+          pageState.value = PageState.NORMAL;
+        }
+      },
+      onError: (message) {
+        pageState.value = PageState.ERROR;
+        LogHelper.error(message);
+      },
+    );
+  }
+
+  void getAllAvailableTables() async {
+    availableTableList.clear();
+    TableRepo.getAllAvailableTables(
+      onSuccess: (availabletables) {
+        if (availabletables.isEmpty) {
+          pageState.value = PageState.EMPTY;
+        } else {
+          availableTableList.addAll(availabletables);
           pageState.value = PageState.NORMAL;
         }
       },

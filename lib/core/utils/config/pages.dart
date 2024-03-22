@@ -16,12 +16,14 @@ import 'package:saralnova/core/controllers/Feature/table/table_controller.dart';
 import 'package:saralnova/core/controllers/Guest/guest_controller.dart';
 import 'package:saralnova/core/controllers/Home/home_controller.dart';
 import 'package:saralnova/core/controllers/Splash/splash_controller.dart';
+import 'package:saralnova/core/controllers/menu/menu_controller.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_screen.dart';
 import 'package:saralnova/features/screens/Feature/Booking/create_booking_screen.dart';
 import 'package:saralnova/features/screens/Feature/activity_log/activity_log_screen.dart';
-import 'package:saralnova/features/screens/Feature/aminity_type/aminities_screen.dart';
+import 'package:saralnova/features/screens/Feature/aminity_type/amenity_screen.dart';
 import 'package:saralnova/features/screens/Feature/facility_type/facility_screen.dart';
+import 'package:saralnova/features/screens/Feature/menu/menu_screen.dart';
 import 'package:saralnova/features/screens/Feature/restaurant/category/category_screen.dart';
 import 'package:saralnova/features/screens/Feature/restaurant/variants/add_variant_screen.dart';
 import 'package:saralnova/features/screens/Feature/restaurant/variants/variants_screen.dart';
@@ -185,6 +187,13 @@ final List<GetPage> pages = [
     page: () => AddTablesScreen(),
     binding: BindingsBuilder(() {
       // Get.lazyPut(() => RoomsController());
+    }),
+  ),
+  GetPage(
+    name: MenuScreen.routeName,
+    page: () => MenuScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => MenuRestaurantController());
     }),
   ),
   // GetPage(

@@ -8,6 +8,8 @@ import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/core/utils/helpers/sky_requests.dart';
 
+import '../../model/feature_model/restaurant_model/menu_model.dart';
+
 class RestaurantRepo {
   static Future<void> getRestaurantCategories({
     required Function(List<Category> categories) onSuccess,
@@ -237,6 +239,62 @@ class RestaurantRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.updateVariants, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  // restaurant's menu api's
+  static Future<void> getRestaurnatMenus({
+    required Function(List<Menu> menus) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.getMenus;
+
+      http.Response response = await SkyRequest.get(
+        url,
+      );
+
+      var data = json.decode(response.body);
+      if (data["status"]) {
+        var menus = menusRestaurantJson(data['data']);
+        onSuccess(menus);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.getMenus, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> deleteRestaurantMenu({
+    required Menu? menuModel,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.deleteMenus;
+      // var body = {
+      //   "id": menuId,
+      // };
+      var body = menuModel?.toJson();
+
+      http.Response response = await SkyRequest.post(
+        url,
+        body: body,
+      );
+
+      var data = json.decode(response.body);
+
+      if (data["status"]) {
+        String msg = data['message'];
+        onSuccess(msg);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.deleteMenus, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

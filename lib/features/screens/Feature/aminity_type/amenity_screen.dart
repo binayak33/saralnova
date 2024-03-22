@@ -27,7 +27,7 @@ class AmenitiesScreen extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          "Add Amenity",
+          "Amenities",
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
       ),

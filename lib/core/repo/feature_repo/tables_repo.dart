@@ -33,6 +33,30 @@ class TableRepo {
     }
   }
 
+  static Future<void> getAllAvailableTables({
+    required Function(List<TableModel> tables) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.getAvailableTables;
+
+      http.Response response = await SkyRequest.get(
+        url,
+      );
+
+      var data = json.decode(response.body);
+      if (data["status"]) {
+        var tables = tablesJson(data['data']);
+        onSuccess(tables);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.getAvailableTables, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
   static Future<void> storeTable({
     // required String title,
     required TableModel? tableModel,

@@ -84,15 +84,18 @@ class Api {
   static String updateVariants = "$apiBaseUrl/restaurant/variants/update";
   static String deleteVariants = "$apiBaseUrl/restaurant/variants/delete";
 
+  //-----restaurant menus
+  static String getMenus = "$apiBaseUrl/restaurant/menu";
+  static String storeMenus = "$apiBaseUrl/restaurant/menu/store";
+  static String updateMenus = "$apiBaseUrl/restaurant/menu/update";
+  static String deleteMenus = "$apiBaseUrl/restaurant/menu/delete";
+
 // ------------tables
   static String getTables = "$apiBaseUrl/restaurant/tables";
   static String getAvailableTables = "$apiBaseUrl/restaurant/available-tables";
   static String storeTables = "$apiBaseUrl/restaurant/tables/store";
   static String updateTables = "$apiBaseUrl/restaurant/tables/update";
   static String deleteTable = "$apiBaseUrl/restaurant/tables/delete";
-
-  // static String storeTable = "$apiBaseUrl/restaurant/variants/store";
-  // static String updateTable = "$apiBaseUrl/restaurant/variants/update";
 
   // ------------space
   static String getSpaces = "$apiBaseUrl/restaurant/space";

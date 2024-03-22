@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
-import 'package:saralnova/features/screens/Feature/tables/add_tables_screen.dart';
-import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 
-import '../../../../core/controllers/Feature/table/table_controller.dart';
-import '../../../../core/utils/constants/colors.dart';
+import '../../../../core/controllers/menu/menu_controller.dart';
+import '../../../../core/utils/helpers/sky_network_image.dart';
+import '../../../widgets/common_widgets/custom_alert_dialog.dart';
 
-class TablesScreen extends StatelessWidget {
-  static const String routeName = "/table-screen";
-  final c = Get.find<TableController>();
-  TablesScreen({super.key});
+class MenuScreen extends StatelessWidget {
+  static const String routeName = "/menu-screen";
+  final c = Get.find<MenuRestaurantController>();
+  MenuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Table"),
+        title: const Text("Menu"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -46,7 +46,7 @@ class TablesScreen extends StatelessWidget {
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.separated(
-                    itemCount: c.tablesList.length,
+                    itemCount: c.menuList.length,
                     physics: const ClampingScrollPhysics(),
                     shrinkWrap: true,
                     separatorBuilder: (context, index) {
@@ -55,19 +55,15 @@ class TablesScreen extends StatelessWidget {
                       );
                     },
                     itemBuilder: (context, index) {
-                      var table = c.tablesList[index];
-                      return TableTile(
+                      var menu = c.menuList[index];
+                      return MenuTile(
                         index: index + 1,
-                        tableName: table.name,
-                        capacity: int.parse(
-                          table.capacity.toString(),
-                        ),
-                        status: table.status,
-                        space: table.spaceName,
-                        onEdit: () => c.onEditClick(table),
-                        onConfirmDelete: () {
-                          c.deleteTable(table.id.toString());
-                        },
+                        menuTitle: menu.title,
+                        price: menu.price.toString(),
+                        imageUrl: menu.imageUrl,
+                        onEdit: () {},
+                        // onConfirmDelete: () {},
+                        onConfirmDelete: () => c.deleteRestaurantMenu(menu.id!),
                       );
                     },
                   );
@@ -85,12 +81,7 @@ class TablesScreen extends StatelessWidget {
       ),
       floatingActionButton: InkResponse(
         radius: 20,
-        onTap: () {
-          c.statusController.clear();
-          c.spaceController.clear();
-          c.crudState.value = CRUDSTATE.ADD;
-          Get.toNamed(AddTablesScreen.routeName);
-        },
+        onTap: () {},
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -109,21 +100,19 @@ class TablesScreen extends StatelessWidget {
   }
 }
 
-class TableTile extends StatelessWidget {
+class MenuTile extends StatelessWidget {
   final int index;
-  final String? tableName;
-  final String? space;
-  final num? capacity;
-  final String? status;
+  final String? menuTitle;
+  final String? imageUrl;
+  final String? price;
   final Function() onConfirmDelete;
   final Function() onEdit;
-  const TableTile({
+  const MenuTile({
     super.key,
     required this.index,
-    this.tableName,
-    this.space,
-    this.capacity,
-    this.status,
+    this.menuTitle,
+    this.imageUrl,
+    this.price,
     required this.onConfirmDelete,
     required this.onEdit,
   });
@@ -139,60 +128,69 @@ class TableTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "S.N: $index ",
-            style: CustomTextStyles.f12W400(color: AppColors.blackColor),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "S.N: $index ",
+                    style:
+                        CustomTextStyles.f12W400(color: AppColors.blackColor),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Menu Name: ",
+                        style: CustomTextStyles.f14W400(
+                            color: AppColors.borderColor),
+                      ),
+                      Text(
+                        menuTitle ?? "",
+                        overflow: TextOverflow.ellipsis,
+                        style: CustomTextStyles.f14W400(
+                            color: AppColors.blackColor),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: "Price:   ",
+                      style: CustomTextStyles.f14W400(
+                          color: AppColors.borderColor),
+                      children: [
+                        TextSpan(
+                            text: price ?? "",
+                            style: CustomTextStyles.f16W500())
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                ],
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: SkyNetworkImage(
+                  imageUrl: imageUrl ?? "",
+                  // imageUrl: "",
+                  height: 70,
+                  width: 70,
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 8,
-          ),
-          RichText(
-            text: TextSpan(
-              text: "Table Name:   ",
-              style: CustomTextStyles.f14W400(color: AppColors.borderColor),
-              children: [
-                TextSpan(
-                    text: tableName ?? "", style: CustomTextStyles.f16W500())
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          RichText(
-            text: TextSpan(
-              text: "Space:   ",
-              style: CustomTextStyles.f14W400(color: AppColors.borderColor),
-              children: [
-                TextSpan(text: space ?? "", style: CustomTextStyles.f16W500())
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          RichText(
-            text: TextSpan(
-              text: "Status:   ",
-              style: CustomTextStyles.f14W400(color: AppColors.borderColor),
-              children: [
-                TextSpan(text: status ?? "", style: CustomTextStyles.f16W500())
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          RichText(
-            text: TextSpan(
-              text: "Capcaity. :   ",
-              style: CustomTextStyles.f14W400(color: AppColors.borderColor),
-              children: [
-                TextSpan(
-                    text: capacity.toString(),
-                    style: CustomTextStyles.f16W500())
-              ],
-            ),
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
