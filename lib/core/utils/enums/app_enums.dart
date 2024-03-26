@@ -1,4 +1,0 @@
-
-enum BookingState { DATEROOMS, OPTIONS, INFORMATION, CONFIRM }
-
-enum PageState { EMPTY, LOADING, NORMAL, ERROR }

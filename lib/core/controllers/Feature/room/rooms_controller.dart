@@ -15,7 +15,7 @@ import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 
 import '../../../../features/screens/Feature/rooms/add_rooms_screen.dart';
 import '../../../model/rooms_model.dart';
-import '../../../utils/constants/enums.dart';
+import '../../../utils/enums/enums.dart';
 
 class RoomsController extends GetxController {
   // final amenitiesList = Get.find<AmenityController>().amenitiesList;
@@ -67,7 +67,7 @@ class RoomsController extends GetxController {
     );
   }
 
-  clearVariables() {
+  addRooms() {
     roomTypeController.clear();
     roomStatusController.clear();
     roomTitleController.clear();
@@ -152,7 +152,6 @@ class RoomsController extends GetxController {
         String amenitiesString =
             amenitiesDataList.map((amenity) => amenity.id!).join(',');
 
-        print("------->${amenitiesString}");
 
         loading.show();
         RoomsRepo.storeRoom(

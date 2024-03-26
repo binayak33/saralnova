@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 
@@ -91,7 +92,7 @@ class AddMenuScreen extends StatelessWidget {
                   height: 20,
                 ),
                 SkyTextField(
-                  hint: "Price",
+                  hint: "Title",
                   controller: c.titleController,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.name,
@@ -118,26 +119,155 @@ class AddMenuScreen extends StatelessWidget {
                   controller: c.categoryController,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.name,
+                  readOnly: true,
+                  suffixIconPath: IconPath.down,
                   validator: (value) => Validator.validateEmpty(value!),
+                  onTap: () {
+                    c.openCategoryTypeBottomSheet();
+                  },
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 SkyTextField(
                   hint: "Description",
+                  // maxLines: null,
                   controller: c.descriptionController,
                   textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.name,
-                  maxLine: 10,
+                  textInputType: TextInputType.multiline,
+                  maxLine: 5,
+
                   validator: (value) => Validator.validateEmpty(value!),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                if (c.addedMenuVariants.isNotEmpty)
-                  Obx(() {
-                    return Text("haha");
-                  }),
+                Obx(() {
+                  if (c.menuExtraState.value == MENUEXTRA.Variant &&
+                      c.addedMenuVariants.isNotEmpty) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          Obx(
+                            () => ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: c.addedMenuVariants.length,
+                              itemBuilder: (context, index) {
+                                var variant = c.addedMenuVariants[index];
+                                return Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 8),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          variant.title ?? "",
+                                          style: CustomTextStyles.f16W600(),
+                                        ),
+                                        Text(
+                                          variant.price.toString(),
+                                          style: CustomTextStyles.f16W600(),
+                                        ),
+                                        Text(
+                                          variant.minQty.toString(),
+                                          style: CustomTextStyles.f16W600(),
+                                        ),
+                                        Text(
+                                          variant.maxQty.toString(),
+                                          style: CustomTextStyles.f16W600(),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            c.addedMenuVariants.removeAt(index);
+                                          },
+                                          icon: SvgPicture.asset(
+                                            IconPath.cut,
+                                            height: 20,
+                                            width: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else if (c.menuExtraState.value == MENUEXTRA.addons &&
+                      c.addedMenuAddOns.isNotEmpty) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          Obx(
+                            () => ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: c.addedMenuAddOns.length,
+                              itemBuilder: (context, index) {
+                                var addOns = c.addedMenuAddOns[index];
+                                return Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 8),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          addOns.title ?? "",
+                                          style: CustomTextStyles.f16W600(),
+                                        ),
+                                        Text(
+                                          addOns.price.toString(),
+                                          style: CustomTextStyles.f16W600(),
+                                        ),
+                                        Text(
+                                          addOns.minQty.toString(),
+                                          style: CustomTextStyles.f16W600(),
+                                        ),
+                                        Text(
+                                          addOns.maxQty.toString(),
+                                          style: CustomTextStyles.f16W600(),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            c.addedMenuAddOns.removeAt(index);
+                                          },
+                                          icon: SvgPicture.asset(
+                                            IconPath.cut,
+                                            height: 20,
+                                            width: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                }),
+                const SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -156,13 +286,22 @@ class AddMenuScreen extends StatelessWidget {
                             c.openAddAddonsBottomSheet();
                           },
                           title: "Addons"),
-                    )
+                    ),
                   ],
                 ),
+                // const Spacer(flex: 2),
               ],
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SkyElevatedButton(
+            onPressed: () {
+              c.storeMenu();
+            },
+            title: "Add Menu"),
       ),
     );
   }

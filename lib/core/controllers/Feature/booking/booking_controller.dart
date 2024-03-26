@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:saralnova/core/model/country_model.dart';
 import 'package:saralnova/core/model/feature_model/booking_model/booking_model.dart';
-import 'package:saralnova/core/utils/enums/app_enums.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_bottom_sheets.dart/booking_calandar_bottom_sheet.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_bottom_sheets.dart/booking_country_screen.dart';
@@ -19,6 +18,7 @@ import '../../../model/feature_model/request_model/store_request_model.dart';
 import '../../../model/feature_model/room_type_model.dart';
 import '../../../model/rooms_model.dart';
 import '../../../repo/feature_repo/booking_repo.dart';
+import '../../../utils/enums/enums.dart';
 
 class BookingController extends GetxController {
   //controllers
@@ -517,15 +517,15 @@ class BookingController extends GetxController {
           loading.hide();
 
           if (availableRooms.isNotEmpty) {
-            // isVisible.value = true;
+            print("normal state----------------------------------------------");
             availableRoomList.addAll(availableRooms);
             pageState.value = PageState.NORMAL;
           } else {
-            // isVisible.value = false;
             pageState.value = PageState.ERROR;
           }
         },
         onError: (message) {
+          print("-------errrer--------------------_${message}");
           loading.hide();
           pageState.value == PageState.ERROR;
 

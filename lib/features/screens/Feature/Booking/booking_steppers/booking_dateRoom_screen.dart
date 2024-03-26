@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/validators.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
 
@@ -12,7 +12,8 @@ import '../../../../../core/utils/constants/icon_path.dart';
 import '../../../../widgets/common_widgets/sky_text_field.dart';
 
 class DateRoomScreen extends StatelessWidget {
-  final c = Get.put(BookingController());
+  // final c = Get.put(BookingController());
+  final c = Get.find<BookingController>();
 
   DateRoomScreen({super.key});
 
@@ -133,7 +134,7 @@ class DateRoomScreen extends StatelessWidget {
               //TODO shimmer
             } else if (c.pageState.value == PageState.NORMAL) {
               return Obx(
-                () => Flexible(
+                () => Expanded(
                   child: SizedBox(
                     child: GridView.builder(
                         shrinkWrap: true,
@@ -162,9 +163,6 @@ class DateRoomScreen extends StatelessWidget {
                                   c.bookedRoomList.add(availableRoom);
                                   c.calculateEstimatedCost();
                                 }
-
-                                print(
-                                    "-----booked room------${c.bookedRoomList}");
                               },
                             ),
                           );
@@ -173,6 +171,7 @@ class DateRoomScreen extends StatelessWidget {
                 ),
               );
             } else {
+              print(c.pageState.value);
               return const Text("No available rooms");
               //TODO No Available rooms  error svg pictrue
             }
@@ -197,7 +196,6 @@ class AvailableRoomBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(6),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/model/feature_model/facility_model.dart';
 import 'package:saralnova/core/repo/feature_repo/facility_repo.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/screens/Feature/facility_type/add_facility_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';

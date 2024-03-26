@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 
 class VariantTypeBottomSheet extends StatelessWidget {
   final Function(String variantType) onSelectRoomStatus;

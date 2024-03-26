@@ -35,14 +35,7 @@ class CreateBookingScreen extends StatelessWidget {
           "Booking",
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
-        // actions: [
-        //   IconButton(
-        //       onPressed: () {
-        //         c.onsubmit();
-        //         c.storeBooking();
-        //       },
-        //       icon: const Icon(Icons.add))
-        // ],
+      
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -130,7 +123,7 @@ class CreateBookingScreen extends StatelessWidget {
                           color: c.currentIndex >= 3
                               ? AppColors.primary
                               : AppColors.borderColor,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                          borderRadius:const BorderRadius.all(Radius.circular(10))),
                       child: SvgPicture.asset(IconPath.check),
                     ),
                   ),

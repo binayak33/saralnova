@@ -14,79 +14,85 @@ class AddVariantBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      height: Get.height / 2,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        height: Get.height * 0.7,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
         ),
-      ),
-      child: Column(
-        children: [
-          Text(
-            "Add Variant",
-            style: CustomTextStyles.f16W600(color: AppColors.blackColor),
+        child: Form(
+          key: c.addVariantKey,
+          child: Column(
+            children: [
+              Text(
+                "Add Variant",
+                style: CustomTextStyles.f16W600(color: AppColors.blackColor),
+              ),
+              const Divider(
+                color: AppColors.borderColor,
+                endIndent: 10,
+                indent: 10,
+                height: 40,
+              ),
+              SkyTextField(
+                hint: "Select variant category",
+                controller: c.variantCategoryController,
+                textInputAction: TextInputAction.next,
+                textInputType: TextInputType.name,
+                suffixIconPath: IconPath.down,
+                validator: (value) => Validator.validateEmpty(value!),
+                onTap: () {
+                  c.showVariants();
+                },
+                readOnly: true,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SkyTextField(
+                hint: "Price",
+                controller: c.priceVariantController,
+                textInputAction: TextInputAction.done,
+                textInputType: TextInputType.name,
+                validator: (value) => Validator.validateEmpty(value!),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SkyTextField(
+                hint: "min quantity",
+                readOnly: true,
+                controller: c.minQtyVariantController,
+                textInputAction: TextInputAction.done,
+                textInputType: TextInputType.name,
+                validator: (value) => Validator.validateEmpty(value!),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SkyTextField(
+                hint: "max quantity",
+                readOnly: true,
+                controller: c.maxQtyVariantController,
+                textInputAction: TextInputAction.done,
+                textInputType: TextInputType.name,
+                validator: (value) => Validator.validateEmpty(value!),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SkyElevatedButton(
+                  onPressed: () {
+                    c.submitAddMenutVariant();
+                  },
+                  title: "Submit"),
+            ],
           ),
-          const Divider(
-            color: AppColors.borderColor,
-            endIndent: 10,
-            indent: 10,
-            height: 40,
-          ),
-          SkyTextField(
-            hint: "Select variant category",
-            controller: c.variantCategoryController,
-            textInputAction: TextInputAction.next,
-            textInputType: TextInputType.name,
-            suffixIconPath: IconPath.down,
-            onTap: () {
-              c.showVariants();
-            },
-            readOnly: true,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SkyTextField(
-            hint: "Price",
-            controller: c.priceVariantController,
-            textInputAction: TextInputAction.done,
-            textInputType: TextInputType.name,
-            validator: (value) => Validator.validateEmpty(value!),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SkyTextField(
-            hint: "min quantity",
-            readOnly: true,
-            controller: c.minQtyVariantController,
-            textInputAction: TextInputAction.done,
-            textInputType: TextInputType.name,
-            validator: (value) => Validator.validateEmpty(value!),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SkyTextField(
-            hint: "max quantity",
-            readOnly: true,
-            controller: c.maxQtyVariantController,
-            textInputAction: TextInputAction.done,
-            textInputType: TextInputType.name,
-            validator: (value) => Validator.validateEmpty(value!),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SkyElevatedButton(
-              onPressed: () {
-                c.submitAddMenutVariant();
-              },
-              title: "Submit"),
-        ],
+        ),
       ),
     );
   }

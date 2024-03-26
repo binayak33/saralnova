@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 
 import '../../../features/widgets/common_widgets/sky_snack_bar.dart';

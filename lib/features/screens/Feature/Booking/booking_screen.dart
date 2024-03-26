@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/controllers/Feature/booking/booking_controller.dart';
-import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/model/feature_model/booking_model/booking_model.dart';
+import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/helpers/date_helper.dart';
 import 'package:saralnova/features/screens/Feature/Booking/create_booking_screen.dart';
+import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 
-import '../../../../core/model/feature_model/booking_model/booking_model.dart';
+import '../../../../core/controllers/Feature/booking/booking_controller.dart';
 import '../../../../core/utils/constants/colors.dart';
-import '../../../../core/utils/constants/icon_path.dart';
-import '../../../widgets/common_widgets/custom_alert_dialog.dart';
+import '../../../../core/utils/constants/custom_text_style.dart';
+import '../../../../core/utils/enums/enums.dart';
 
 class BookingScreen extends StatelessWidget {
   static const String routeName = "/booking-screen";
@@ -33,6 +33,15 @@ class BookingScreen extends StatelessWidget {
           "Booking",
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                print(c.pageState.value);
+
+                print(c.bookingList);
+              },
+              icon: Icon(Icons.add))
+        ],
       ),
       body: SingleChildScrollView(
         controller: c.scrollController,
@@ -55,14 +64,13 @@ class BookingScreen extends StatelessWidget {
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.builder(
-                    key: Key('builder}'), //attention
+                    key: const Key('builder}'),
                     itemCount: c.bookingList.length,
                     physics: const ClampingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       var booking = c.bookingList[index];
 
-                      print("------gn--${booking.guest?.name}");
                       return BookingTile(
                         index: index + 1,
                         booking: booking,
@@ -70,6 +78,7 @@ class BookingScreen extends StatelessWidget {
                     },
                   );
                 } else {
+                  print(c.pageState.value);
                   return const ErrorView(
                     errorTitle: "Something went wrong!!",
                     errorMessage: "Something went wrong",

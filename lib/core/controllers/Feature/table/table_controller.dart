@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/model/feature_model/tables/table_model.dart';
 import 'package:saralnova/core/repo/feature_repo/tables_repo.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/screens/Feature/tables/add_tables_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';

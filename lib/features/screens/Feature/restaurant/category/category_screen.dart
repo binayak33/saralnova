@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/restaurant/category/category_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';

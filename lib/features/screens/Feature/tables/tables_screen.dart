@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/features/screens/Feature/tables/add_tables_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.dart';

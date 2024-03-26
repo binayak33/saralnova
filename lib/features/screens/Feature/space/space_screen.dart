@@ -10,7 +10,7 @@ import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.da
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 
-import '../../../../core/utils/constants/enums.dart';
+import '../../../../core/utils/enums/enums.dart';
 
 class SpaceScreen extends StatelessWidget {
   static const String routeName = "/space-screen";

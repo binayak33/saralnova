@@ -6,7 +6,7 @@ import 'package:saralnova/core/utils/helpers/validators.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 
-import '../../../../core/utils/constants/enums.dart';
+import '../../../../core/utils/enums/enums.dart';
 
 class AddFacilityTypeScreen extends StatelessWidget {
   final c = Get.find<FacilityController>();

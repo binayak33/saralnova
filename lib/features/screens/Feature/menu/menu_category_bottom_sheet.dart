@@ -1,34 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:saralnova/core/controllers/Feature/restaurant/variants/variant_controller.dart';
-import 'package:saralnova/core/model/feature_model/restaurant_model/variant_model.dart';
+import 'package:saralnova/core/controllers/Feature/restaurant/category/category_controller.dart';
+import 'package:saralnova/core/model/feature_model/restaurant_model/category_model.dart';
+import 'package:saralnova/core/utils/constants/colors.dart';
+import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 
-import '../../../../../core/utils/constants/colors.dart';
-import '../../../../../core/utils/constants/custom_text_style.dart';
-
-class SelectAddOnTypeButtomSheet extends StatelessWidget {
+class MenuCategoryBottomSheet extends StatelessWidget {
   final c = Get.put(
-      VariantController()); // TODO get . find garne  ekpatak pailai lazyput garera bolaisakepaxi
+      CategoryController()); // TODO get . find garne  ekpatak pailai lazyput garera bolaisakepaxi
 
-  final Function(Variant variant) onSelectAddOnType;
-  SelectAddOnTypeButtomSheet({
+  final Function(Category categoryType) onSelectCategoryType;
+  MenuCategoryBottomSheet({
     super.key,
-    required this.onSelectAddOnType,
+    // this.selectedRoomType,
+    required this.onSelectCategoryType,
   });
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
-
-
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.6,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Column(
         children: [
           Text(
-            "Select Variant Type",
+            "Select Menu Category",
             style: CustomTextStyles.f16W600(color: AppColors.blackColor),
           ),
           const Divider(
@@ -38,23 +36,23 @@ class SelectAddOnTypeButtomSheet extends StatelessWidget {
             height: 20,
           ),
           Obx(() {
-            if (c.filteredVariantList.isEmpty) {
+            if (c.restaurantCategorylist.isEmpty) {
               return const LinearProgressIndicator();
             } else {
               return Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
-                  itemCount: c.filteredAddonsList.length,
+                  itemCount: c.restaurantCategorylist.length,
                   itemBuilder: (context, index) {
-                    var addon = c.filteredAddonsList[index];
+                    var category = c.restaurantCategorylist[index];
                     return ListTile(
                       onTap: () {
                         Navigator.of(context).pop();
-                        onSelectAddOnType(addon);
+                        onSelectCategoryType(category);
                       },
                       title: Text(
-                        addon.title ?? "",
+                        category.title ?? "",
                         style: CustomTextStyles.f16W400(),
                       ),
                       dense: true,

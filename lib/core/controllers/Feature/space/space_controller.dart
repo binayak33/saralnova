@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/model/feature_model/tables/space_model.dart';
 import 'package:saralnova/core/repo/feature_repo/space_repo.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/screens/Feature/space/add_space_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';

@@ -21,6 +21,7 @@ class SkyTextField extends StatelessWidget {
   final bool? autofocus;
   final int? maxLength;
   final int? maxLine;
+  final bool? expands;
   final Function()? onTap;
   final Function(String)? onSubmitted;
   final TextCapitalization textCapitalization;
@@ -52,6 +53,7 @@ class SkyTextField extends StatelessWidget {
     this.fillColor,
     this.maxLength,
     this.maxLine,
+    this.expands,
     this.prefixIcon,
     this.suffixIcon,
     this.obscureText = false,
@@ -81,7 +83,8 @@ class SkyTextField extends StatelessWidget {
       readOnly: (readOnly == null) ? false : readOnly!,
       keyboardType: textInputType,
       textInputAction: textInputAction,
-      maxLines: 1,
+      maxLines: maxLine,
+      expands: expands ?? false,
       validator: (validator != null) ? validator : null,
       controller: (controller != null) ? controller : null,
       // onChanged: (text) {
@@ -91,7 +94,6 @@ class SkyTextField extends StatelessWidget {
       // },
       onChanged: onValueChange,
       maxLength: maxLength,
-      minLines: maxLine != null ? 1 : null,
       decoration: InputDecoration(
         label: showLable
             ? Text(

@@ -8,7 +8,7 @@ import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 
 import '../../../../features/widgets/common_widgets/loading_dialog.dart';
 import '../../../model/feature_model/staff_model.dart';
-import '../../../utils/constants/enums.dart';
+import '../../../utils/enums/enums.dart';
 
 class StaffController extends GetxController {
   final LogoLoading loading = LogoLoading();

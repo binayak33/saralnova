@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:saralnova/core/model/feature_model/room_type_model.dart';
 import 'package:saralnova/core/repo/feature_repo/room_type_repo.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/screens/Feature/room_type/add_roomType_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:saralnova/core/controllers/Feature/amenities/amenities_controller.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/helpers/image_helper.dart';
 import 'package:saralnova/core/utils/helpers/sky_network_image.dart';

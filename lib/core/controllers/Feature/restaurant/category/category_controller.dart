@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/category_model.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/screens/Feature/restaurant/category/add_category_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';

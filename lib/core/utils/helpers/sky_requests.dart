@@ -124,4 +124,39 @@ class SkyRequest {
       throw "Server Error";
     }
   }
+
+  static Future<http.StreamedResponse> multiPartFile({
+    String type = "POST",
+    required String url,
+    Map<String, String>? headers,
+    Map<String, String>? fields,
+    required http.MultipartFile file, // Change parameter to a single file
+  }) async {
+    try {
+      var token = StorageHelper.getAccessToken();
+      headers ??= <String, String>{};
+      headers["Authorization"] = token.toString();
+
+      http.MultipartRequest request =
+          http.MultipartRequest(type, Uri.parse(url));
+
+      request.headers.addAll(headers);
+      if (fields != null) {
+        request.fields.addAll(fields);
+      }
+
+      request.files.add(file); // Add the single file
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 401) {
+        // Handle unauthorized access
+      }
+
+      return response;
+    } catch (e, s) {
+      // Handle errors
+      throw "Server Error";
+    }
+  }
 }

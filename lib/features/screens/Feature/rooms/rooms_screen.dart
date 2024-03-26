@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/constants/enums.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/features/widgets/app_widgets/rooms_widget.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
@@ -36,7 +36,7 @@ class RoomsScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Center(
+                  return const Center(
                     child: LinearProgressIndicator(),
                   );
                 } else if (c.pageState.value == PageState.EMPTY) {
@@ -101,7 +101,7 @@ class RoomsScreen extends StatelessWidget {
                     },
                   );
                 } else {
-                  return ErrorView(
+                  return const ErrorView(
                     errorTitle: "Something went wrong!!",
                     errorMessage: "Something went wrong",
                     imagePath: IconPath.somethingWentWrong,
@@ -115,7 +115,7 @@ class RoomsScreen extends StatelessWidget {
       floatingActionButton: InkResponse(
         radius: 20,
         onTap: () {
-          c.clearVariables();
+          c.addRooms();
         },
         child: Container(
           padding: const EdgeInsets.all(10),

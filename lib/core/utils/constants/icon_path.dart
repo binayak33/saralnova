@@ -33,6 +33,8 @@ class IconPath {
   //Assets
   static const String finance = "$basePath/finance.svg";
   static const String qr = "$basePath/qr.svg";
+  static const String cut = "$basePath/cut.svg";
+
   static const String loadingJson = "$basePathAnim/saralnova-loading.json";
 
   // vectors imgs

@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:saralnova/core/model/feature_model/restaurant_model/category_model.dart';
+import 'package:saralnova/core/model/feature_model/restaurant_model/menu_request_model.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/variant_model.dart';
 import 'package:saralnova/core/utils/constants/api.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
@@ -275,9 +277,7 @@ class RestaurantRepo {
   }) async {
     try {
       String url = Api.deleteMenus;
-      // var body = {
-      //   "id": menuId,
-      // };
+
       var body = menuModel?.toJson();
 
       http.Response response = await SkyRequest.post(
@@ -298,4 +298,73 @@ class RestaurantRepo {
       onError(Messages.error);
     }
   }
+
+  static Future<void> storeRestaurantMenu({
+    required MenuRequestParams? menuRequestParams,
+    File? file,
+    required Function(Menu menu) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.storeMenus;
+
+      var body = menuRequestParams?.toJson();
+
+      http.Response response = await SkyRequest.post(
+        url,
+        body: body,
+      );
+
+      var data = json.decode(response.body);
+
+      if (data["status"]) {
+        var menu = Menu.fromJson(data['data']);
+        onSuccess(menu);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.storeMenus, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+// -------------------------------
+  // static Future<void> storeRestaurantMenu({
+  //   required MenuRequestParams? menuRequestParams,
+  //   File?file,
+  //   required Function(Menu menu) onSuccess,
+  //   required Function(String message) onError,
+  // }) async {
+  //   try {
+  //     String url = Api.storeMenus;
+
+  //           http.MultipartFile httpFile = await http.MultipartFile.fromPath('file', file.path);
+
+  //     // var body = menuRequestParams?.toJson();
+
+  //     // http.Response response = await SkyRequest.post(
+  //     //   url,
+  //     //   body: body,
+  //     // );
+
+  //       http.StreamedResponse response = await SkyRequest.multiPartFile(
+  //       url: url,
+  //       file: httpFile, // Pass single file
+  //       fields: menuRequestParams?.toJson(), // Convert MenuRequestParams to JSON
+  //     );
+
+  //     var data = json.decode(response.body);
+
+  //     if (data["status"]) {
+  //       var menu = Menu.fromJson(data['data']);
+  //       onSuccess(menu);
+  //     } else {
+  //       onError(data['message']);
+  //     }
+  //   } catch (e, s) {
+  //     LogHelper.error(Api.storeMenus, error: e, stackTrace: s);
+  //     onError(Messages.error);
+  //   }
+  // }
 }
