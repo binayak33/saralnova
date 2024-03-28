@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/model/feature_model/activity/acitivity_model.dart';
@@ -21,15 +22,10 @@ class ActivitiesScreen extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: const Text("Activities"),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  print(c.activityList);
-                },
-                icon: Icon(Icons.add))
-          ],
         ),
         body: SingleChildScrollView(
+          controller: c.scrollController,
+          key: const PageStorageKey("Activities"),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -77,7 +73,18 @@ class ActivitiesScreen extends StatelessWidget {
                       imagePath: IconPath.somethingWentWrong,
                     );
                   }
-                })
+                }),
+                Obx(
+                  () => c.nextPageUrl.value != null
+                      ? const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                            // child: CircularProgressIndicator(),
+                            child: CupertinoActivityIndicator(),
+                          ),
+                        )
+                      : Container(),
+                )
               ],
             ),
           ),
@@ -97,7 +104,9 @@ class ActivityTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double parentWidth = MediaQuery.of(context).size.width;
     return Container(
+      width: parentWidth,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -139,26 +148,63 @@ class ActivityTile extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 40,
-                      width: 100, //make dynamic width
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.blackColor),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Expanded(
-                        child: ListView.builder(
-                          itemCount: 4,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return Text("hahahha");
-                          },
-                        ),
+                  if (activity.activities!.isNotEmpty) // no need to check null
+                    SizedBox(
+                      // height: 200,
+                      width: parentWidth * 0.85, //TODO width fix
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            height: 6,
+                          );
+                        },
+                        itemCount: activity.activities!.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          var activitiesData = activity.activities![index];
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Icon(Icons.add),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        activitiesData.description ?? "",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: CustomTextStyles.f16W600(
+                                            color: AppColors.primary),
+                                      ),
+                                      const SizedBox(
+                                        height: 6,
+                                      ),
+                                      if (activitiesData.properties?.remarks !=
+                                          null)
+                                        FittedBox(
+                                          child: Text(
+                                            activitiesData
+                                                    .properties?.remarks ??
+                                                "",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: CustomTextStyles.f13W400(
+                                                color: AppColors.blackColor),
+                                          ),
+                                        ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ),
-                  ),
                 ],
               ),
             ],

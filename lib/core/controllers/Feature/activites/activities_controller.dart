@@ -47,9 +47,9 @@ class ActivitiesController extends GetxController {
     } else {
       isLoadingMore.value = true;
     }
-    activityList.clear();
 
     ActivityRepo.getAllActivities(
+      nextPageUrl: nextPageUrl.value,
       onSuccess: (activityList, nextPageUrl) {
         if (activityList.isEmpty) {
           pageState.value = PageState.EMPTY;
