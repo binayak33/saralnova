@@ -27,7 +27,7 @@ class BookingCalandarBottomSheet extends StatelessWidget {
             initialSelectedRanges: [
               PickerDateRange(
                 DateTime.now(),
-                DateTime.now().add(const Duration(days: 2)),
+                DateTime.now().add(const Duration(days: 1)),
               ),
             ],
             enablePastDates: false,
@@ -36,11 +36,14 @@ class BookingCalandarBottomSheet extends StatelessWidget {
             showTodayButton: false,
             confirmText: "Apply",
             onSubmit: (dynamic value) {
-              if (value is PickerDateRange) {
-                // Process selected date range
-              } else if (value is DateTime) {
-                // Process selected date
-              }
+              print("00000000000000000");
+
+              // if (value is PickerDateRange) {
+              //   // Process selected date range
+              // } else if (value is DateTime) {
+              //   // Process selected date
+              // }
+
               Navigator.pop(context); // Close the date picker
             },
             onCancel: () {
@@ -49,8 +52,9 @@ class BookingCalandarBottomSheet extends StatelessWidget {
             onSelectionChanged: c.onSelectionChanged,
             selectionMode: DateRangePickerSelectionMode.range,
             initialSelectedRange: PickerDateRange(
-              DateTime.now().subtract(const Duration(days: 4)),
-              DateTime.now().add(const Duration(days: 3)),
+              // DateTime.now().subtract(const Duration(days: 4)),
+              DateTime.now(),
+              DateTime.now().add(const Duration(days: 1)),
             ),
           ),
         ],

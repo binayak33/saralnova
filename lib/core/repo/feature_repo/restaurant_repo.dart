@@ -10,6 +10,7 @@ import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/core/utils/helpers/sky_requests.dart';
 
+////import 'package:http_parser/http_parser.dart';
 import '../../model/feature_model/restaurant_model/menu_model.dart';
 
 class RestaurantRepo {
@@ -299,59 +300,21 @@ class RestaurantRepo {
     }
   }
 
-  static Future<void> storeRestaurantMenu({
-    required MenuRequestParams? menuRequestParams,
-    File? file,
-    required Function(Menu menu) onSuccess,
-    required Function(String message) onError,
-  }) async {
-    try {
-      String url = Api.storeMenus;
-
-      var body = menuRequestParams?.toJson();
-
-      http.Response response = await SkyRequest.post(
-        url,
-        body: body,
-      );
-
-      var data = json.decode(response.body);
-
-      if (data["status"]) {
-        var menu = Menu.fromJson(data['data']);
-        onSuccess(menu);
-      } else {
-        onError(data['message']);
-      }
-    } catch (e, s) {
-      LogHelper.error(Api.storeMenus, error: e, stackTrace: s);
-      onError(Messages.error);
-    }
-  }
-
-// -------------------------------
+// api to post only map without img
   // static Future<void> storeRestaurantMenu({
   //   required MenuRequestParams? menuRequestParams,
-  //   File?file,
+  //   File? file,
   //   required Function(Menu menu) onSuccess,
   //   required Function(String message) onError,
   // }) async {
   //   try {
   //     String url = Api.storeMenus;
 
-  //           http.MultipartFile httpFile = await http.MultipartFile.fromPath('file', file.path);
+  //     var body = menuRequestParams?.toJson();
 
-  //     // var body = menuRequestParams?.toJson();
-
-  //     // http.Response response = await SkyRequest.post(
-  //     //   url,
-  //     //   body: body,
-  //     // );
-
-  //       http.StreamedResponse response = await SkyRequest.multiPartFile(
-  //       url: url,
-  //       file: httpFile, // Pass single file
-  //       fields: menuRequestParams?.toJson(), // Convert MenuRequestParams to JSON
+  //     http.Response response = await SkyRequest.post(
+  //       url,
+  //       body: body,
   //     );
 
   //     var data = json.decode(response.body);
@@ -367,4 +330,63 @@ class RestaurantRepo {
   //     onError(Messages.error);
   //   }
   // }
+
+// -------------------------------
+  static Future<void> storeRestaurantMenu({
+    required MenuRequestParams? menuRequestParams,
+    File? file,
+    required Function(Menu menu) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.storeMenus;
+
+      // List<http.MultipartFile> images = [];
+
+      // if (file != null) {
+      //   images = [
+      //     http.MultipartFile.fromBytes(
+      //       "image",
+      //       await file.readAsBytes(),
+      //       filename: "image",
+      //       contentType: MediaType("image", "*"),
+      //     )
+      //   ];
+      // }
+
+      // http.StreamedResponse response = await SkyRequest.multiPart(
+      //   url: url,
+      //   file: http.MultipartFile.fromBytes(
+      //     "image",
+      //     await file!.readAsBytes(),
+      //     filename: "image",
+      //     contentType: MediaType("image", "*"),
+      //   ), // Pass single file
+      //   fields: menuRequestParams?.toJson(),
+      // );
+
+      // -------------------
+      http.StreamedResponse response = await SkyRequest.multiPart(
+        url: url,
+        file: file!, // Pass single file
+        fields: menuRequestParams?.toJson(),
+      );
+      dynamic data = json.decode(await response.stream.bytesToString());
+
+      print("--------------response-------------$data");
+
+      if (data["status"]) {
+        var menu = Menu.fromJson(data['data']);
+
+        print(
+            "---------------------------------------menu-------------------${menu}");
+        onSuccess(menu);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.storeMenus, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
 }

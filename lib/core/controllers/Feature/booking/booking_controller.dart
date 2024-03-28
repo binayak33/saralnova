@@ -465,6 +465,13 @@ class BookingController extends GetxController {
       DateTime startDate = args.value.startDate;
       DateTime endDate = args.value.endDate ?? args.value.startDate;
 
+      //validation if the start date and end date are same
+      if (startDate == endDate) {
+        endDate = endDate.add(Duration(days: 1));
+        return;
+      }
+
+      // Ensure end date is one day ahead
       range.value =
           '${DateFormat('yyyy-MM-dd').format(startDate)}  -TO-  ${DateFormat('yyyy-MM-dd').format(endDate)}';
       checkInOutRangeController.text = range.value;

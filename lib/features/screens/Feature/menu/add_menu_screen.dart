@@ -24,6 +24,13 @@ class AddMenuScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Add Menu"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                print(c.pickedFile.value);
+              },
+              icon: Icon(Icons.add))
+        ],
       ),
       body: SingleChildScrollView(
         child: Form(

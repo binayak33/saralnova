@@ -33,15 +33,6 @@ class BookingScreen extends StatelessWidget {
           "Booking",
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                print(c.pageState.value);
-
-                print(c.bookingList);
-              },
-              icon: Icon(Icons.add))
-        ],
       ),
       body: SingleChildScrollView(
         controller: c.scrollController,
@@ -78,7 +69,6 @@ class BookingScreen extends StatelessWidget {
                     },
                   );
                 } else {
-                  print(c.pageState.value);
                   return const ErrorView(
                     errorTitle: "Something went wrong!!",
                     errorMessage: "Something went wrong",

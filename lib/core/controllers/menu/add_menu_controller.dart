@@ -253,11 +253,13 @@ class AddMenuController extends GetxController {
         categoryId: category.value?.id,
         description: descriptionController.text,
         variants: convertedVariantsList,
-        menuImage: pickedFile.value,
+
+        // menuImage: pickedFile.value,
       );
 
       RestaurantRepo.storeRestaurantMenu(
           menuRequestParams: menuRequest,
+          file: pickedFile.value,
           onSuccess: (menu) {
             loading.hide();
             SkySnackBar.success(

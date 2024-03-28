@@ -39,8 +39,10 @@ import 'package:saralnova/features/screens/Feature/tables/tables_screen.dart';
 import 'package:saralnova/features/screens/Splash/splash_screen.dart';
 
 import '../../../features/screens/Auth/login_screen.dart';
+import '../../../features/screens/Feature/activites/activites_screen.dart';
 import '../../../features/screens/Feature/menu/add_menu_screen.dart';
 import '../../controllers/Auth/login_controller.dart';
+import '../../controllers/Feature/activites/activities_controller.dart';
 
 final List<GetPage> pages = [
   GetPage(
@@ -204,6 +206,14 @@ final List<GetPage> pages = [
     page: () => AddMenuScreen(),
     binding: BindingsBuilder(() {
       Get.lazyPut(() => AddMenuController());
+    }),
+  ),
+
+   GetPage(
+    name: ActivitiesScreen.routeName,
+    page: () => ActivitiesScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => ActivitiesController());
     }),
   ),
 ];

@@ -86,8 +86,10 @@ class Api {
 
   //-----restaurant menus
   static String getMenus = "$apiBaseUrl/restaurant/menu";
-  static String storeMenus = "$apiBaseUrl/restaurant/menu/store";
-  static String updateMenus = "$apiBaseUrl/restaurant/menu/update";
+  static String storeMenus =
+      "$apiBaseUrl/restaurant/menu/store"; //TODO implement
+  static String updateMenus =
+      "$apiBaseUrl/restaurant/menu/update"; //TODO implement
   static String deleteMenus = "$apiBaseUrl/restaurant/menu/delete";
 
 // ------------tables
@@ -102,4 +104,7 @@ class Api {
   static String storeSpace = "$apiBaseUrl/restaurant/space/store";
   static String updateSpace = "$apiBaseUrl/restaurant/space/update";
   static String deleteSpace = "$apiBaseUrl/restaurant/space/delete";
+
+// -------------activities
+  static String activities = "$apiBaseUrl/restaurant/activities";
 }

@@ -4,6 +4,7 @@ import 'package:saralnova/core/controllers/Feature/feature_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/features/screens/Feature/Booking/booking_screen.dart';
+import 'package:saralnova/features/screens/Feature/activites/activites_screen.dart';
 import 'package:saralnova/features/screens/Feature/activity_log/activity_log_screen.dart';
 import 'package:saralnova/features/screens/Feature/aminity_type/amenity_screen.dart';
 import 'package:saralnova/features/screens/Feature/facility_type/facility_screen.dart';
@@ -115,14 +116,15 @@ class FeatureScreen extends StatelessWidget {
                   },
                 ),
               ),
-               Card(
+              Card(
                 child: ListTile(
                   title: const Text("Menus"),
                   onTap: () {
                     Get.toNamed(MenuScreen.routeName);
                   },
                 ),
-              ), const SizedBox(
+              ),
+              const SizedBox(
                 height: 10,
               ),
               Text("Tables features below"),
@@ -142,6 +144,18 @@ class FeatureScreen extends StatelessWidget {
                   title: const Text("Tables"),
                   onTap: () {
                     Get.toNamed(TablesScreen.routeName);
+                  },
+                ),
+              ),
+              Text("Activities"),
+              const SizedBox(
+                height: 10,
+              ),
+              Card(
+                child: ListTile(
+                  title: const Text("Activities"),
+                  onTap: () {
+                    Get.toNamed(ActivitiesScreen.routeName);
                   },
                 ),
               ),

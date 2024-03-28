@@ -1,11 +1,11 @@
-import 'dart:io';
+import 'dart:convert';
 
 class MenuRequestParams {
   String? title;
   int? price;
   String? categoryId;
   String? description;
-  File? menuImage;
+  // File? menuImage;
   List<Variants>? variants;
 
   MenuRequestParams(
@@ -13,7 +13,7 @@ class MenuRequestParams {
       this.price,
       this.categoryId,
       this.description,
-      this.menuImage,
+      // this.menuImage,
       this.variants});
 
   Map<String, dynamic> toJson() {
@@ -22,10 +22,13 @@ class MenuRequestParams {
     data['price'] = this.price;
     data['category_id'] = this.categoryId;
     data['description'] = this.description;
-    data['image'] = this.menuImage;
-    if (this.variants != null) {
-      data['variants'] = this.variants!.map((v) => v.toJson()).toList();
-    }
+    // data['image'] = this.menuImage.toString();
+    // if (this.variants != null) {
+    //   data['variants'] = this.variants!.map((v) => v.toJson()).toList();
+    // }
+    data['variants'] =
+        json.encode(variants?.map((v) => v.toJson()).toList() ?? []);
+
     return data;
   }
 }
