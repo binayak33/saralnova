@@ -6,6 +6,7 @@ import 'package:saralnova/core/controllers/Feature/amenities/amenities_controlle
 import 'package:saralnova/core/controllers/Feature/booking/booking_controller.dart';
 import 'package:saralnova/core/controllers/Feature/facility/facility_controller.dart';
 import 'package:saralnova/core/controllers/Feature/feature_controller.dart';
+import 'package:saralnova/core/controllers/Feature/orders/customer_orders/customers_KOT_controller.dart';
 import 'package:saralnova/core/controllers/Feature/restaurant/category/category_controller.dart';
 import 'package:saralnova/core/controllers/Feature/restaurant/variants/variant_controller.dart';
 import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
@@ -25,6 +26,7 @@ import 'package:saralnova/features/screens/Feature/activity_log/activity_log_scr
 import 'package:saralnova/features/screens/Feature/aminity_type/amenity_screen.dart';
 import 'package:saralnova/features/screens/Feature/facility_type/facility_screen.dart';
 import 'package:saralnova/features/screens/Feature/menu/menu_screen.dart';
+import 'package:saralnova/features/screens/Feature/orders/customer_order/customer_kot_screen.dart';
 import 'package:saralnova/features/screens/Feature/restaurant/category/category_screen.dart';
 import 'package:saralnova/features/screens/Feature/restaurant/variants/add_variant_screen.dart';
 import 'package:saralnova/features/screens/Feature/restaurant/variants/variants_screen.dart';
@@ -41,8 +43,10 @@ import 'package:saralnova/features/screens/Splash/splash_screen.dart';
 import '../../../features/screens/Auth/login_screen.dart';
 import '../../../features/screens/Feature/activites/activites_screen.dart';
 import '../../../features/screens/Feature/menu/add_menu_screen.dart';
+import '../../../features/screens/Feature/orders/customer_order/customer_orders_screen.dart';
 import '../../controllers/Auth/login_controller.dart';
 import '../../controllers/Feature/activites/activities_controller.dart';
+import '../../controllers/Feature/orders/customer_orders/customer_order_controller.dart';
 
 final List<GetPage> pages = [
   GetPage(
@@ -201,7 +205,7 @@ final List<GetPage> pages = [
     }),
   ),
 
-   GetPage(
+  GetPage(
     name: AddMenuScreen.routeName,
     page: () => AddMenuScreen(),
     binding: BindingsBuilder(() {
@@ -209,11 +213,27 @@ final List<GetPage> pages = [
     }),
   ),
 
-   GetPage(
+  GetPage(
     name: ActivitiesScreen.routeName,
     page: () => ActivitiesScreen(),
     binding: BindingsBuilder(() {
       Get.lazyPut(() => ActivitiesController());
+    }),
+  ),
+
+  // .......below are the orders controllers/pages/routeNames
+  GetPage(
+    name: CustomerOrderScreen.routeName,
+    page: () => CustomerOrderScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => CustomerOrderController());
+    }),
+  ),
+  GetPage(
+    name: CustomersKotScreen.routeName,
+    page: () => CustomersKotScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => CustomersKOTController());
     }),
   ),
 ];

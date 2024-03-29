@@ -107,4 +107,15 @@ class Api {
 
 // -------------activities
   static String activities = "$apiBaseUrl/restaurant/activities";
+
+  // -------------------------------ORDERS
+
+  // ----------------ORDERS --Customer Orders
+  // ------------space
+  static String getAllCustomersOrders =
+      "$apiBaseUrl/restaurant/customer/all-orders-by-customer";
+  static String getCustomersOrder =
+      "$apiBaseUrl/restaurant/customer/orders?id=#id#";
+  // static String updateSpace = "$apiBaseUrl/restaurant/space/update";
+  // static String deleteSpace = "$apiBaseUrl/restaurant/space/delete";
 }

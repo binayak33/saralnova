@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class MenuRequestParams {
   String? title;
   int? price;
@@ -16,18 +14,19 @@ class MenuRequestParams {
       // this.menuImage,
       this.variants});
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['price'] = this.price;
-    data['category_id'] = this.categoryId;
-    data['description'] = this.description;
+  Map<String, String> toJson() {
+    final Map<String, String> data = new Map<String, String>();
+    data['title'] = this.title.toString();
+    data['price'] = this.price.toString();
+    data['category_id'] = this.categoryId.toString();
+    data['description'] = this.description.toString();
     // data['image'] = this.menuImage.toString();
-    // if (this.variants != null) {
-    //   data['variants'] = this.variants!.map((v) => v.toJson()).toList();
-    // }
-    data['variants'] =
-        json.encode(variants?.map((v) => v.toJson()).toList() ?? []);
+    if (this.variants != null) {
+      data['variants'] =
+          this.variants!.map((v) => v.toJson()).toList().toString();
+    }
+    // data['variants'] =
+    //     json.encode(variants?.map((v) => v.toJson()).toList() ?? []);
 
     return data;
   }

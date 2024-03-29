@@ -257,6 +257,8 @@ class AddMenuController extends GetxController {
         // menuImage: pickedFile.value,
       );
 
+      print("-menu request----${menuRequest}");
+
       RestaurantRepo.storeRestaurantMenu(
           menuRequestParams: menuRequest,
           file: pickedFile.value,

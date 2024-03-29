@@ -93,10 +93,11 @@ class ActivitiesScreen extends StatelessWidget {
 }
 
 class ActivityTile extends StatelessWidget {
+  final c = Get.find<ActivitiesController>();
   final int index;
   final Activity activity;
 
-  const ActivityTile({
+  ActivityTile({
     super.key,
     required this.index,
     required this.activity,
@@ -163,6 +164,7 @@ class ActivityTile extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           var activitiesData = activity.activities![index];
+
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -170,33 +172,47 @@ class ActivityTile extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Icon(Icons.add),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        activitiesData.description ?? "",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: CustomTextStyles.f16W600(
-                                            color: AppColors.primary),
-                                      ),
-                                      const SizedBox(
-                                        height: 6,
-                                      ),
-                                      if (activitiesData.properties?.remarks !=
-                                          null)
-                                        FittedBox(
-                                          child: Text(
-                                            activitiesData
-                                                    .properties?.remarks ??
-                                                "",
-                                            overflow: TextOverflow.ellipsis,
-                                            style: CustomTextStyles.f13W400(
-                                                color: AppColors.blackColor),
-                                          ),
+                                  c.showStatusTypeIcon(activitiesData),
+                                  // if (activitiesData.description ==
+                                  //     "Customer checkout")
+                                  //   SvgPicture.asset(
+                                  //     IconPath.orderCheckout,
+                                  //     height: 20,
+                                  //     width: 20,
+                                  //   ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          activitiesData.description ?? "",
+                                          overflow: TextOverflow.ellipsis,
+                                          style: CustomTextStyles.f16W600(
+                                              color: AppColors.primary),
                                         ),
-                                    ],
+                                        const SizedBox(
+                                          height: 6,
+                                        ),
+                                        if (activitiesData
+                                                .properties?.remarks !=
+                                            null)
+                                          FittedBox(
+                                            child: Text(
+                                              activitiesData
+                                                      .properties?.remarks ??
+                                                  "",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: CustomTextStyles.f13W400(
+                                                  color: AppColors.blackColor),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),

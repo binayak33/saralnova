@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -125,94 +124,32 @@ class SkyRequest {
   //     throw "Server Error";
   //   }
   // }
-
-  // ------------------------------- mine worked multipart
-
-  // static Future<http.StreamedResponse> multiPart({
-  //   String type = "POST",
-  //   required String url,
-  //   Map<String, String>? headers,
-  //   Map<String, String>? fields,
-  //   required List<http.MultipartFile> files,
-  // }) async {
-  //   try {
-  //     var token = StorageHelper.getAccessToken();
-  //     headers ??= <String, String>{};
-  //     headers["Content-Type"] = "application/json";
-  //     headers["Accept"] = "application/json";
-  //     headers["Authorization"] = token.toString();
-
-  //     http.MultipartRequest request =
-  //         http.MultipartRequest(type, Uri.parse(url));
-
-  //     request.headers.addAll(headers);
-  //     if (fields != null) {
-  //       request.fields.addAll(fields);
-
-  //     }
-
-  //     request.files.addAll(files);
-
-  //     request.headers.addAll(headers);
-  //     http.StreamedResponse response = await request.send();
-
-  //     log(json.encode(headers), name: "Get Request Header ==> $url");
-
-  //     if (response.statusCode == 401) {
-  //       Get.find<CoreController>().logOut();
-  //       Get.closeAllSnackbars();
-  //       SkySnackBar.info(
-  //           title: "Session Expired",
-  //           message: "Your session has expired!!. Please Log in to continue");
-  //     }
-  //     return response;
-  //   } catch (e, s) {
-  //     log(
-  //       "Server Error",
-  //       error: e,
-  //       stackTrace: s,
-  //     );
-  //     throw "Server Error";
-  //   }
-  // }
-
-  // ------------------------------- New  multipart to handle lists
-
   static Future<http.StreamedResponse> multiPart({
     String type = "POST",
     required String url,
     Map<String, String>? headers,
-    Map<String, dynamic>? fields, // Changed to Map<String, dynamic>
-    // required List<http.MultipartFile> files,
-    // required http.MultipartFile file,
-    required File file,
+    dynamic fields,
+    required List<http.MultipartFile> files,
   }) async {
     try {
       var token = StorageHelper.getAccessToken();
       headers ??= <String, String>{};
-      headers["Content-Type"] = "application/json";
+      headers["Content-Type"] =
+          "multipart/form-data"; // Change content type to multipart/form-data
       headers["Accept"] = "application/json";
       headers["Authorization"] = token.toString();
 
       http.MultipartRequest request =
           http.MultipartRequest(type, Uri.parse(url));
 
-      request.files.add(await http.MultipartFile.fromPath('image', file.path));
-
       request.headers.addAll(headers);
+
       if (fields != null) {
-        fields.forEach((key, value) {
-          if (value is List) {
-            // Convert list to JSON string
-            request.fields[key] = value.toString();
-          } else {
-            // For other types, convert to string
-            request.fields[key] = value.toString();
-          }
-        });
+        // Check if fields are provided and encode them as JSON
+        request.fields['data'] = json.encode(fields);
       }
 
-      // request.files.addAll(fields);
+      request.files.addAll(files);
 
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();

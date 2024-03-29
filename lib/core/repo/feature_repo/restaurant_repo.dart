@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+////import 'package:http_parser/http_parser.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/category_model.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/menu_request_model.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/variant_model.dart';
@@ -10,7 +12,6 @@ import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/core/utils/helpers/sky_requests.dart';
 
-////import 'package:http_parser/http_parser.dart';
 import '../../model/feature_model/restaurant_model/menu_model.dart';
 
 class RestaurantRepo {
@@ -341,36 +342,33 @@ class RestaurantRepo {
     try {
       String url = Api.storeMenus;
 
-      // List<http.MultipartFile> images = [];
+      List<http.MultipartFile> images = [];
 
-      // if (file != null) {
-      //   images = [
-      //     http.MultipartFile.fromBytes(
-      //       "image",
-      //       await file.readAsBytes(),
-      //       filename: "image",
-      //       contentType: MediaType("image", "*"),
-      //     )
-      //   ];
-      // }
+      if (file != null) {
+        images = [
+          http.MultipartFile.fromBytes(
+            "image",
+            await file.readAsBytes(),
+            filename: "image",
+            contentType: MediaType("image", "*"),
+          )
+        ];
+      }
 
-      // http.StreamedResponse response = await SkyRequest.multiPart(
-      //   url: url,
-      //   file: http.MultipartFile.fromBytes(
-      //     "image",
-      //     await file!.readAsBytes(),
-      //     filename: "image",
-      //     contentType: MediaType("image", "*"),
-      //   ), // Pass single file
-      //   fields: menuRequestParams?.toJson(),
-      // );
+      Map<String, String>? encodedParams;
+      if (menuRequestParams != null) {
+        encodedParams = menuRequestParams.toJson();
+      }
 
-      // -------------------
       http.StreamedResponse response = await SkyRequest.multiPart(
         url: url,
-        file: file!, // Pass single file
-        fields: menuRequestParams?.toJson(),
+        files: images,
+        // fields: json.encode(menuRequestParams?.toJson()),
+        fields: encodedParams,
       );
+
+      print(response);
+
       dynamic data = json.decode(await response.stream.bytesToString());
 
       print("--------------response-------------$data");

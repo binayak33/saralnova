@@ -23,6 +23,14 @@ class IconPath {
   static const String minus = "$basePath/minus.svg";
   static const String plus = "$basePath/plus.svg";
 
+  // order icons----------
+  static const String billCancel = "$basePath/billCancel.svg";
+  static const String billDelete = "$basePath/billDelete.svg";
+  static const String justCteatedDish = "$basePath/justCteatedDish.svg";
+  static const String orderCheckout = "$basePath/orderCheckout.svg";
+  static const String orderPlaced = "$basePath/orderPlaced.svg";
+  static const String orderReceived = "$basePath/orderReceived.svg";
+
   //Bottom Nav Icons
   static const String home = "$basePath/home.svg";
   static const String calendar = "$basePath/calendar.svg";
