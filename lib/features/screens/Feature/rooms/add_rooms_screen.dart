@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/validators.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 
@@ -101,79 +101,88 @@ class AddRoomsScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Text(
                   "Amenities",
                   style: CustomTextStyles.f22W600(),
                 ),
-                Obx(() {
-                  if (c.amenityController.amenitiesList.isNotEmpty) {
-                    return SizedBox(
-                      height: 300,
-                      width: Get.width,
-                      child: ListView(
-                        children: [
-                          Wrap(
-                            alignment: WrapAlignment.start,
-                            runSpacing: 6,
-                            spacing: 6,
-                            children: List.generate(
-                              c.amenityController.amenitiesList.length,
-                              (index) {
-                                var amenity =
-                                    c.amenityController.amenitiesList[index];
-                                return ActionChip(
-                                  color: c.amenitiesDataList.contains(amenity)
-                                      ? MaterialStateProperty.all<Color?>(
-                                          AppColors.bookingColor)
-                                      : MaterialStateProperty.all<Color?>(
-                                          Colors.transparent),
-                                  backgroundColor: AppColors.blackColor,
-                                  avatar: c.amenitiesDataList.contains(amenity)
-                                      ? const Icon(Icons.check)
-                                      : const Icon(Icons.add),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    side: const BorderSide(
-                                      color: AppColors.borderColor,
+                const SizedBox(
+                  height: 10,
+              ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.borderColor),
+                    borderRadius: BorderRadius.circular(
+                      10,
+                    ),
+                  ),
+                  height: 170,
+                  width: Get.width,
+                  child: Obx(() {
+                    if (c.amenityController.amenitiesList.isNotEmpty) {
+                      return SizedBox(
+                        height: 300,
+                        width: Get.width,
+                        child: ListView(
+                          children: [
+                            Wrap(
+                              alignment: WrapAlignment.start,
+                              runSpacing: 6,
+                              spacing: 6,
+                              children: List.generate(
+                                c.amenityController.amenitiesList.length,
+                                (index) {
+                                  var amenity =
+                                      c.amenityController.amenitiesList[index];
+                                  return ActionChip(
+                                    color: c.amenitiesDataList.contains(amenity)
+                                        ? MaterialStateProperty.all<Color?>(
+                                            AppColors.orangeColor)
+                                        : MaterialStateProperty.all<Color?>(
+                                            Colors.transparent),
+                                    backgroundColor: AppColors.blackColor,
+                                    avatar:
+                                        c.amenitiesDataList.contains(amenity)
+                                            ? const Icon(Icons.check)
+                                            : const Icon(Icons.add),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      side: const BorderSide(
+                                        color: AppColors.borderColor,
+                                      ),
                                     ),
-                                  ),
-                                  label: Text(
-                                    "${c.amenityController.amenitiesList[index].title}",
-                                    style: CustomTextStyles.f12W600(
-                                      color: AppColors.blackColor,
+                                    label: Text(
+                                      "${c.amenityController.amenitiesList[index].title}",
+                                      style: CustomTextStyles.f12W600(
+                                        color: AppColors.blackColor,
+                                      ),
                                     ),
-                                  ),
-                                  onPressed: () {
-                                    //TODO  // c.amenitiesDataList.add(amenity);
+                                    onPressed: () {
+                                      //TODO  // c.amenitiesDataList.add(amenity);
 
-                                    if (c.amenitiesDataList.contains(amenity)) {
-                                      c.amenitiesDataList.remove(amenity);
-                                    } else {
-                                      c.amenitiesDataList.add(amenity);
-                                    }
-
-                                    // String title = amenity.title.toString();
-                                    // if (c.amenitiesDataList.contains(title)) {
-                                    //   c.amenitiesDataList.remove(title);
-                                    // } else {
-                                    //   c.amenitiesDataList.add(title);
-                                    // }
-                                  },
-                                );
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                })
+                                      if (c.amenitiesDataList
+                                          .contains(amenity)) {
+                                        c.amenitiesDataList.remove(amenity);
+                                      } else {
+                                        c.amenitiesDataList.add(amenity);
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }),
+                )
               ],
             ),
           ),

@@ -20,8 +20,6 @@ class CreateBookingScreen extends StatelessWidget {
   final c = Get.find<BookingController>();
   CreateBookingScreen({super.key});
 
-// TODO : BACK bUTTON HUDA EHI APP ma ehi rakhdineyuser lai
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +33,6 @@ class CreateBookingScreen extends StatelessWidget {
           "Booking",
           style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
         ),
-      
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -123,7 +120,8 @@ class CreateBookingScreen extends StatelessWidget {
                           color: c.currentIndex >= 3
                               ? AppColors.primary
                               : AppColors.borderColor,
-                          borderRadius:const BorderRadius.all(Radius.circular(10))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
                       child: SvgPicture.asset(IconPath.check),
                     ),
                   ),
@@ -138,7 +136,7 @@ class CreateBookingScreen extends StatelessWidget {
                 width: Get.width,
                 child: PageView(
                   controller: c.pageController,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   onPageChanged: (value) {
                     c.changeIndex(value); //TODO validate when swipe
                   },

@@ -60,15 +60,8 @@ class CustomerOrderScreen extends StatelessWidget {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       var customer = c.customerList[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Get.toNamed(CustomersKotScreen.routeName, arguments: {
-                            "customer":customer,
-                          });
-                        },
-                        child: CustomerCard(
-                          customer: customer,
-                        ),
+                      return CustomerCard(
+                        customer: customer,
                       );
                     },
                   );
@@ -97,55 +90,157 @@ class CustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          border: Border.all(color: AppColors.borderColor),
-          borderRadius: BorderRadius.circular(8),
-          color: customer.isPaid == true
-              ? Colors.green[200]
-              : AppColors.shadowColor),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                customer.customerName ?? "",
-                style: CustomTextStyles.f16W600(
-                  color: AppColors.primary,
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(
+          CustomersKotScreen.routeName,
+          arguments: {
+            "customer": customer,
+            "customer_name": customer.customerName,
+          },
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            border: Border.all(color: AppColors.borderColor),
+            borderRadius: BorderRadius.circular(8),
+            color: customer.isPaid == true
+                ? Colors.green[200]
+                : AppColors.fillColor),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            customer.tables != null && customer.tables!.isNotEmpty
+                ? SizedBox(
+                    height: 20, //height of the listview
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        // physics: const NeverScrollableScrollPhysics(),
+                        itemCount: customer.tables!.length,
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            width: 5,
+                          );
+                        },
+                        itemBuilder: (context, index) {
+                          var table = customer.tables![index];
+
+                          return Text(
+                            table.name ?? "",
+                            style: CustomTextStyles.f14W400(
+                              color: AppColors.blackColor,
+                            ),
+                          );
+                        }),
+                  )
+                : const SizedBox.shrink(),
+            const Divider(
+              color: AppColors.secondaryTextColor,
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  customer.customerName ?? "",
+                  style: CustomTextStyles.f16W600(
+                    color: AppColors.blackColor,
+                  ),
+                ),
+                customer.createdAt != null
+                    ? Text(
+                        DateTimeHelper.prettyDateWithDay(customer.createdAt)!,
+                        style: CustomTextStyles.f14W400(
+                          color: AppColors.blackColor,
+                        ),
+                      )
+                    : const SizedBox.shrink()
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              customer.customerPhone ?? "",
+              style: CustomTextStyles.f12W400(
+                color: AppColors.blackColor,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            if (customer.kotCount != null)
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'KOT: ',
+                      style: CustomTextStyles.f12W400(
+                        color: AppColors.secondaryTextColor,
+                      ),
+                    ),
+                    TextSpan(
+                      text: customer.kotCount.toString(),
+                      style: CustomTextStyles.f12W400(
+                        color: AppColors
+                            .blackColor, // Example of different color for this segment
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              customer.createdAt != null
-                  ? Text(
-                      DateTimeHelper.prettyDateWithDay(customer.createdAt)!,
-                      style: CustomTextStyles.f14W400(
-                        color: AppColors.blackColor,
-                      ),
-                    )
-                  : const SizedBox.shrink()
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            customer.customerPhone ?? "",
-            style: CustomTextStyles.f12W400(
-              color: AppColors.blackColor,
+            const SizedBox(
+              height: 5,
             ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            customer.isPaid == false ? "Not paid" : "Paid",
-            style: CustomTextStyles.f12W400(
-              color: AppColors.blackColor,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (customer.isPaid != null)
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Status: ',
+                          style: CustomTextStyles.f12W400(
+                            color: AppColors.secondaryTextColor,
+                          ),
+                        ),
+                        TextSpan(
+                          text: customer.isPaid == false ? "Not paid" : "Paid",
+                          style: CustomTextStyles.f12W400(
+                            color: AppColors
+                                .blackColor, // Example of different color for this segment
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                if (customer.kotCount != null)
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Total Amount: ',
+                          style: CustomTextStyles.f12W400(
+                            color: AppColors.secondaryTextColor,
+                          ),
+                        ),
+                        TextSpan(
+                          text: "Rs. ${customer.total.toString()}",
+                          style: CustomTextStyles.f12W400(
+                            color: AppColors
+                                .blackColor, // Example of different color for this segment
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

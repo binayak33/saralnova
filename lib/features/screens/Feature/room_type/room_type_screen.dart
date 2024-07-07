@@ -3,12 +3,14 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/room_type/room_type_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
-import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
+import 'package:saralnova/features/widgets/common_widgets/custom_appBar.dart';
+import 'package:saralnova/features/widgets/common_widgets/custom_floating_action_button.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
+import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
 
 class RoomTypeScreen extends StatelessWidget {
   static const String routeName = "/roomtype-screen";
@@ -18,16 +20,8 @@ class RoomTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        iconTheme: const IconThemeData(
-          color: AppColors.scaffoldColor, //change your color here
-        ),
-        centerTitle: true,
-        title: Text(
-          "Room Type",
-          style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
-        ),
+      appBar: const SaralNovaApppBar(
+        title: 'Room Type',
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -36,13 +30,8 @@ class RoomTypeScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Center(
-                    child: LinearProgressIndicator(),
-                  );
+                  return SaralNovaShimmer.listShimmerheigh50();
                 } else if (c.pageState.value == PageState.EMPTY) {
-                  // return Center(
-                  //   child: Text("Empty"),
-                  // );
                   return EmptyView(
                     message: "Empty!!",
                     title: "Empty",
@@ -105,7 +94,7 @@ class RoomTypeScreen extends StatelessWidget {
                     },
                   );
                 } else {
-                  return ErrorView(
+                  return const ErrorView(
                     errorTitle: "Something went wrong!!",
                     errorMessage: "Something went wrong",
                     imagePath: IconPath.somethingWentWrong,
@@ -116,25 +105,11 @@ class RoomTypeScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: InkResponse(
-        radius: 20,
-        onTap: () {
+      floatingActionButton: CustomFloatingActionButton(
+        onPressed: () {
           c.titleRoomController.clear();
           c.openRoomsBottomSheet();
         },
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: AppColors.primary,
-          ),
-          child: Text(
-            "Create",
-            style: CustomTextStyles.f16W600(
-              color: AppColors.scaffoldColor,
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -15,11 +15,31 @@ class IconPath {
   static const String camera = "$basePath/camera.svg";
   static const String list = "$basePath/list.svg";
   static const String edit = "$basePath/edit.svg";
+  static const String roomType = "$basePath/room_type.svg";
+  static const String amenities = "$basePath/amenities.svg";
+  static const String viewRooms = "$basePath/view_rooms.svg";
+  static const String staffs = "$basePath/staffs.svg";
+  static const String booking = "$basePath/booking.svg";
+  static const String activity = "$basePath/activity.svg";
+  static const String category = "$basePath/category.svg";
+  static const String variants = "$basePath/variants.svg";
+  static const String menu = "$basePath/menu.svg";
+  static const String space = "$basePath/space.svg";
+  static const String clock = "$basePath/clock.svg";
+
+  static const String tables = "$basePath/tables.svg";
+  static const String order = "$basePath/order.svg";
+  static const String activities = "$basePath/activities.svg";
+  static const String nodata = "$basePath/nodata.svg";
+
   static const String delete = "$basePath/delete.svg";
   static const String search = "$basePath/search.svg";
 
   static const String info = "$basePath/info.svg";
   static const String check = "$basePath/check.svg";
+  static const String facilities = "$basePath/facility.svg";
+
+  static const String more = "$basePath/more.svg";
   static const String minus = "$basePath/minus.svg";
   static const String plus = "$basePath/plus.svg";
 

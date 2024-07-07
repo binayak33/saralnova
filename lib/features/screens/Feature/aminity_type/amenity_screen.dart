@@ -3,12 +3,14 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
 import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
+import 'package:saralnova/features/widgets/common_widgets/custom_floating_action_button.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
+import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
 
 import '../../../../core/controllers/Feature/amenities/amenities_controller.dart';
 
@@ -38,9 +40,7 @@ class AmenitiesScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Center(
-                    child: LinearProgressIndicator(),
-                  );
+                  return SaralNovaShimmer.listShimmerheigh150();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
                     message: "Empty!!",
@@ -64,7 +64,7 @@ class AmenitiesScreen extends StatelessWidget {
                             key: ValueKey(index),
                             endActionPane: ActionPane(
                               extentRatio: 0.5,
-                              motion: ScrollMotion(),
+                              motion: const ScrollMotion(),
                               children: [
                                 SlidableAction(
                                   padding: EdgeInsets.zero,
@@ -121,7 +121,7 @@ class AmenitiesScreen extends StatelessWidget {
                           ));
                     },
                   );
-            } else {
+                } else {
                   return const ErrorView(
                     errorTitle: "Something went wrong!!",
                     errorMessage: "Something went wrong",
@@ -133,26 +133,12 @@ class AmenitiesScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: InkResponse(
-        radius: 20,
-        onTap: () {
+      floatingActionButton: CustomFloatingActionButton(
+        onPressed: () {
           c.titleAminityController.clear();
-          c.pickedFile.value = null; // Clearing the picked file value
+          c.pickedFile.value = null;
           c.openAmenityBottomSheet();
         },
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: AppColors.primary,
-          ),
-          child: Text(
-            "Create",
-            style: CustomTextStyles.f16W600(
-              color: AppColors.scaffoldColor,
-            ),
-          ),
-        ),
       ),
     );
   }

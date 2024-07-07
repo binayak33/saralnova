@@ -31,6 +31,20 @@ class CustomTheme {
         outlineVariant: AppColors.secondaryTextColor,
         error: AppColors.errorColor,
       ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.scaffoldColor,
+        foregroundColor: AppColors.textColor,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        titleTextStyle: TextStyle(
+          color: AppColors.textColor,
+          fontFamily: "Plus Jakarta Sans",
+          fontWeight: FontWeight.bold,
+        ),
+        iconTheme: IconThemeData(
+          color: AppColors.textColor,
+        ),
+      ),
     );
   }
 

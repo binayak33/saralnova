@@ -13,24 +13,10 @@ class DashPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Scaffold(
-      // appBar: CustomAppBar(
-      //   actions: [
-      //     IconButton(
-      //       onPressed: c.logout,
-      //       icon: SvgPicture.asset(
-      //         IconPath.logout,
-      //         height: 24,
-      //         width: 24,
-      //         colorFilter: const ColorFilter.mode(
-      //           Colors.white,
-      //           BlendMode.srcIn,
-      //         ),
-      //       ),
-      //     )
-      //   ],
-      // ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
           currentIndex: c.currnetIndex.value,
           onTap: c.onUpdatePage,
           items: [
@@ -39,8 +25,7 @@ class DashPanel extends StatelessWidget {
                 theme: theme, iconPath: IconPath.calendar, label: "Calendar"),
             customNavItem(
                 theme: theme, iconPath: IconPath.personInfo, label: "Expenses"),
-            customNavItem(
-                theme: theme, iconPath: IconPath.roomDoor, label: "Rooms"),
+            customNavItem(theme: theme, iconPath: IconPath.more, label: "More"),
           ],
         ),
       ),

@@ -25,17 +25,12 @@ class CustomersKotScreen extends StatelessWidget {
           color: AppColors.scaffoldColor, //change your color here
         ),
         centerTitle: true,
-        title: Text(
-          "Customer KOT Orders",
-          style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
+        title: Obx(
+          () => Text(
+            c.individualKotName.value ?? "Customer KOT",
+            style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
+          ),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                print(c.customer);
-              },
-              icon: Icon(Icons.add))
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -83,6 +78,23 @@ class CustomersKotScreen extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: InkResponse(
+        radius: 20,
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: AppColors.primary,
+          ),
+          child: Text(
+            "Checkout",
+            style: CustomTextStyles.f16W600(
+              color: AppColors.scaffoldColor,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -96,28 +108,47 @@ class CustomerKotCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color kotColor;
+    if (kot.isServed == true) {
+      kotColor = Colors.green[100]!;
+    } else if (kot.isCancelled == true) {
+      kotColor = Colors.red[100]!;
+    } else if (kot.isPaid == true) {
+      kotColor = Colors.yellow[100]!;
+    } else {
+      kotColor = Colors.white; // Default color
+    }
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.borderColor),
         borderRadius: BorderRadius.circular(8),
+        color: kotColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            kot.kotNumber != null ? "KOT #${kot.kotNumber.toString()}" : "KOT",
+            style: CustomTextStyles.f14W600(
+              color: AppColors.blackColor,
+            ),
+          ),
+          const Divider(
+            color: AppColors.fillColor,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                kot.restaurantCustomer?.customerName ?? "",
-                style: CustomTextStyles.f16W600(
-                  color: AppColors.primary,
+                kot.table?.name ?? "",
+                style: CustomTextStyles.f12W400(
+                  color: AppColors.blackColor,
                 ),
               ),
-              kot.restaurantCustomer?.createdAt != null
+              kot.createdAt != null
                   ? Text(
-                      DateTimeHelper.prettyDateWithDay(
-                          kot.restaurantCustomer?.createdAt)!,
+                      DateTimeHelper.prettyDateWithDay(kot.createdAt)!,
                       style: CustomTextStyles.f14W400(
                         color: AppColors.blackColor,
                       ),
@@ -129,46 +160,209 @@ class CustomerKotCard extends StatelessWidget {
             height: 5,
           ),
           if (kot.salesTotal != null)
-            Text(
-              "Total Sales: ${kot.salesTotal.toString()}",
-              style: CustomTextStyles.f12W400(
-                color: AppColors.blackColor,
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Total: ',
+                    style: CustomTextStyles.f12W400(
+                      color: AppColors.secondaryTextColor,
+                    ),
+                  ),
+                  TextSpan(
+                    text: " Rs.${kot.salesTotal.toString()}",
+                    style: CustomTextStyles.f12W400(
+                      color: AppColors
+                          .blackColor, // Example of different color for this segment
+                    ),
+                  ),
+                ],
               ),
             ),
           if (kot.remainingAmount != null)
-            Text(
-              "Remaining Amount: ${kot.remainingAmount.toString()}",
-              style: CustomTextStyles.f12W400(
-                color: AppColors.blackColor,
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Remaining: ',
+                    style: CustomTextStyles.f12W400(
+                      color: AppColors.secondaryTextColor,
+                    ),
+                  ),
+                  TextSpan(
+                    text: " Rs.${kot.remainingAmount.toString()}",
+                    style: CustomTextStyles.f12W400(
+                      color: AppColors
+                          .blackColor, // Example of different color for this segment
+                    ),
+                  ),
+                ],
               ),
             ),
-          if (kot.paidAmount != null)
-            Text(
-              "Paid Amount: ${kot.paidAmount.toString()}",
-              style: CustomTextStyles.f12W400(
-                color: AppColors.blackColor,
-              ),
-            ),
-          if (kot.advanceAmount != null)
-            Text(
-              "Advance Amount: ${kot.advanceAmount.toString()}",
-              style: CustomTextStyles.f12W400(
-                color: AppColors.blackColor,
+          if (kot.discount != null && kot.discount != 0)
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Discount: ',
+                    style: CustomTextStyles.f12W400(
+                      color: AppColors.secondaryTextColor,
+                    ),
+                  ),
+                  TextSpan(
+                    text: " Rs.${kot.discount.toString()}",
+                    style: CustomTextStyles.f12W400(
+                      color: AppColors
+                          .blackColor, // Example of different color for this segment
+                    ),
+                  ),
+                ],
               ),
             ),
           if (kot.items!.isNotEmpty)
             SizedBox(
-              height: 150,
+              // height: 150,
               child: ListView.separated(
+                physics: const ClampingScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: kot.items?.length ?? 0,
                 itemBuilder: (context, index) {
                   var item = kot.items?[index];
 
                   if (item != null) {
+                    Color itemColor;
+                    if (item.isServed == true) {
+                      itemColor = Colors.green[100]!;
+                    } else if (item.isCancelled == true) {
+                      itemColor = Colors.red[100]!;
+                    } else if (item.isPaid == true) {
+                      itemColor = Colors.yellow[100]!;
+                    } else {
+                      itemColor = Colors.white; // Default color
+                    }
                     return Container(
-                      padding: const EdgeInsets.all(4),
-                      child: Text("hahaha"),
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          width: 1,
+                          color: AppColors.borderColor,
+                        ),
+                        color: itemColor,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              if (item.menuTitle != null)
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Name: ',
+                                        style: CustomTextStyles.f12W400(
+                                          color: AppColors.secondaryTextColor,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: item.menuTitle,
+                                        style: CustomTextStyles.f12W400(
+                                          color: AppColors
+                                              .blackColor, // Example of different color for this segment
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              if (item.quantity != null)
+                                Text(
+                                  "x ${item.quantity}",
+                                  style: CustomTextStyles.f14W400(),
+                                ),
+                            ],
+                          ),
+                          if (item.total != null)
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Price: ',
+                                    style: CustomTextStyles.f12W400(
+                                      color: AppColors.secondaryTextColor,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: "Rs. ${item.total}",
+                                    style: CustomTextStyles.f12W400(
+                                      color: AppColors
+                                          .blackColor, // Example of different color for this segment
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          if (item.variantData != null &&
+                              item.variantData!.isNotEmpty)
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: ListView.separated(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(
+                                    height: 2,
+                                  );
+                                },
+                                itemCount: item.variantData!.length,
+                                itemBuilder: (context, index) {
+                                  var variant = item.variantData![index];
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          if (variant.title != null)
+                                            RichText(
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: variant.type ?? "",
+                                                    style: CustomTextStyles
+                                                        .f12W400(
+                                                      color: AppColors
+                                                          .secondaryTextColor,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text:
+                                                        " - ${variant.title ?? ""}",
+                                                    style: CustomTextStyles
+                                                        .f12W400(
+                                                      color: AppColors
+                                                          .blackColor, // Example of different color for this segment
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                      if (variant.price != null)
+                                        Text("Rs. ${variant.price.toString()}"),
+                                    ],
+                                  );
+                                },
+                              ),
+                            )
+                        ],
+                      ),
                     );
                   } else {
                     return const Text("No Items Available");

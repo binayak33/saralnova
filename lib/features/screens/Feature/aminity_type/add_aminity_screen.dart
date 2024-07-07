@@ -3,10 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:saralnova/core/controllers/Feature/amenities/amenities_controller.dart';
-import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/core/utils/constants/image_path.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/image_helper.dart';
-import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
 import 'package:saralnova/core/utils/helpers/validators.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 
@@ -32,25 +32,43 @@ class AddAmenityScreen extends StatelessWidget {
             ),
             Stack(
               children: [
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(100),
+                //   child: Obx(() {
+                //     final file = c.pickedFile.value;
+                //     if (file != null) {
+                //       return Image.file(
+                //         file,
+                //         height: 100,
+                //         width: 100,
+                //         fit: BoxFit.cover,
+                //       );
+                //     } else {
+                //       return const SkyNetworkImage(
+                //         imageUrl: "",
+                //         height: 100,
+                //         width: 100,
+                //       );
+                //     }
+                //   }),
+                // ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: Obx(() {
-                    final file = c.pickedFile.value;
-                    if (file != null) {
-                      return Image.file(
-                        file,
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      );
-                    } else {
-                      return const SkyNetworkImage(
-                        imageUrl: "",
-                        height: 100,
-                        width: 100,
-                      );
-                    }
-                  }),
+                  child: Obx(
+                    () => c.pickedFile.value == null
+                        ? Image.asset(
+                            ImagePath.placeHolder,
+                            fit: BoxFit.cover,
+                            height: 100,
+                            width: 100,
+                          )
+                        : Image.file(
+                            c.pickedFile.value!,
+                            fit: BoxFit.cover,
+                            height: 100,
+                            width: 100,
+                          ),
+                  ),
                 ),
                 Positioned(
                   bottom: 5,

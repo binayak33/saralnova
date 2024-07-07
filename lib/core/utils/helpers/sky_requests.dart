@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:saralnova/core/controllers/Splash/core_controller.dart';
+import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/core/utils/helpers/storage_helper.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
@@ -78,17 +79,20 @@ class SkyRequest {
     }
   }
 
+//before the new sprint
+
   // static Future<http.StreamedResponse> multiPart({
   //   String type = "POST",
   //   required String url,
   //   Map<String, String>? headers,
-  //   Map<String, String>? fields,
+  //   dynamic fields,
   //   required List<http.MultipartFile> files,
   // }) async {
   //   try {
   //     var token = StorageHelper.getAccessToken();
   //     headers ??= <String, String>{};
-  //     headers["Content-Type"] = "application/json";
+  //     headers["Content-Type"] =
+  //         "multipart/form-data"; // Change content type to multipart/form-data
   //     headers["Accept"] = "application/json";
   //     headers["Authorization"] = token.toString();
 
@@ -96,8 +100,10 @@ class SkyRequest {
   //         http.MultipartRequest(type, Uri.parse(url));
 
   //     request.headers.addAll(headers);
+
   //     if (fields != null) {
-  //       request.fields.addAll(fields);
+  //       // Check if fields are provided and encode them as JSON
+  //       request.fields['data'] = json.encode(fields);
   //     }
 
   //     request.files.addAll(files);
@@ -124,18 +130,21 @@ class SkyRequest {
   //     throw "Server Error";
   //   }
   // }
+
+  //new request for image
+
   static Future<http.StreamedResponse> multiPart({
     String type = "POST",
     required String url,
     Map<String, String>? headers,
-    dynamic fields,
+    Map<String, String>? fields,
+    Map<String, List<dynamic>>? additionalListFields,
     required List<http.MultipartFile> files,
   }) async {
     try {
       var token = StorageHelper.getAccessToken();
       headers ??= <String, String>{};
-      headers["Content-Type"] =
-          "multipart/form-data"; // Change content type to multipart/form-data
+      headers["Content-Type"] = "application/json";
       headers["Accept"] = "application/json";
       headers["Authorization"] = token.toString();
 
@@ -143,13 +152,20 @@ class SkyRequest {
           http.MultipartRequest(type, Uri.parse(url));
 
       request.headers.addAll(headers);
-
       if (fields != null) {
-        // Check if fields are provided and encode them as JSON
-        request.fields['data'] = json.encode(fields);
+        request.fields.addAll(fields);
       }
 
       request.files.addAll(files);
+
+      if (additionalListFields != null) {
+        var keys = additionalListFields.keys;
+        for (var key in keys) {
+          additionalListFields[key]
+              ?.map((value) => request.fields[key] = value.toString())
+              .toList();
+        }
+      }
 
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
@@ -160,8 +176,7 @@ class SkyRequest {
         Get.find<CoreController>().logOut();
         Get.closeAllSnackbars();
         SkySnackBar.info(
-            title: "Session Expired",
-            message: "Your session has expired!!. Please Log in to continue");
+            title: "Session Expired", message: Messages.sessionExpiredMessage);
       }
       return response;
     } catch (e, s) {

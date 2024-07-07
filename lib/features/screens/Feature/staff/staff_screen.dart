@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/staff/staff_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/features/widgets/app_widgets/hotel_feature_widget.dart';
+import 'package:saralnova/features/widgets/common_widgets/custom_floating_action_button.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
+import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
 
 class StaffScreen extends StatelessWidget {
   static const String routeName = "/staff-screen";
@@ -36,9 +38,7 @@ class StaffScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Center(
-                    child: LinearProgressIndicator(),
-                  );
+                  return SaralNovaShimmer.listShimmerheigh50();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
                     message: "Empty!!",
@@ -106,7 +106,7 @@ class StaffScreen extends StatelessWidget {
                     },
                   );
                 } else {
-                  return ErrorView(
+                  return const ErrorView(
                     errorTitle: "Something went wrong!!",
                     errorMessage: "Something went wrong",
                     imagePath: IconPath.somethingWentWrong,
@@ -117,24 +117,10 @@ class StaffScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: InkResponse(
-        radius: 20,
-        onTap: () {
+      floatingActionButton: CustomFloatingActionButton(
+        onPressed: () {
           c.openStaffBottomSheet();
         },
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: AppColors.primary,
-          ),
-          child: Text(
-            "Add",
-            style: CustomTextStyles.f16W600(
-              color: AppColors.scaffoldColor,
-            ),
-          ),
-        ),
       ),
     );
   }

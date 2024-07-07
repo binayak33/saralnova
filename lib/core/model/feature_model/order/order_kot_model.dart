@@ -1,4 +1,4 @@
-import 'order_customers_model.dart';
+import '../tables/table_model.dart';
 
 List<KitchenOrderTicket> kitchenOrderTicketsFromJson(
         List<dynamic> kitchenOrderTicketsJson) =>
@@ -10,12 +10,13 @@ List<KitchenOrderTicket> kitchenOrderTicketsFromJson(
 
 class KitchenOrderTicket {
   String? id;
+  int? kotNumber;
   String? vendorId;
   String? vendorName;
   String? vendorAddress;
   String? vendorPhone;
   String? vendorImage;
-  Customer? restaurantCustomer;
+  // Customer? restaurantCustomer;
   String? billBy;
   int? salesTotal;
   int? discount;
@@ -23,20 +24,23 @@ class KitchenOrderTicket {
   int? paidAmount;
   int? remainingAmount;
   int? advanceAmount;
+  TableModel? table;
   bool? isPaid;
   bool? isCancelled;
+  bool? isServed;
   List<Items>? items;
   String? createdAt;
   String? updatedAt;
 
   KitchenOrderTicket(
       {this.id,
+      this.kotNumber,
       this.vendorId,
       this.vendorName,
       this.vendorAddress,
       this.vendorPhone,
       this.vendorImage,
-      this.restaurantCustomer,
+      // this.restaurantCustomer,
       this.billBy,
       this.salesTotal,
       this.discount,
@@ -44,7 +48,9 @@ class KitchenOrderTicket {
       this.paidAmount,
       this.remainingAmount,
       this.advanceAmount,
+      this.table,
       this.isPaid,
+      this.isServed,
       this.isCancelled,
       this.items,
       this.createdAt,
@@ -52,15 +58,18 @@ class KitchenOrderTicket {
 
   KitchenOrderTicket.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    kotNumber = json['kot_number'];
     vendorId = json['vendor_id'];
     vendorName = json['vendor_name'];
     vendorAddress = json['vendor_address'];
     vendorPhone = json['vendor_phone'];
     vendorImage = json['vendor_image'];
 
-    restaurantCustomer = json['restaurant_customer'] != null
-        ? Customer.fromJson(json['restaurant_customer'])
-        : null;
+    // restaurantCustomer = json['restaurant_customer'] != null
+    //     ? Customer.fromJson(json['restaurant_customer'])
+    //     : null;
+
+    table = json['table'] != null ? TableModel.fromJson(json['table']) : null;
     billBy = json['bill_by'];
     salesTotal = json['sales_total'];
     discount = json['discount'];
@@ -70,6 +79,7 @@ class KitchenOrderTicket {
     advanceAmount = json['advance_amount'];
     isPaid = json['is_paid'];
     isCancelled = json['is_cancelled'];
+    isServed = json['is_served'];
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
@@ -83,14 +93,18 @@ class KitchenOrderTicket {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['kot_number'] = this.kotNumber;
     data['vendor_id'] = this.vendorId;
     data['vendor_name'] = this.vendorName;
     data['vendor_address'] = this.vendorAddress;
     data['vendor_phone'] = this.vendorPhone;
     data['vendor_image'] = this.vendorImage;
 
-    if (this.restaurantCustomer != null) {
-      data['restaurant_customer'] = this.restaurantCustomer!.toJson();
+    // if (this.restaurantCustomer != null) {
+    //   data['restaurant_customer'] = this.restaurantCustomer!.toJson();
+    // }
+    if (this.table != null) {
+      data['table'] = this.table!.toJson();
     }
     data['bill_by'] = this.billBy;
     data['sales_total'] = this.salesTotal;
@@ -101,6 +115,7 @@ class KitchenOrderTicket {
     data['advance_amount'] = this.advanceAmount;
     data['is_paid'] = this.isPaid;
     data['is_cancelled'] = this.isCancelled;
+    data['is_served'] = this.isServed;
     if (this.items != null) {
       data['items'] = this.items!.map((v) => v.toJson()).toList();
     }
@@ -121,6 +136,7 @@ class Items {
   int? total;
   bool? isPaid;
   bool? isCancelled;
+  bool? isServed;
   String? createdAt;
   String? updatedAt;
 
@@ -135,6 +151,7 @@ class Items {
       this.total,
       this.isPaid,
       this.isCancelled,
+      this.isServed,
       this.createdAt,
       this.updatedAt});
 
@@ -153,6 +170,7 @@ class Items {
     quantity = json['quantity'];
     total = json['total'];
     isPaid = json['is_paid'];
+    isServed = json['is_served'];
     isCancelled = json['is_cancelled'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -171,6 +189,8 @@ class Items {
     data['quantity'] = this.quantity;
     data['total'] = this.total;
     data['is_paid'] = this.isPaid;
+    data['is_served'] = this.isServed;
+
     data['is_cancelled'] = this.isCancelled;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;

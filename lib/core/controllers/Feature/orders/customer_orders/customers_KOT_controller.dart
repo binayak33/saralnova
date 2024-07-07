@@ -14,12 +14,14 @@ class CustomersKOTController extends GetxController {
 
   var pageState = PageState.LOADING.obs;
   RxList<KitchenOrderTicket> kitchenOrderTicketList = RxList();
+  RxnString individualKotName = RxnString();
   @override
   void onInit() {
     // TODO: implement onInit
     var args = Get.arguments;
     if (args != null) {
       customer.value = args['customer'];
+      individualKotName.value = args['customer_name'];
     }
     getCustomerKots();
     super.onInit();

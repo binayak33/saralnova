@@ -23,7 +23,8 @@ class CustomTextStyles {
       color: color ?? AppColors.textColor,
     );
   }
-   static TextStyle f11W400({Color? color}) {
+
+  static TextStyle f11W400({Color? color}) {
     return TextStyle(
       fontFamily: 'Plus Jakarta Sans',
       fontWeight: FontWeight.w400,
@@ -37,6 +38,15 @@ class CustomTextStyles {
       fontFamily: 'Plus Jakarta Sans',
       fontWeight: FontWeight.w400,
       fontSize: 13,
+      color: color ?? AppColors.textColor,
+    );
+  }
+
+  static TextStyle f20W400({Color? color}) {
+    return TextStyle(
+      fontFamily: 'Plus Jakarta Sans',
+      fontWeight: FontWeight.w400,
+      fontSize: 20,
       color: color ?? AppColors.textColor,
     );
   }
@@ -229,7 +239,8 @@ class CustomTextStyles {
       color: color ?? AppColors.textColor,
     );
   }
-   static TextStyle f35W600({Color? color}) {
+
+  static TextStyle f35W600({Color? color}) {
     return TextStyle(
       fontFamily: 'Plus Jakarta Sans',
       fontWeight: FontWeight.w600,

@@ -50,6 +50,7 @@ class RoomsController extends GetxController {
   }
 
   void getAllRooms() async {
+    pageState.value = PageState.LOADING;
     roomsList.clear();
     RoomsRepo.getRooms(
       onSuccess: (rooms) {
@@ -151,7 +152,6 @@ class RoomsController extends GetxController {
       if (roomType.value?.id != null) {
         String amenitiesString =
             amenitiesDataList.map((amenity) => amenity.id!).join(',');
-
 
         loading.show();
         RoomsRepo.storeRoom(

@@ -35,6 +35,7 @@ class OrderRepo {
     }
   }
 
+//getKotsByCustomer is the api of individual customers KOT's
   static Future<void> getKotsByCustomer({
     required customerId,
     required Function(List<KitchenOrderTicket> kitchenOrderTickets) onSuccess,

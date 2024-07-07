@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:saralnova/core/model/feature_model/amenity_model.dart';
 import 'package:saralnova/core/repo/feature_repo/aminitiy_repo.dart';
@@ -49,44 +48,15 @@ class AmenityController extends GetxController {
   }
 
   //pick image
-  final Rx<File?> pickedFile = Rx<File?>(null);
-
-  // Your other controller code...
+  // final Rx<File?> pickedFile = Rx<File?>(null);
+  Rxn<File> pickedFile = Rxn();
 
   Future<void> pickImage(XFile imageFile) async {
     pickedFile.value = File(imageFile.path);
   }
 
-//when image is required
-  // void storeAmenityType() async {
-  //   if (aminityKey.currentState!.validate()) {
-  //     loading.show();
-  //     if (pickedFile.value != null) {
-  //       AminityRepo.storeAmintyType(
-  //           title: titleAminityController.text,
-  //           image: pickedFile.value,
-  //           onSuccess: (room) {
-  //             loading.hide();
-  //             //TODO show page state so that loader will be displayed
-  //             getAllAmenities();
-  //             titleAminityController.clear();
-  //             Get.back();
-  //           },
-  //           onError: (message) {
-  //             loading.hide();
-
-  //             SkySnackBar.error(title: "Amenity", message: message);
-  //           });
-  //     } else {
-  //       loading.hide();
-  //       SkySnackBar.error(title: "Amenity", message: "Please pick an image");
-  //     }
-  //   }
-  // }
-
-//when image is not mandatory
-
   void storeAmenityType() async {
+    print(pickedFile.value);
     if (aminityKey.currentState!.validate()) {
       loading.show();
       AminityRepo.storeAmintyType(

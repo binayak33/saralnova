@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -343,11 +344,15 @@ class BookingController extends GetxController {
     );
   }).toList();
 
-  //date & forms screen index variables,sheets,lists
 
   final roomTypeController = TextEditingController();
 
   RxInt guestNumber = RxInt(1);
+  Rx<Time> selectedTime = Time(hour: 12, minute: 0).obs;
+
+    void onTimeChanged(Time newTime) {
+    selectedTime.value = newTime;
+  }
 
   onIncrement() {
     if (guestNumber.value >= 1) {
