@@ -4,12 +4,13 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/restaurant/variants/variant_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/features/screens/Feature/restaurant/variants/add_variant_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
+//TODO - REMAINDER :  This feature is currently disabled
 
 class VariantScreen extends StatelessWidget {
   static const String routeName = "/variant-screen";
@@ -20,8 +21,9 @@ class VariantScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.errorColor,
         centerTitle: true,
-        title: const Text("Variants"),
+        title: const Text("Variants This feature is currently disabled"),
       ),
       body: SingleChildScrollView(
         child: Padding(

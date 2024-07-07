@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/activity_log/activity_log_controller.dart';
-import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/features/widgets/common_widgets/custom_appBar.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 
 import '../../../../core/utils/helpers/validators.dart';
@@ -14,9 +14,8 @@ class ActivityLogScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Activity Log"),
-        centerTitle: true,
+      appBar: const SaralNovaApppBar(
+        title: 'Activity Log',
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -25,7 +24,8 @@ class ActivityLogScreen extends StatelessWidget {
             children: [
               SkyTextField(
                 hint: "Search Booking",
-                prefixIconPath: IconPath.search,
+                // prefixIconPath: IconPath.search,
+                prefixIcon: const Icon(Icons.search),
                 textCapitalization: TextCapitalization.none,
                 validator: (value) => Validator.validateEmpty(value!),
                 controller: c.searchBookingController,

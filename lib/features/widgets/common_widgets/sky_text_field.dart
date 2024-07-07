@@ -106,7 +106,9 @@ class SkyTextField extends StatelessWidget {
         prefixIcon: (prefixIconPath != null)
             ? SvgPicture.asset(
                 prefixIconPath!,
-                fit: BoxFit.scaleDown,
+                height: 5,
+                width: 5,
+                // fit: BoxFit.scaleDown,
                 colorFilter:
                     ColorFilter.mode(theme.primaryColor, BlendMode.srcIn),
               )

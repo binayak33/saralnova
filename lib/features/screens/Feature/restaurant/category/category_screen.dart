@@ -3,11 +3,13 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/restaurant/category/category_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
-import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
+import 'package:saralnova/features/widgets/common_widgets/custom_appBar.dart';
+import 'package:saralnova/features/widgets/common_widgets/custom_floating_action_button.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
+import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
 
 import '../../../../widgets/app_widgets/hotel_feature_widget.dart';
 
@@ -19,9 +21,8 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Category"),
+      appBar: SaralNovaApppBar(
+        title: "Category",
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -30,9 +31,7 @@ class CategoryScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Center(
-                    child: LinearProgressIndicator(),
-                  );
+                  return SaralNovaShimmer.listShimmerheigh50();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
                     message: "Empty!!",
@@ -42,6 +41,7 @@ class CategoryScreen extends StatelessWidget {
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.builder(
+                    padding: const EdgeInsets.only(bottom: 20 ),
                     itemCount: c.restaurantCategorylist.length,
                     physics: const ClampingScrollPhysics(),
                     shrinkWrap: true,
@@ -106,25 +106,11 @@ class CategoryScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: InkResponse(
-        radius: 20,
-        onTap: () {
+      floatingActionButton: CustomFloatingActionButton(
+        onPressed: () {
           c.categoryController.clear();
           c.openCategoryBottomSheet();
         },
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: AppColors.primary,
-          ),
-          child: Text(
-            "Create",
-            style: CustomTextStyles.f16W600(
-              color: AppColors.scaffoldColor,
-            ),
-          ),
-        ),
       ),
     );
   }

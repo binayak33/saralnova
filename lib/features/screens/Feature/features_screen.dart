@@ -13,7 +13,6 @@ import 'package:saralnova/features/screens/Feature/facility_type/facility_screen
 import 'package:saralnova/features/screens/Feature/menu/menu_screen.dart';
 import 'package:saralnova/features/screens/Feature/orders/customer_order/customer_orders_screen.dart';
 import 'package:saralnova/features/screens/Feature/restaurant/category/category_screen.dart';
-import 'package:saralnova/features/screens/Feature/restaurant/variants/variants_screen.dart';
 import 'package:saralnova/features/screens/Feature/room_type/room_type_screen.dart';
 import 'package:saralnova/features/screens/Feature/rooms/rooms_screen.dart';
 import 'package:saralnova/features/screens/Feature/space/space_screen.dart';
@@ -130,13 +129,13 @@ class FeatureScreen extends StatelessWidget {
                 },
                 iconPath: IconPath.category,
               ),
-              CustomListTile(
-                title: "Variants",
-                onTap: () {
-                  Get.toNamed(VariantScreen.routeName);
-                },
-                iconPath: IconPath.variants,
-              ),
+              // CustomListTile(
+              //   title: "Variants",
+              //   onTap: () {
+              //     Get.toNamed(VariantScreen.routeName);
+              //   },
+              //   iconPath: IconPath.variants,
+              // ),
               CustomListTile(
                 title: "Menus",
                 onTap: () {

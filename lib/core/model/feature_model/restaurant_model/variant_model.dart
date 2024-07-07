@@ -1,3 +1,5 @@
+//TODO - REMAINDER :  This feature is currently disabled
+
 List<Variant> restaurantVariantsJson(List<dynamic> variantsJson) =>
     List<Variant>.from(
         variantsJson.map((variantJson) => Variant.fromJson(variantJson)));
