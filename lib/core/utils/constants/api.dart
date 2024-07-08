@@ -11,7 +11,7 @@ class Api {
     if (apiMode == "live") {
       return "https://stay.saralnova.com";
     } else if (apiMode == "uat") {
-      return "https://stay.saralnova.com";
+      return "https://uat-app.saralnova.com";
     } else {
       return dotenv.env['API_LOCAL_URL'] ?? "http://0.0.0.0:8000";
     }
@@ -86,8 +86,7 @@ class Api {
 
   //-----restaurant menus
   static String getMenus = "$apiBaseUrl/restaurant/menu";
-  static String storeMenus =
-      "$apiBaseUrl/restaurant/menu/store"; //TODO implement
+  static String storeMenus = "$apiBaseUrl/restaurant/menu/store";
   static String updateMenus =
       "$apiBaseUrl/restaurant/menu/update"; //TODO implement
   static String deleteMenus = "$apiBaseUrl/restaurant/menu/delete";

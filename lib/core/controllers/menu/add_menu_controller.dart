@@ -3,11 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:saralnova/core/controllers/menu/menu_controller.dart';
+import 'package:saralnova/core/model/feature_model/restaurant_model/menu_request_model.dart';
+import 'package:saralnova/core/repo/feature_repo/restaurant_repo.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
+import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 
 import '../../../features/screens/Feature/menu/menu_category_bottom_sheet.dart';
 import '../../model/feature_model/restaurant_model/category_model.dart';
+import '../../model/feature_model/restaurant_model/menu_model.dart';
 
 enum MENUEXTRA { Variant, addons }
 
@@ -40,10 +45,31 @@ class AddMenuController extends GetxController {
 
   Rxn<Category> category = Rxn();
 
+  Rxn<Menu> menu = Rxn();
+
   @override
   void onInit() {
-    // TODO: implement onInit
+    var args = Get.arguments;
+    if (args != null) {
+      menu.value = args['menu'];
+      category.value =
+          menu.value?.category != null ? menu.value!.category : null;
+
+      crudState.value = CRUDSTATE.UPDATE;
+      onLoad();
+    }
     super.onInit();
+  }
+
+  String? imageUrl;
+  void onLoad() {
+    imageUrl = menu.value?.imageUrl ?? "";
+    titleController.text = menu.value?.title ?? "";
+    priceController.text = menu.value?.price?.toString() ?? "0.0";
+
+    categoryController.text = category.value?.title ?? "";
+
+    descriptionController.text = menu.value?.description ?? "";
   }
 
   //pick image
@@ -74,7 +100,51 @@ class AddMenuController extends GetxController {
     );
   }
 
-  Future<void> storeMenu() async {}
+  Future<void> storeMenu() async {
+    loading.show();
+    MenuRequestParams menuRequest = MenuRequestParams(
+      title: titleController.text,
+      price: int.parse(priceController.text),
+      categoryId: category.value?.id,
+      description: descriptionController.text,
+    );
+    await RestaurantRepo.storeRestaurantMenu(
+        menuRequestParams: menuRequest,
+        file: pickedFile.value,
+        onSuccess: (menu) {
+          loading.hide();
+          Get.find<MenuRestaurantController>().getAllRestaurantMenus();
+          Get.back();
+        },
+        onError: (message) {
+          loading.hide();
+
+          SkySnackBar.error(title: "Menu", message: message);
+        });
+  }
+
+  Future<void> updateMenu() async {
+    loading.show();
+    MenuRequestParams menuRequest = MenuRequestParams(
+      title: titleController.text,
+      price: int.parse(priceController.text),
+      categoryId: category.value?.id,
+      description: descriptionController.text,
+    );
+    await RestaurantRepo.updateRestaurantMenu(
+        menuRequestParams: menuRequest,
+        file: pickedFile.value ?? null,
+        onSuccess: (menu) {
+          loading.hide();
+          Get.find<MenuRestaurantController>().getAllRestaurantMenus();
+          Get.back();
+        },
+        onError: (message) {
+          loading.hide();
+
+          SkySnackBar.error(title: "Menu", message: message);
+        });
+  }
 // ===================== THIS FEATURE IS CURRENTLY DISABLED TODO:REMAINDER========================
 
 //   openAddVariantBottomSheet() {

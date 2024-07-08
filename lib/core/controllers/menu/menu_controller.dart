@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
+import 'package:saralnova/features/screens/Feature/menu/add_menu_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 
 import '../../../features/widgets/common_widgets/sky_snack_bar.dart';
@@ -24,6 +25,8 @@ class MenuRestaurantController extends GetxController {
 
   void getAllRestaurantMenus() async {
     menuList.clear();
+    pageState.value = PageState.LOADING;
+
     RestaurantRepo.getRestaurnatMenus(
       onSuccess: (menus) {
         if (menus.isEmpty) {
@@ -60,5 +63,9 @@ class MenuRestaurantController extends GetxController {
         SkySnackBar.error(title: "Menu", message: message);
       },
     );
+  }
+
+  void onMenuEdit(Menu menu) async {
+    Get.toNamed(AddMenuScreen.routeName, arguments: {"menu": menu});
   }
 }

@@ -33,7 +33,7 @@ class MenuScreen extends StatelessWidget {
               ),
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return SaralNovaShimmer.bookingShimmer();
+                  return SaralNovaShimmer.menuShimmer();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
                     message: "Empty!!",
@@ -59,7 +59,7 @@ class MenuScreen extends StatelessWidget {
                         menuTitle: menu.title,
                         price: menu.price.toString(),
                         imageUrl: menu.imageUrl,
-                        onEdit: () {},
+                        onEdit: () => c.onMenuEdit(menu),
                         onConfirmDelete: () => c.deleteRestaurantMenu(menu.id!),
                       );
                     },

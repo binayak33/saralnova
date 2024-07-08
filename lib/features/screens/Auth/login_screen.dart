@@ -64,6 +64,7 @@ class LoginScreen extends StatelessWidget {
                                 Validator.validatePassword(value!),
                             obscureText: !c.showPassword.value,
                             textInputAction: TextInputAction.next,
+                            maxLine: 1,
                             textInputType: TextInputType.emailAddress,
                             suffixIcon: c.showPassword.value
                                 ? IconButton(

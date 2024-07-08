@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 
@@ -22,11 +23,17 @@ class AddMenuScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Add Menu"),
+        title: Text(
+            c.crudState.value == CRUDSTATE.ADD ? "Add Menu" : "Update Menu"),
         actions: [
           IconButton(
               onPressed: () {
-                print(c.pickedFile.value);
+                print(c.category.value?.id);
+
+                print(c.category.value);
+
+                print(c.menu.value?.imageUrl);
+                print(c.category.value?.title);
               },
               icon: Icon(Icons.add))
         ],
@@ -49,12 +56,21 @@ class AddMenuScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(100),
                       child: Obx(() {
                         final file = c.pickedFile.value;
+                        // final imageUrl = c.menu.value?.imageUrl;
+                        final imageUrl = c.imageUrl;
+
                         if (file != null) {
                           return Image.file(
                             file,
                             height: 100,
                             width: 100,
                             fit: BoxFit.cover,
+                          );
+                        } else if (imageUrl != null && imageUrl.isNotEmpty) {
+                          return SkyNetworkImage(
+                            imageUrl: imageUrl,
+                            height: 100,
+                            width: 100,
                           );
                         } else {
                           return const SkyNetworkImage(
@@ -65,16 +81,6 @@ class AddMenuScreen extends StatelessWidget {
                         }
                       }),
                     ),
-                    // --------------------
-                    // ClipRRect(
-                    //   borderRadius: BorderRadius.circular(100),
-                    //   child: SkyNetworkImage(
-                    //     imageUrl: "",
-                    //     // imageUrl: "",
-                    //     height: 70,
-                    //     width: 70,
-                    //   ),
-                    // ),
                     Positioned(
                       bottom: 5,
                       right: 10,
@@ -309,9 +315,13 @@ class AddMenuScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: SkyElevatedButton(
             onPressed: () {
-              c.storeMenu();
+              c.crudState.value == CRUDSTATE.ADD
+                  ? c.storeMenu()
+                  : c.updateMenu();
             },
-            title: "Add Menu"),
+            title: c.crudState.value == CRUDSTATE.ADD
+                ? "Add Menu"
+                : "Update Menu"),
       ),
     );
   }

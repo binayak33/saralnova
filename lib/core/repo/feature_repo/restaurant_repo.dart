@@ -301,38 +301,6 @@ class RestaurantRepo {
     }
   }
 
-// api to post only map without img
-  // static Future<void> storeRestaurantMenu({
-  //   required MenuRequestParams? menuRequestParams,
-  //   File? file,
-  //   required Function(Menu menu) onSuccess,
-  //   required Function(String message) onError,
-  // }) async {
-  //   try {
-  //     String url = Api.storeMenus;
-
-  //     var body = menuRequestParams?.toJson();
-
-  //     http.Response response = await SkyRequest.post(
-  //       url,
-  //       body: body,
-  //     );
-
-  //     var data = json.decode(response.body);
-
-  //     if (data["status"]) {
-  //       var menu = Menu.fromJson(data['data']);
-  //       onSuccess(menu);
-  //     } else {
-  //       onError(data['message']);
-  //     }
-  //   } catch (e, s) {
-  //     LogHelper.error(Api.storeMenus, error: e, stackTrace: s);
-  //     onError(Messages.error);
-  //   }
-  // }
-
-// -------------------------------
   static Future<void> storeRestaurantMenu({
     required MenuRequestParams? menuRequestParams,
     File? file,
@@ -349,7 +317,7 @@ class RestaurantRepo {
           http.MultipartFile.fromBytes(
             "image",
             await file.readAsBytes(),
-            filename: "image",
+            filename: "${DateTime.now().microsecondsSinceEpoch}.jpg",
             contentType: MediaType("image", "*"),
           )
         ];
@@ -363,7 +331,6 @@ class RestaurantRepo {
       http.StreamedResponse response = await SkyRequest.multiPart(
         url: url,
         files: images,
-        // fields: json.encode(menuRequestParams?.toJson()),
         fields: encodedParams,
       );
 
@@ -384,6 +351,58 @@ class RestaurantRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.storeMenus, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> updateRestaurantMenu({
+    required MenuRequestParams? menuRequestParams,
+    File? file,
+    required Function(Menu menu) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.updateMenus;
+
+      List<http.MultipartFile> images = [];
+
+      if (file != null) {
+        images = [
+          http.MultipartFile.fromBytes(
+            "image",
+            await file.readAsBytes(),
+            filename: "${DateTime.now().microsecondsSinceEpoch}.jpg",
+            contentType: MediaType("image", "*"),
+          )
+        ];
+      }
+
+      Map<String, String>? encodedParams;
+      if (menuRequestParams != null) {
+        encodedParams = menuRequestParams.toJson();
+      }
+
+      http.StreamedResponse response = await SkyRequest.multiPart(
+        url: url,
+        files: images,
+        fields: encodedParams,
+      );
+
+      print(response);
+
+      dynamic data = json.decode(await response.stream.bytesToString());
+
+      print("--------------response-------------$data");
+
+      if (data["status"]) {
+        var menu = Menu.fromJson(data['data']);
+
+        onSuccess(menu);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.updateMenus, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

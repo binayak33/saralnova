@@ -4,10 +4,6 @@ import 'package:saralnova/core/controllers/Feature/restaurant/variants/variant_c
 import 'package:saralnova/core/controllers/menu/add_menu_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
-import 'package:saralnova/core/utils/constants/icon_path.dart';
-import 'package:saralnova/core/utils/helpers/validators.dart';
-import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
-import 'package:saralnova/features/widgets/common_widgets/sky_text_field.dart';
 
 class AddAddonsBottomSheet extends StatelessWidget {
   final c = Get.find<AddMenuController>();
@@ -39,56 +35,56 @@ class AddAddonsBottomSheet extends StatelessWidget {
               indent: 10,
               height: 40,
             ),
-            SkyTextField(
-              hint: "Select addon category",
-              controller: c.categoryAddOnController,
-              textInputAction: TextInputAction.next,
-              textInputType: TextInputType.name,
-              suffixIconPath: IconPath.down,
-              validator: (value) => Validator.validateEmpty(value!),
-              onTap: () {
-                c.showAddons();
-              },
-              readOnly: true,
-            ),
+            // SkyTextField(
+            //   hint: "Select addon category",
+            //   controller: c.categoryAddOnController,
+            //   textInputAction: TextInputAction.next,
+            //   textInputType: TextInputType.name,
+            //   suffixIconPath: IconPath.down,
+            //   validator: (value) => Validator.validateEmpty(value!),
+            //   onTap: () {
+            //     c.showAddons();
+            //   },
+            //   readOnly: true,
+            // ),
             const SizedBox(
               height: 10,
             ),
-            SkyTextField(
-              hint: "Price",
-              controller: c.priceAddOnController,
-              textInputAction: TextInputAction.done,
-              textInputType: TextInputType.name,
-              validator: (value) => Validator.validateEmpty(value!),
-            ),
+            // SkyTextField(
+            //   hint: "Price",
+            //   controller: c.priceAddOnController,
+            //   textInputAction: TextInputAction.done,
+            //   textInputType: TextInputType.name,
+            //   validator: (value) => Validator.validateEmpty(value!),
+            // ),
             const SizedBox(
               height: 10,
             ),
-            SkyTextField(
-              hint: "Max quantity",
-              controller: c.minQtyAddonController,
-              textInputAction: TextInputAction.done,
-              textInputType: TextInputType.name,
-              validator: (value) => Validator.validateEmpty(value!),
-            ),
+            // SkyTextField(
+            //   hint: "Max quantity",
+            //   controller: c.minQtyAddonController,
+            //   textInputAction: TextInputAction.done,
+            //   textInputType: TextInputType.name,
+            //   validator: (value) => Validator.validateEmpty(value!),
+            // ),
             const SizedBox(
               height: 10,
             ),
-            SkyTextField(
-              hint: "Max quantity",
-              controller: c.maxQtyAddonController,
-              textInputAction: TextInputAction.done,
-              textInputType: TextInputType.name,
-              validator: (value) => Validator.validateEmpty(value!),
-            ),
+            // SkyTextField(
+            //   hint: "Max quantity",
+            //   controller: c.maxQtyAddonController,
+            //   textInputAction: TextInputAction.done,
+            //   textInputType: TextInputType.name,
+            //   validator: (value) => Validator.validateEmpty(value!),
+            // ),
             const SizedBox(
               height: 10,
             ),
-            SkyElevatedButton(
-                onPressed: () {
-                  c.submitAddMenutAddOns();
-                },
-                title: "Submit"),
+            // SkyElevatedButton(
+            //     onPressed: () {
+            //       c.submitAddMenutAddOns();
+            //     },
+            //     title: "Submit"),
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:saralnova/core/model/feature_model/restaurant_model/category_model.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/menu_variant_model.dart';
 
 List<Menu> menusRestaurantJson(List<dynamic> menusJson) =>
@@ -15,19 +16,22 @@ class Menu {
   String? description;
   String? createdAt;
   String? updatedAt;
+  Category? category;
 
-  Menu(
-      {this.id,
-      this.vendorId,
-      this.title,
-      this.price,
-      this.categoryId,
-      this.categoryTitle,
-      this.menuVariants,
-      this.imageUrl,
-      this.description,
-      this.createdAt,
-      this.updatedAt});
+  Menu({
+    this.id,
+    this.vendorId,
+    this.title,
+    this.price,
+    this.categoryId,
+    this.categoryTitle,
+    this.menuVariants,
+    this.imageUrl,
+    this.description,
+    this.createdAt,
+    this.updatedAt,
+    this.category,
+  });
 
   Menu.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -46,6 +50,10 @@ class Menu {
     description = json['description'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+
+    category = json['category'] != null
+        ? new Category.fromJson(json['category'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -64,6 +72,10 @@ class Menu {
     data['description'] = this.description;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+
+    if (this.category != null) {
+      data['category'] = this.category!.toJson();
+    }
     return data;
   }
 }

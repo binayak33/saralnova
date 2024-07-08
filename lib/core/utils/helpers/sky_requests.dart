@@ -26,6 +26,13 @@ class SkyRequest {
         body: body != null ? json.encode(body) : null,
       );
 
+      // LogHelper.info("Post Request Header ==> $url",
+      //     error: json.encode(headers));
+      // LogHelper.info("Post Request Payload ==> $url", error: json.encode(body));
+      // LogHelper.info("Post Request Response ==> $url", error: response.body);
+
+      LogHelper.error(token.toString());
+
       LogHelper.info("Post Request Header ==> $url",
           error: json.encode(headers));
       LogHelper.info("Post Request Payload ==> $url", error: json.encode(body));

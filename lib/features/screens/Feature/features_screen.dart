@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Feature/feature_controller.dart';
+import 'package:saralnova/core/controllers/Splash/core_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
@@ -216,9 +217,21 @@ class FeatureScreen extends StatelessWidget {
                 },
                 iconPath: IconPath.activities,
               ),
+
               const Divider(
                 height: 0,
                 color: AppColors.fillColor,
+              ),
+
+              CustomListTile(
+                title: "Logout",
+                onTap: () {
+                  Get.find<CoreController>().logOut();
+                },
+                iconPath: IconPath.menu,
+              ),
+              const SizedBox(
+                height: 20,
               ),
             ],
           ),
