@@ -10,6 +10,7 @@ class MenuTile extends StatelessWidget {
   final int index;
   final String? menuTitle;
   final String? imageUrl;
+  final String? menuCategory;
   final String? price;
   final Function() onConfirmDelete;
   final Function() onEdit;
@@ -18,6 +19,7 @@ class MenuTile extends StatelessWidget {
     required this.index,
     this.menuTitle,
     this.imageUrl,
+    this.menuCategory,
     this.price,
     required this.onConfirmDelete,
     required this.onEdit,
@@ -82,6 +84,20 @@ class MenuTile extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
+                  RichText(
+                    text: TextSpan(
+                      text: "Category:   ",
+                      style: CustomTextStyles.f14W400(
+                          color: AppColors.borderColor),
+                      children: [
+                        TextSpan(
+                            text: menuCategory ?? "",
+                            style: CustomTextStyles.f16W500())
+                      ],
+                    ),
+                  ),   const SizedBox(
+                    height: 8,
+                  )
                 ],
               ),
               ClipRRect(

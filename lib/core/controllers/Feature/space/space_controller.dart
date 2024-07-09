@@ -28,6 +28,8 @@ class SpaceController extends GetxController {
   }
 
   void getAllTableSpaces() async {
+    pageState.value = PageState.LOADING;
+
     spaceList.clear();
     SpaceRepo.getSpaces(
       onSuccess: (spaces) {
@@ -93,8 +95,8 @@ class SpaceController extends GetxController {
     crudState.value = CRUDSTATE.UPDATE;
     this.space.value = space; // assign the id to the model
     Get.toNamed(AddSpaceScreen.routeName);
-    nameController.text = space.name.toString();
-    descpController.text = space.description.toString();
+    nameController.text = space.name ?? "";
+    descpController.text = space.description ?? "";
   }
 
   void updateSpace() async {

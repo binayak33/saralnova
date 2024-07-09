@@ -101,49 +101,56 @@ class AddMenuController extends GetxController {
   }
 
   Future<void> storeMenu() async {
-    loading.show();
-    MenuRequestParams menuRequest = MenuRequestParams(
-      title: titleController.text,
-      price: int.parse(priceController.text),
-      categoryId: category.value?.id,
-      description: descriptionController.text,
-    );
-    await RestaurantRepo.storeRestaurantMenu(
-        menuRequestParams: menuRequest,
-        file: pickedFile.value,
-        onSuccess: (menu) {
-          loading.hide();
-          Get.find<MenuRestaurantController>().getAllRestaurantMenus();
-          Get.back();
-        },
-        onError: (message) {
-          loading.hide();
+    if (menuKey.currentState!.validate()) {
+      loading.show();
 
-          SkySnackBar.error(title: "Menu", message: message);
-        });
+      MenuRequestParams menuRequest = MenuRequestParams(
+        title: titleController.text,
+        price: int.parse(priceController.text),
+        categoryId: category.value?.id,
+        description: descriptionController.text,
+      );
+      await RestaurantRepo.storeRestaurantMenu(
+          menuRequestParams: menuRequest,
+          file: pickedFile.value,
+          onSuccess: (menu) {
+            loading.hide();
+            Get.find<MenuRestaurantController>().getAllRestaurantMenus();
+            Get.back();
+          },
+          onError: (message) {
+            loading.hide();
+
+            SkySnackBar.error(title: "Menu", message: message);
+          });
+    }
   }
 
   Future<void> updateMenu() async {
-    loading.show();
-    MenuRequestParams menuRequest = MenuRequestParams(
-      title: titleController.text,
-      price: int.parse(priceController.text),
-      categoryId: category.value?.id,
-      description: descriptionController.text,
-    );
-    await RestaurantRepo.updateRestaurantMenu(
-        menuRequestParams: menuRequest,
-        file: pickedFile.value ?? null,
-        onSuccess: (menu) {
-          loading.hide();
-          Get.find<MenuRestaurantController>().getAllRestaurantMenus();
-          Get.back();
-        },
-        onError: (message) {
-          loading.hide();
+    if (menuKey.currentState!.validate()) {
+      loading.show();
 
-          SkySnackBar.error(title: "Menu", message: message);
-        });
+      MenuRequestParams menuRequest = MenuRequestParams(
+        id: menu.value!.id!,
+        title: titleController.text,
+        price: int.parse(priceController.text),
+        categoryId: category.value?.id,
+        description: descriptionController.text,
+      );
+      await RestaurantRepo.updateRestaurantMenu(
+          menuRequestParams: menuRequest,
+          file: pickedFile.value,
+          onSuccess: (menu) {
+            loading.hide();
+            Get.find<MenuRestaurantController>().getAllRestaurantMenus();
+            Get.back();
+          },
+          onError: (message) {
+            loading.hide();
+
+            SkySnackBar.error(title: "Menu", message: message);
+          });
+    }
   }
 // ===================== THIS FEATURE IS CURRENTLY DISABLED TODO:REMAINDER========================
 

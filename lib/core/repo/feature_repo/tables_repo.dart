@@ -60,12 +60,18 @@ class TableRepo {
   static Future<void> storeTable({
     // required String title,
     required TableModel? tableModel,
+    required String spaceId,
     required Function(TableModel table) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
       String url = Api.storeTables;
-      var body = tableModel?.toJson();
+      // var body = tableModel?.toJson();
+      // var body = {
+      //   "spaceId":spaceId
+      // };
+      Map<String, dynamic> body = tableModel?.toJson() ?? {};
+      body['space_id'] = spaceId;
 
       http.Response response = await SkyRequest.post(
         url,
@@ -88,12 +94,15 @@ class TableRepo {
 
   static Future<void> updateTable({
     required TableModel? tableModel,
+    required String spaceId,
     required Function(TableModel table) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
       String url = Api.updateTables;
-      var body = tableModel?.toJson();
+      // var body = tableModel?.toJson();
+      Map<String, dynamic> body = tableModel?.toJson() ?? {};
+      body['space_id'] = spaceId;
 
       http.Response response = await SkyRequest.post(
         url,

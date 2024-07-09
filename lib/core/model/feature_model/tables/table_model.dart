@@ -1,11 +1,14 @@
+import 'package:saralnova/core/model/feature_model/tables/space_model.dart';
+
 List<TableModel> tablesJson(List<dynamic> tablesJson) => List<TableModel>.from(
     tablesJson.map((tableJson) => TableModel.fromJson(tableJson)));
 
 class TableModel {
   String? id;
   String? vendorId;
-  String? spaceId;
-  String? spaceName;
+  // String? spaceId;
+  // String? spaceName;
+  Space? space;
   String? name;
   int? capacity;
   String? status;
@@ -15,8 +18,9 @@ class TableModel {
   TableModel(
       {this.id,
       this.vendorId,
-      this.spaceId,
-      this.spaceName,
+      // this.spaceId,
+      // this.spaceName,
+      this.space,
       this.name,
       this.capacity,
       this.status,
@@ -26,13 +30,14 @@ class TableModel {
   TableModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     vendorId = json['vendor_id'];
-    spaceId = json['space_id'];
-    spaceName = json['space_name'];
+    // spaceId = json['space_id'];
+    // spaceName = json['space_name'];
     name = json['name'];
     capacity = json['capacity'];
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    space = json['space'] != null ? new Space.fromJson(json['space']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -40,14 +45,17 @@ class TableModel {
     // data['id'] = this.id;
     if (id != null) data['id'] = this.id;
     if (vendorId != null) data['vendor_id'] = this.vendorId;
-    if (spaceId != null) data['space_id'] = this.spaceId;
-    if (spaceName != null) data['space_name'] = this.spaceName;
+    // if (spaceId != null) data['space_id'] = this.spaceId;
+    // if (spaceName != null) data['space_name'] = this.spaceName;
 
     if (name != null) data['name'] = this.name;
     if (capacity != null) data['capacity'] = this.capacity;
     if (status != null) data['status'] = this.status;
     // data['created_at'] = this.createdAt;
     // data['updated_at'] = this.updatedAt;
+    if (this.space != null) {
+      data['space'] = this.space!.toJson();
+    }
     return data;
   }
 }

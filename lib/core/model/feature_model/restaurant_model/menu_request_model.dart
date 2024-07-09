@@ -1,4 +1,5 @@
 class MenuRequestParams {
+  String? id;
   String? title;
   int? price;
   String? categoryId;
@@ -7,7 +8,8 @@ class MenuRequestParams {
   List<Variants>? variants;
 
   MenuRequestParams(
-      {this.title,
+      {this.id,
+      this.title,
       this.price,
       this.categoryId,
       this.description,
@@ -16,6 +18,8 @@ class MenuRequestParams {
 
   Map<String, String> toJson() {
     final Map<String, String> data = new Map<String, String>();
+    data['id'] = this.id.toString();
+
     data['title'] = this.title.toString();
     data['price'] = this.price.toString();
     data['category_id'] = this.categoryId.toString();

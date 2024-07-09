@@ -59,6 +59,7 @@ class MenuScreen extends StatelessWidget {
                         menuTitle: menu.title,
                         price: menu.price.toString(),
                         imageUrl: menu.imageUrl,
+                        menuCategory: menu.categoryTitle,
                         onEdit: () => c.onMenuEdit(menu),
                         onConfirmDelete: () => c.deleteRestaurantMenu(menu.id!),
                       );

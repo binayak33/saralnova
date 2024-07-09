@@ -24,17 +24,19 @@ class TableController extends GetxController {
   final capcityController = TextEditingController();
   final statusController = TextEditingController();
   final spaceController = TextEditingController();
-  Rxn<Space> space = Rxn();
   Rxn<TableModel> table = Rxn();
+  Rxn<Space> space = Rxn();
 
   @override
   void onInit() {
     getAllTables();
-    getAllAvailableTables();  
+    getAllAvailableTables();
     super.onInit();
   }
 
   void getAllTables() async {
+    pageState.value = PageState.LOADING;
+
     tablesList.clear();
     TableRepo.getAllTables(
       onSuccess: (tables) {
@@ -90,17 +92,19 @@ class TableController extends GetxController {
   }
 
   void storeTable() async {
-    // print("------------id---------------------${space.value?.id}");
+    print("------------id---------------------${space.value?.id}");
     if (tableKey.currentState!.validate()) {
       loading.show();
       TableModel tableRequest = TableModel(
         name: nameController.text,
         capacity: int.parse(capcityController.text),
         status: statusController.text,
-        spaceId: space.value?.id,
+        // spaceId: space.value?.id,
+        // space:
       );
       TableRepo.storeTable(
           tableModel: tableRequest,
+          spaceId: space.value!.id!,
           onSuccess: (category) {
             loading.hide();
             //TODO show page state so that loader will be displayed
@@ -122,11 +126,15 @@ class TableController extends GetxController {
   void onEditClick(TableModel table) async {
     crudState.value = CRUDSTATE.UPDATE;
     this.table.value = table; // assign the id to the model
+    this.space.value = table.space;
     Get.toNamed(AddTablesScreen.routeName);
-    nameController.text = table.name.toString();
+    nameController.text = table.name ?? "";
     capcityController.text = (table.capacity ?? 1).toString();
     statusController.text = table.status ?? "";
-    spaceController.text = table.spaceName ?? "";
+    // spaceController.text = table.spaceName ?? "";
+    spaceController.text = table.space?.name ?? "";
+
+    // space.value = table.space ;
   }
 
   void updateTable() async {
@@ -135,15 +143,15 @@ class TableController extends GetxController {
       TableModel tableRequest = TableModel(
         id: table.value?.id,
         name: nameController.text,
-        spaceId: table.value?.spaceId,
+        // spaceId: table.value?.spaceId,
         status: statusController.text,
         capacity: int.parse(capcityController.text),
       );
       TableRepo.updateTable(
         tableModel: tableRequest,
+        spaceId: space.value!.id!,
         onSuccess: (table) {
           loading.hide();
-          //TODO show page state so that loader will be displayed
 
           getAllTables();
           nameController.clear();
@@ -159,7 +167,11 @@ class TableController extends GetxController {
           SkySnackBar.error(title: "Category", message: message);
         },
       );
+
+      // print("Space id ============>${table.value?.spaceId}");
     }
+
+    // print("------------id---------------------${space.value?.id}");
   }
 
   showStatus() {
@@ -191,12 +203,12 @@ class TableController extends GetxController {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: SpaceBottomSheet(
-            onSelectRoomType: (space) {
+            onSelectRoomType: (Space space) {
               spaceController.text = space.name.toString();
 
               this.space.value = space;
               if (crudState.value == CRUDSTATE.UPDATE) {
-                // updateIndex.value = roomType.id;
+                this.space.value = space;
               }
             },
           ),
