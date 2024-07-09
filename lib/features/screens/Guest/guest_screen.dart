@@ -7,10 +7,10 @@ import 'package:saralnova/core/controllers/Guest/guest_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
-import 'package:saralnova/features/screens/Feature/Booking/booking_steppers/booking_confirm_screen.dart';
-import 'package:saralnova/features/screens/Feature/Booking/booking_steppers/booking_dateRoom_screen.dart';
-import 'package:saralnova/features/screens/Feature/Booking/booking_steppers/booking_information_screen.dart';
-import 'package:saralnova/features/screens/Feature/Booking/booking_steppers/booking_options_screen.dart';
+import 'package:saralnova/features/screens/More/Booking/booking_steppers/booking_confirm_screen.dart';
+import 'package:saralnova/features/screens/More/Booking/booking_steppers/booking_dateRoom_screen.dart';
+import 'package:saralnova/features/screens/More/Booking/booking_steppers/booking_information_screen.dart';
+import 'package:saralnova/features/screens/More/Booking/booking_steppers/booking_options_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_elevated_button.dart';
 
 class GuestScreen extends StatelessWidget {

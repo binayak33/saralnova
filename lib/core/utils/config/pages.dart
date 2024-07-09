@@ -1,52 +1,55 @@
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Calendar/calendar_controller.dart';
 import 'package:saralnova/core/controllers/Dashboard/dashboard_panel_controller.dart';
-import 'package:saralnova/core/controllers/Feature/activity_log/activity_log_controller.dart';
-import 'package:saralnova/core/controllers/Feature/amenities/amenities_controller.dart';
-import 'package:saralnova/core/controllers/Feature/booking/booking_controller.dart';
-import 'package:saralnova/core/controllers/Feature/facility/facility_controller.dart';
-import 'package:saralnova/core/controllers/Feature/feature_controller.dart';
-import 'package:saralnova/core/controllers/Feature/orders/customer_orders/customers_KOT_controller.dart';
-import 'package:saralnova/core/controllers/Feature/restaurant/category/category_controller.dart';
-import 'package:saralnova/core/controllers/Feature/restaurant/variants/variant_controller.dart';
-import 'package:saralnova/core/controllers/Feature/room/rooms_controller.dart';
-import 'package:saralnova/core/controllers/Feature/room_type/room_type_controller.dart';
-import 'package:saralnova/core/controllers/Feature/space/space_controller.dart';
-import 'package:saralnova/core/controllers/Feature/staff/staff_controller.dart';
-import 'package:saralnova/core/controllers/Feature/table/table_controller.dart';
-import 'package:saralnova/core/controllers/Guest/guest_controller.dart';
 import 'package:saralnova/core/controllers/Home/home_controller.dart';
+import 'package:saralnova/core/controllers/More/activity_log/activity_log_controller.dart';
+import 'package:saralnova/core/controllers/More/amenities/amenities_controller.dart';
+import 'package:saralnova/core/controllers/More/booking/booking_controller.dart';
+import 'package:saralnova/core/controllers/More/facility/facility_controller.dart';
+import 'package:saralnova/core/controllers/More/more_controller.dart';
+import 'package:saralnova/core/controllers/More/order/order_controller.dart';
+import 'package:saralnova/core/controllers/More/order/order_detail_controller.dart';
+import 'package:saralnova/core/controllers/More/orders/customer_orders/customers_KOT_controller.dart';
+import 'package:saralnova/core/controllers/More/restaurant/category/category_controller.dart';
+import 'package:saralnova/core/controllers/More/restaurant/variants/variant_controller.dart';
+import 'package:saralnova/core/controllers/More/room/rooms_controller.dart';
+import 'package:saralnova/core/controllers/More/room_type/room_type_controller.dart';
+import 'package:saralnova/core/controllers/More/space/space_controller.dart';
+import 'package:saralnova/core/controllers/More/staff/staff_controller.dart';
+import 'package:saralnova/core/controllers/More/table/table_controller.dart';
 import 'package:saralnova/core/controllers/Splash/splash_controller.dart';
 import 'package:saralnova/core/controllers/menu/add_menu_controller.dart';
 import 'package:saralnova/core/controllers/menu/menu_controller.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
-import 'package:saralnova/features/screens/Feature/Booking/booking_screen.dart';
-import 'package:saralnova/features/screens/Feature/Booking/create_booking_screen.dart';
-import 'package:saralnova/features/screens/Feature/activity_log/activity_log_screen.dart';
-import 'package:saralnova/features/screens/Feature/aminity_type/amenity_screen.dart';
-import 'package:saralnova/features/screens/Feature/facility_type/facility_screen.dart';
-import 'package:saralnova/features/screens/Feature/menu/menu_screen.dart';
-import 'package:saralnova/features/screens/Feature/orders/customer_order/customer_kot_screen.dart';
-import 'package:saralnova/features/screens/Feature/restaurant/category/category_screen.dart';
-import 'package:saralnova/features/screens/Feature/restaurant/variants/add_variant_screen.dart';
-import 'package:saralnova/features/screens/Feature/restaurant/variants/variants_screen.dart';
-import 'package:saralnova/features/screens/Feature/room_type/room_type_screen.dart';
-import 'package:saralnova/features/screens/Feature/rooms/add_rooms_screen.dart';
-import 'package:saralnova/features/screens/Feature/rooms/rooms_screen.dart';
-import 'package:saralnova/features/screens/Feature/space/add_space_screen.dart';
-import 'package:saralnova/features/screens/Feature/space/space_screen.dart';
-import 'package:saralnova/features/screens/Feature/staff/staff_screen.dart';
-import 'package:saralnova/features/screens/Feature/tables/add_tables_screen.dart';
-import 'package:saralnova/features/screens/Feature/tables/tables_screen.dart';
+import 'package:saralnova/features/screens/More/Booking/booking_screen.dart';
+import 'package:saralnova/features/screens/More/Booking/create_booking_screen.dart';
+import 'package:saralnova/features/screens/More/activity_log/activity_log_screen.dart';
+import 'package:saralnova/features/screens/More/aminity_type/amenity_screen.dart';
+import 'package:saralnova/features/screens/More/facility_type/facility_screen.dart';
+import 'package:saralnova/features/screens/More/menu/menu_screen.dart';
+import 'package:saralnova/features/screens/More/order/order_detail_screen.dart';
+import 'package:saralnova/features/screens/More/order/order_screen.dart';
+import 'package:saralnova/features/screens/More/pos/customer_order/customer_kot_screen.dart';
+import 'package:saralnova/features/screens/More/restaurant/category/category_screen.dart';
+import 'package:saralnova/features/screens/More/restaurant/variants/add_variant_screen.dart';
+import 'package:saralnova/features/screens/More/restaurant/variants/variants_screen.dart';
+import 'package:saralnova/features/screens/More/room_type/room_type_screen.dart';
+import 'package:saralnova/features/screens/More/rooms/add_rooms_screen.dart';
+import 'package:saralnova/features/screens/More/rooms/rooms_screen.dart';
+import 'package:saralnova/features/screens/More/space/add_space_screen.dart';
+import 'package:saralnova/features/screens/More/space/space_screen.dart';
+import 'package:saralnova/features/screens/More/staff/staff_screen.dart';
+import 'package:saralnova/features/screens/More/tables/add_tables_screen.dart';
+import 'package:saralnova/features/screens/More/tables/tables_screen.dart';
 import 'package:saralnova/features/screens/Splash/splash_screen.dart';
 
 import '../../../features/screens/Auth/login_screen.dart';
-import '../../../features/screens/Feature/activites/activites_screen.dart';
-import '../../../features/screens/Feature/menu/add_menu_screen.dart';
-import '../../../features/screens/Feature/orders/customer_order/customer_orders_screen.dart';
+import '../../../features/screens/More/activites/activites_screen.dart';
+import '../../../features/screens/More/menu/add_menu_screen.dart';
+import '../../../features/screens/More/pos/customer_order/customer_orders_screen.dart';
 import '../../controllers/Auth/login_controller.dart';
-import '../../controllers/Feature/activites/activities_controller.dart';
-import '../../controllers/Feature/orders/customer_orders/customer_order_controller.dart';
+import '../../controllers/More/activites/activities_controller.dart';
+import '../../controllers/More/orders/customer_orders/customer_order_controller.dart';
 
 final List<GetPage> pages = [
   GetPage(
@@ -70,8 +73,11 @@ final List<GetPage> pages = [
       Get.lazyPut(() => DashPanelController());
       Get.lazyPut(() => HomeController());
       Get.lazyPut(() => CalendarController());
-      Get.lazyPut(() => GuestController());
-      Get.lazyPut(() => FeatureController());
+      // Get.lazyPut(() => GuestController());
+
+      Get.lazyPut(() => CustomerOrderController());
+
+      Get.lazyPut(() => MoreController());
     }),
   ),
 
@@ -234,6 +240,22 @@ final List<GetPage> pages = [
     page: () => CustomersKotScreen(),
     binding: BindingsBuilder(() {
       Get.lazyPut(() => CustomersKOTController());
+    }),
+  ),
+
+  GetPage(
+    name: OrderScreen.routeName,
+    page: () => OrderScreen(),
+    binding: BindingsBuilder(
+      () => Get.lazyPut(() => OrderController()),
+    ),
+  ),
+
+   GetPage(
+    name: OrderDetailScreen.routeName,
+    page: () => OrderDetailScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => OrderDetailController());
     }),
   ),
 ];

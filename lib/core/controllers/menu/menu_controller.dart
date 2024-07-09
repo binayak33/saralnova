@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
-import 'package:saralnova/features/screens/Feature/menu/add_menu_screen.dart';
+import 'package:saralnova/features/screens/More/menu/add_menu_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 
 import '../../../features/widgets/common_widgets/sky_snack_bar.dart';
 import '../../model/feature_model/restaurant_model/menu_model.dart';
-import '../../repo/feature_repo/restaurant_repo.dart';
+import '../../repo/more_repo/restaurant_repo.dart';
 import '../../utils/helpers/log_helper.dart';
 
 class MenuRestaurantController extends GetxController {

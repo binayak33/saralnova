@@ -50,6 +50,7 @@ class IconPath {
   static const String orderCheckout = "$basePath/orderCheckout.svg";
   static const String orderPlaced = "$basePath/orderPlaced.svg";
   static const String orderReceived = "$basePath/orderReceived.svg";
+  static const String pos = "$basePath/pos.svg";
 
   //Bottom Nav Icons
   static const String home = "$basePath/home.svg";

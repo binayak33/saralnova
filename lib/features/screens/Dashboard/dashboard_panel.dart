@@ -23,8 +23,7 @@ class DashPanel extends StatelessWidget {
             customNavItem(theme: theme, iconPath: IconPath.home, label: "Home"),
             customNavItem(
                 theme: theme, iconPath: IconPath.calendar, label: "Calendar"),
-            customNavItem(
-                theme: theme, iconPath: IconPath.personInfo, label: "Expenses"),
+            customNavItem(theme: theme, iconPath: IconPath.pos, label: "Pos"),
             customNavItem(theme: theme, iconPath: IconPath.more, label: "More"),
           ],
         ),
@@ -47,11 +46,15 @@ class DashPanel extends StatelessWidget {
       label: label,
       icon: SvgPicture.asset(
         iconPath,
+        height: 20,
+        width: 20,
         colorFilter:
             ColorFilter.mode(theme.colorScheme.outlineVariant, BlendMode.srcIn),
       ),
       activeIcon: SvgPicture.asset(
         iconPath,
+        height: 25,
+        width: 25,
         colorFilter:
             ColorFilter.mode(theme.colorScheme.primary, BlendMode.srcIn),
       ),

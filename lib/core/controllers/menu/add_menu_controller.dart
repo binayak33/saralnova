@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:saralnova/core/controllers/menu/menu_controller.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/menu_request_model.dart';
-import 'package:saralnova/core/repo/feature_repo/restaurant_repo.dart';
+import 'package:saralnova/core/repo/more_repo/restaurant_repo.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 
-import '../../../features/screens/Feature/menu/menu_category_bottom_sheet.dart';
+import '../../../features/screens/More/menu/menu_category_bottom_sheet.dart';
 import '../../model/feature_model/restaurant_model/category_model.dart';
 import '../../model/feature_model/restaurant_model/menu_model.dart';
 

@@ -6,7 +6,7 @@ import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 
 class SkyTextField extends StatelessWidget {
   final Function(String)? onValueChange;
-  final String hint;
+  final String? hint;
   final String? prefixIconPath;
   final Widget? prefixIcon;
   final String? suffixIconPath;
@@ -26,7 +26,7 @@ class SkyTextField extends StatelessWidget {
   final Function(String)? onSubmitted;
   final TextCapitalization textCapitalization;
   final Color? fillColor;
-  final bool showLable;
+  final bool showLabel;
   final bool obscureText;
   final FocusNode? focusNode;
   final double borderRadius;
@@ -49,7 +49,7 @@ class SkyTextField extends StatelessWidget {
     this.onTap,
     this.onSubmitted,
     this.autofocus = false,
-    this.showLable = false,
+    this.showLabel = true,
     this.fillColor,
     this.maxLength,
     this.maxLine,
@@ -95,9 +95,9 @@ class SkyTextField extends StatelessWidget {
       onChanged: onValueChange,
       maxLength: maxLength,
       decoration: InputDecoration(
-        label: showLable
+        label: showLabel
             ? Text(
-                hint,
+                hint ?? "",
                 style: CustomTextStyles.f16W400(color: AppColors.hintTextColor),
               )
             : null,

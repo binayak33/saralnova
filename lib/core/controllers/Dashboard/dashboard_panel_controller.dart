@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Splash/core_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/features/screens/Calendar/calander_screen.dart';
-import 'package:saralnova/features/screens/Guest/guest_screen.dart';
 import 'package:saralnova/features/screens/Home/home_screen.dart';
-import 'package:saralnova/features/screens/Feature/features_screen.dart';
+import 'package:saralnova/features/screens/More/more_screen.dart';
+import 'package:saralnova/features/screens/More/pos/customer_order/customer_orders_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.dart';
 
 class DashPanelController extends GetxController {
@@ -16,8 +16,9 @@ class DashPanelController extends GetxController {
   var pages = <Widget>[
     HomeScreen(),
     CalendarScreen(),
-    GuestScreen(),
-    FeatureScreen(),
+    // GuestScreen(),
+    CustomerOrderScreen(),
+    MoreScreen(),
   ];
 
   void onUpdatePage(int value) {
