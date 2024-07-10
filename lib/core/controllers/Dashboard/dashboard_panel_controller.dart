@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Splash/core_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/features/screens/Calendar/calander_screen.dart';
+import 'package:saralnova/features/screens/Dashboard/main_pos_panel.dart';
 import 'package:saralnova/features/screens/Home/home_screen.dart';
 import 'package:saralnova/features/screens/More/more_screen.dart';
-import 'package:saralnova/features/screens/More/pos/customer_order/customer_orders_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.dart';
 
 class DashPanelController extends GetxController {
@@ -16,8 +16,8 @@ class DashPanelController extends GetxController {
   var pages = <Widget>[
     HomeScreen(),
     CalendarScreen(),
-    // GuestScreen(),
-    CustomerOrderScreen(),
+    // CustomerOrderScreen(), // this is the later page
+    // MainPosPanel(), //main pos panel kholera tes vitra aru bottom navigation banaune
     MoreScreen(),
   ];
 
@@ -25,6 +25,12 @@ class DashPanelController extends GetxController {
     currnetIndex.value = value;
     pageController.animateToPage(currnetIndex.value,
         duration: const Duration(milliseconds: 100), curve: Curves.linear);
+
+    if (value == 2) {
+      Get.toNamed(MainPosPanel.routeName);
+
+      return;
+    }
   }
 
   void logout() {

@@ -27,7 +27,8 @@ class OrderDetailScreen extends StatelessWidget {
               border: Border.all(
                 color: AppColors.hintTextColor,
               ),
-              borderRadius: BorderRadius.circular(10)),
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.splashBackgroundColor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

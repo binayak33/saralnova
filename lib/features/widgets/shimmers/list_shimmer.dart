@@ -391,6 +391,103 @@ class SaralNovaShimmer {
     );
   }
 
+  static Widget categoryShimmerPOS() {
+    return Shimmer.fromColors(
+        baseColor: AppColors.shimmerBase,
+        highlightColor: AppColors.shimmerHighlight,
+        child: ListView.separated(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          separatorBuilder: (context, index) {
+            return const SizedBox(
+              width: 10,
+            );
+          },
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.borderColor),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: SkyNetworkImage(
+                      imageUrl: "",
+                      height: 60,
+                      width: 60,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    height: 15,
+                    width: 50,
+                    color: AppColors.shimmerHighlight,
+                  ),
+                ],
+              ),
+            );
+          },
+        ));
+  }
+
+  static Widget menuGridShimmer() {
+    return Shimmer.fromColors(
+      baseColor: AppColors.shimmerBase,
+      highlightColor: AppColors.shimmerHighlight,
+      child: GridView.builder(
+        key: const PageStorageKey(""),
+        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 1,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
+        itemCount: 20,
+        itemBuilder: (context, index) {
+          return Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppColors.borderColor),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: const SkyNetworkImage(
+                    imageUrl: "",
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 20,
+                  width: 100,
+                  color: AppColors.shimmerHighlight,
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   static Widget orderShimmer() {
     return Shimmer.fromColors(
       baseColor: AppColors.shimmerBase,

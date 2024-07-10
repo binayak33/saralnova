@@ -14,7 +14,6 @@ class Customer {
   num? total;
   List<TableModel>? tables;
   String? createdAt;
-
   String? updatedAt;
 
   Customer(

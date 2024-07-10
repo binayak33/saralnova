@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Calendar/calendar_controller.dart';
 import 'package:saralnova/core/controllers/Dashboard/dashboard_panel_controller.dart';
+import 'package:saralnova/core/controllers/Dashboard/main_pos_panel_controller.dart';
 import 'package:saralnova/core/controllers/Home/home_controller.dart';
 import 'package:saralnova/core/controllers/More/activity_log/activity_log_controller.dart';
 import 'package:saralnova/core/controllers/More/amenities/amenities_controller.dart';
@@ -20,7 +21,9 @@ import 'package:saralnova/core/controllers/More/table/table_controller.dart';
 import 'package:saralnova/core/controllers/Splash/splash_controller.dart';
 import 'package:saralnova/core/controllers/menu/add_menu_controller.dart';
 import 'package:saralnova/core/controllers/menu/menu_controller.dart';
+import 'package:saralnova/core/controllers/pos/place_order_pos_controller.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
+import 'package:saralnova/features/screens/Dashboard/main_pos_panel.dart';
 import 'package:saralnova/features/screens/More/Booking/booking_screen.dart';
 import 'package:saralnova/features/screens/More/Booking/create_booking_screen.dart';
 import 'package:saralnova/features/screens/More/activity_log/activity_log_screen.dart';
@@ -30,6 +33,7 @@ import 'package:saralnova/features/screens/More/menu/menu_screen.dart';
 import 'package:saralnova/features/screens/More/order/order_detail_screen.dart';
 import 'package:saralnova/features/screens/More/order/order_screen.dart';
 import 'package:saralnova/features/screens/More/pos/customer_order/customer_kot_screen.dart';
+import 'package:saralnova/features/screens/More/pos/make_order_pos_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/category/category_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/variants/add_variant_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/variants/variants_screen.dart';
@@ -74,13 +78,15 @@ final List<GetPage> pages = [
       Get.lazyPut(() => HomeController());
       Get.lazyPut(() => CalendarController());
       // Get.lazyPut(() => GuestController());
+      Get.lazyPut(() => MainPosPanelController());
 
-      Get.lazyPut(() => CustomerOrderController());
+      // Get.lazyPut(() => CustomerOrderController());
 
       Get.lazyPut(() => MoreController());
     }),
   ),
 
+  
   GetPage(
     name: RoomTypeScreen.routeName,
     page: () => RoomTypeScreen(),
@@ -251,11 +257,30 @@ final List<GetPage> pages = [
     ),
   ),
 
-   GetPage(
+  GetPage(
     name: OrderDetailScreen.routeName,
     page: () => OrderDetailScreen(),
     binding: BindingsBuilder(() {
       Get.lazyPut(() => OrderDetailController());
     }),
   ),
+
+  GetPage(
+    name: MainPosPanel.routeName,
+    page: () => MainPosPanel(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => MainPosPanelController());
+      Get.lazyPut(() => PlaceOrderPosController());
+    }),
+  ),
+
+  GetPage(
+    name: MakeOrderPosScreen.routeName,
+    page: () => MakeOrderPosScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => MainPosPanelController());
+      Get.lazyPut(() => PlaceOrderPosController());
+    }),
+  ),
+
 ];

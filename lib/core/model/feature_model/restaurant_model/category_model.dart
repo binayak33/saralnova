@@ -6,6 +6,7 @@ class Category {
   String? id;
   String? title;
   String? vendorId;
+  String? image;
   String? createdAt;
   String? updatedAt;
 
@@ -16,6 +17,7 @@ class Category {
     id = json['id'];
     title = json['title'];
     vendorId = json['vendor_id'];
+    image = json['image_url'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -25,6 +27,8 @@ class Category {
     data['id'] = this.id;
     data['title'] = this.title;
     data['vendor_id'] = this.vendorId;
+    data['image_url'] = this.image;
+
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;

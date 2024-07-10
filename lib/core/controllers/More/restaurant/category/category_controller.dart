@@ -26,6 +26,23 @@ class CategoryController extends GetxController {
     super.onInit();
   }
 
+ Future<void> getAllRestaurantCategories() async {
+    restaurantCategorylist.clear();
+    RestaurantRepo.getRestaurantCategories(
+      onSuccess: (categories) {
+        if (categories.isEmpty) {
+          pageState.value = PageState.EMPTY;
+        } else {
+          restaurantCategorylist.addAll(categories);
+          pageState.value = PageState.NORMAL;
+        }
+      },
+      onError: (message) {
+        pageState.value = PageState.ERROR;
+        LogHelper.error(message);
+      },
+    );
+  }
   openCategoryBottomSheet() async {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -61,23 +78,7 @@ class CategoryController extends GetxController {
     }
   }
 
-  void getAllRestaurantCategories() async {
-    restaurantCategorylist.clear();
-    RestaurantRepo.getRestaurantCategories(
-      onSuccess: (categories) {
-        if (categories.isEmpty) {
-          pageState.value = PageState.EMPTY;
-        } else {
-          restaurantCategorylist.addAll(categories);
-          pageState.value = PageState.NORMAL;
-        }
-      },
-      onError: (message) {
-        pageState.value = PageState.ERROR;
-        LogHelper.error(message);
-      },
-    );
-  }
+ 
 
   void deleteRestaurantCategory(String categoryId) async {
     loading.show();

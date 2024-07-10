@@ -9,8 +9,8 @@ class Menu {
   String? vendorId;
   String? title;
   int? price;
-  String? categoryId;
-  String? categoryTitle;
+  // String? categoryId;
+  // String? categoryTitle;
   List<MenuVariant>? menuVariants;
   String? imageUrl;
   String? description;
@@ -23,8 +23,8 @@ class Menu {
     this.vendorId,
     this.title,
     this.price,
-    this.categoryId,
-    this.categoryTitle,
+    // this.categoryId,
+    // this.categoryTitle,
     this.menuVariants,
     this.imageUrl,
     this.description,
@@ -38,8 +38,8 @@ class Menu {
     vendorId = json['vendor_id'];
     title = json['title'];
     price = json['price'];
-    categoryId = json['category_id'];
-    categoryTitle = json['category_title'];
+    // categoryId = json['category_id'];
+    // categoryTitle = json['category_title'];
     if (json['menu_variants'] != null) {
       menuVariants = <MenuVariant>[];
       json['menu_variants'].forEach((v) {
@@ -62,8 +62,8 @@ class Menu {
     data['vendor_id'] = this.vendorId;
     data['title'] = this.title;
     data['price'] = this.price;
-    data['category_id'] = this.categoryId;
-    data['category_title'] = this.categoryTitle;
+    // data['category_id'] = this.categoryId;
+    // data['category_title'] = this.categoryTitle;
     if (this.menuVariants != null) {
       data['menu_variants'] =
           this.menuVariants!.map((v) => v.toJson()).toList();
