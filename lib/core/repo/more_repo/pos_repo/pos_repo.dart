@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:saralnova/core/model/feature_model/pos/pos_request_model.dart/place_order_request_model.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/menu_model.dart';
 import 'package:saralnova/core/utils/constants/api.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
@@ -89,6 +90,32 @@ class PosRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.getMenuByCategory, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  //request place order
+
+  static Future<void> placeKOT({
+    required PlaceOrderRequestModel? placeOrderRequestModel,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.placeKotOrder;
+      var body = placeOrderRequestModel?.toJson();
+      http.Response response = await SkyRequest.post(url, body: body);
+      var data = json.decode(response.body);
+
+      if (data['status']) {
+        // var booking = Booking.fromJson(data['data']);
+        var message = data['message'];
+        onSuccess(message);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.placeKotOrder, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

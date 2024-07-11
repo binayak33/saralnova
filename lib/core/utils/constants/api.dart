@@ -123,4 +123,7 @@ class Api {
 
 static String getMenuByCategory =
       "$apiBaseUrl/restaurant/category/menus?id=#id#";
+
+      static String placeKotOrder =
+      "$apiBaseUrl/restaurant/kot/order";
 }

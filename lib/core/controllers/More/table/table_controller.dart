@@ -55,6 +55,7 @@ class TableController extends GetxController {
   }
 
   void getAllAvailableTables() async {
+    pageState.value = PageState.LOADING;
     availableTableList.clear();
     TableRepo.getAllAvailableTables(
       onSuccess: (availabletables) {
