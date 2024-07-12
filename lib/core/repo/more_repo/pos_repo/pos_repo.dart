@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:saralnova/core/model/feature_model/pos/pending_orders_for_kot_model.dart';
 import 'package:saralnova/core/model/feature_model/pos/pos_request_model.dart/place_order_request_model.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/menu_model.dart';
 import 'package:saralnova/core/utils/constants/api.dart';
@@ -116,6 +117,32 @@ class PosRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.placeKotOrder, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  //getKOT orders  // These are pending orders
+  static Future<void> getKOTorders({
+    required Function(List<PendingOrders> pendingOrders) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.getKotOrders;
+
+      http.Response response = await SkyRequest.get(
+        url,
+      );
+
+      var data = json.decode(response.body);
+
+      if (data["status"]) {
+        var pendingOrders = pendingKOTordersFromJson(data['data']);
+        onSuccess(pendingOrders);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.getKotOrders, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

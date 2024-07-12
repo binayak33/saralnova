@@ -19,20 +19,6 @@ class MainPosPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: InkResponse(
-      //     onTap: () {
-      //       Get.find<DashPanelController>().currnetIndex.value = 0;
-      //       // Get.back();
-
-      //       Get.toNamed(DashPanel.routeName);
-      //     },
-      //     child: const Icon(
-      //       Icons.arrow_back,
-      //       color: AppColors.blackColor,
-      //     ),
-      //   ),
-      // ),
       appBar: AppBar(
         actions: [
           if (c.currnetIndex.value == 0)
@@ -57,7 +43,7 @@ class MainPosPanel extends StatelessWidget {
                 ),
                 searchIconColor: AppColors.textColor,
                 color: AppColors.fillColor,
-                width: Get.width - 100,
+                width: 250,
                 textController: c.searchMenuController,
                 onSuffixTap: () {},
                 onSubmitted: (String) {},

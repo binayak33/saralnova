@@ -21,6 +21,7 @@ import 'package:saralnova/core/controllers/More/table/table_controller.dart';
 import 'package:saralnova/core/controllers/Splash/splash_controller.dart';
 import 'package:saralnova/core/controllers/menu/add_menu_controller.dart';
 import 'package:saralnova/core/controllers/menu/menu_controller.dart';
+import 'package:saralnova/core/controllers/pos/pending_order_pos_controller.dart';
 import 'package:saralnova/core/controllers/pos/place_order_pos_controller.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
 import 'package:saralnova/features/screens/Dashboard/main_pos_panel.dart';
@@ -33,6 +34,7 @@ import 'package:saralnova/features/screens/More/menu/menu_screen.dart';
 import 'package:saralnova/features/screens/More/order/order_detail_screen.dart';
 import 'package:saralnova/features/screens/More/order/order_screen.dart';
 import 'package:saralnova/features/screens/More/pos/customer_order/customer_kot_screen.dart';
+import 'package:saralnova/features/screens/More/pos/kot_POS_screen.dart';
 import 'package:saralnova/features/screens/More/pos/make_order_pos_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/category/category_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/variants/add_variant_screen.dart';
@@ -86,7 +88,6 @@ final List<GetPage> pages = [
     }),
   ),
 
-  
   GetPage(
     name: RoomTypeScreen.routeName,
     page: () => RoomTypeScreen(),
@@ -271,6 +272,7 @@ final List<GetPage> pages = [
     binding: BindingsBuilder(() {
       Get.lazyPut(() => MainPosPanelController());
       Get.lazyPut(() => PlaceOrderPosController());
+      Get.lazyPut(() => PendingOrderController());
     }),
   ),
 
@@ -278,9 +280,16 @@ final List<GetPage> pages = [
     name: MakeOrderPosScreen.routeName,
     page: () => MakeOrderPosScreen(),
     binding: BindingsBuilder(() {
-      Get.lazyPut(() => MainPosPanelController());
+      // Get.lazyPut(() => MainPosPanelController());
       Get.lazyPut(() => PlaceOrderPosController());
     }),
   ),
 
+  GetPage(
+    name: KotScreenPOS.routeName,
+    page: () => KotScreenPOS(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => PendingOrderController());
+    }),
+  ),
 ];

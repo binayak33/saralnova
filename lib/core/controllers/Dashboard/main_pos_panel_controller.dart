@@ -23,7 +23,7 @@ class MainPosPanelController extends GetxController {
 
   var pages = <Widget>[
     PlaceOrderScreenPOS(),
-    KOTScreenPOS(),
+    KotScreenPOS(),
     // CustomerOrderScreen(), // this is the later page
     CheckoutScreenPOS(),
     TablesScreenPOS(),

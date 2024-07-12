@@ -1,3 +1,4 @@
+import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/pos/place_order_pos_controller.dart';
@@ -19,6 +20,12 @@ class PlaceOrderScreenPOS extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   actions: [
+
+      //   ]
+      
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -138,7 +145,10 @@ class PlaceOrderScreenPOS extends StatelessWidget {
                 return Expanded(child: SaralNovaShimmer.menuGridShimmer());
               } else if (c.pageState.value == PageState.EMPTY) {
                 return EmptyView(
-                    message: "No data available", title: "No Data");
+                  message: "No data available",
+                  title: "No Data",
+                  media: IconPath.nodata,
+                );
               } else if (c.pageState.value == PageState.NORMAL) {
                 return Expanded(
                   child: Obx(

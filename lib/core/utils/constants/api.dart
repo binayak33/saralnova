@@ -107,12 +107,8 @@ class Api {
 // -------------activities
   static String activities = "$apiBaseUrl/restaurant/activities";
 
-  
-
   //-------------order new sprint
-    static String checkedOutOrders = "$apiBaseUrl/restaurant/checked-out-orders";
-
-
+  static String checkedOutOrders = "$apiBaseUrl/restaurant/checked-out-orders";
 
 // ------------pos
   static String getAllCustomersOrders =
@@ -120,10 +116,10 @@ class Api {
   static String getCustomersOrder =
       "$apiBaseUrl/restaurant/customer/orders?id=#id#";
 
-
-static String getMenuByCategory =
+  static String getMenuByCategory =
       "$apiBaseUrl/restaurant/category/menus?id=#id#";
 
-      static String placeKotOrder =
-      "$apiBaseUrl/restaurant/kot/order";
+  static String placeKotOrder = "$apiBaseUrl/restaurant/kot/order";
+
+  static String getKotOrders = "$apiBaseUrl/restaurant/kot/all-orders";
 }

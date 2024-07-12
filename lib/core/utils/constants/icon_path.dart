@@ -18,6 +18,10 @@ class IconPath {
   static const String roomType = "$basePath/room_type.svg";
   static const String placeOrder = "$basePath/placeOrder.svg";
 
+  static const String circleCross = "$basePath/circleCross.svg";
+
+  static const String circleTick = "$basePath/tick.svg";
+
   static const String circlePlus = "$basePath/circlePlus.svg";
 
   static const String circleMinus = "$basePath/circleMinus.svg";
