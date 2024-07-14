@@ -19,17 +19,21 @@ class KotScreenPOS extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text(
+          "Pending Order",
+          style: CustomTextStyles.f14W600(),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: [
-            Text("Pending Order"),
             Obx(() {
               if (c.pageState.value == PageState.LOADING) {
-                return Expanded(
-                    child: SaralNovaShimmer
-                        .menuGridShimmer()); //TODO make shimmer according to the page
+                return Expanded(child: SaralNovaShimmer.pendingOrderShimmer());
               } else if (c.pageState.value == PageState.EMPTY) {
                 return EmptyView(
                   message: "No pending orders at the moment",
@@ -40,13 +44,13 @@ class KotScreenPOS extends StatelessWidget {
                 return Expanded(
                   child: Obx(
                     () => GridView.builder(
+                      //TODO make this listview
                       key: const PageStorageKey("pending orders"),
                       shrinkWrap: true,
                       physics: const AlwaysScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
-                        // childAspectRatio: 1,
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
                         mainAxisExtent: 250,
@@ -57,8 +61,41 @@ class KotScreenPOS extends StatelessWidget {
 
                         return PendingOrderBox(
                           pendingOrders: pOrder,
-                          onCancel: () {},
-                          onSuccess: () {},
+                          onSuccess: () {
+                            c.serveKotItems(pOrder: pOrder);
+                          },
+                          onCancel: () {
+                            c.cancelKotItems(pOrder: pOrder);
+                          },
+
+                          // ==========================
+                          // onSuccess: () {
+                          //   List<String> itemIds = pOrder.items
+                          //           ?.where((item) =>
+                          //               !item.isCancelled! &&
+                          //               !item.isServed! &&
+                          //               !item.isPaid!)
+                          //           .map((item) => item.id!)
+                          //           .toList() ??
+                          //       [];
+                          //   c.serveKotItems(menuIds: itemIds, pOrder: pOrder);
+                          // },
+                          // onCancel: () {
+                          //   List<String> itemIds = pOrder.items
+                          //           ?.where((item) =>
+                          //               !item.isCancelled! &&
+                          //               !item.isServed! &&
+                          //               !item.isPaid!)
+                          //           .map((item) => item.id!)
+                          //           .toList() ??
+                          //       [];
+                          //   c.cancelKotItems(menuIds: itemIds);
+                          // },
+
+                          onSelected: (String menuItemId) {
+                            // c.toggleSelection(menuItemId);
+                            c.toggleSelection(menuItemId, pOrder.id!);
+                          },
                         );
                       },
                     ),
@@ -80,14 +117,19 @@ class KotScreenPOS extends StatelessWidget {
 }
 
 class PendingOrderBox extends StatelessWidget {
+  final pendingOrderController = Get.find<PendingOrderController>();
   final PendingOrders pendingOrders;
   final Function() onSuccess;
   final Function() onCancel;
-  const PendingOrderBox({
+  // final Function()? onSelected;
+
+  final Function(String menuItemId)? onSelected;
+  PendingOrderBox({
     super.key,
     required this.pendingOrders,
     required this.onCancel,
     required this.onSuccess,
+    this.onSelected,
   });
 
   @override
@@ -115,18 +157,24 @@ class PendingOrderBox extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    SvgPicture.asset(
-                      IconPath.circleCross,
-                      height: 20,
-                      width: 20,
+                    GestureDetector(
+                      onTap: onCancel,
+                      child: SvgPicture.asset(
+                        IconPath.circleCross,
+                        height: 20,
+                        width: 20,
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
-                    SvgPicture.asset(
-                      IconPath.circleTick,
-                      height: 26,
-                      width: 26,
+                    GestureDetector(
+                      onTap: onSuccess,
+                      child: SvgPicture.asset(
+                        IconPath.circleTick,
+                        height: 26,
+                        width: 26,
+                      ),
                     )
                   ],
                 ),
@@ -174,19 +222,70 @@ class PendingOrderBox extends StatelessWidget {
                       },
                       itemBuilder: (context, index) {
                         var menuItem = pendingOrders.items![index];
-                        return ListTile(
-                          tileColor: AppColors.fillColor,
-                          dense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 16.0),
-                          title: Text(
-                            menuItem.menuTitle ?? "",
-                            style: CustomTextStyles.f14W400(
-                                color: AppColors.blackColor),
+
+                        String status = ''; //THESE can be multiple tooo
+                        if (menuItem.isPaid == true) {
+                          status = "Paid";
+                        }
+                        if (menuItem.isServed == true) {
+                          status = "Served";
+                        }
+                        if (menuItem.isCancelled == true) {
+                          status = "Cancelled";
+                        }
+
+                        return Obx(
+                          () => InkWell(
+                            onTap: () {
+                              // if (!menuItem.isPaid! &&
+                              //     !menuItem.isServed! &&
+                              //     !menuItem.isCancelled!) {
+                              //   pendingOrderController
+                              //       .toggleSelection(menuItem.id!);
+                              // }
+                              if (onSelected != null &&
+                                  !menuItem.isPaid! &&
+                                  !menuItem.isServed! &&
+                                  !menuItem.isCancelled!) {
+                                onSelected!(menuItem.id!);
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: AppColors.fillColor,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: pendingOrderController
+                                          .selectedMenuItemListId
+                                          .contains(menuItem.id)
+                                      ? AppColors.orangeColor
+                                      : AppColors.borderColor,
+                                ),
+                              ),
+                              padding: const EdgeInsets.all(12),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    menuItem.menuTitle ?? "",
+                                    style: CustomTextStyles.f14W400(
+                                        color: AppColors.blackColor),
+                                  ),
+                                  Text(menuItem.quantity != null
+                                      ? "x ${menuItem.quantity.toString()}"
+                                      : ""),
+                                  Text(
+                                    status,
+                                    style: CustomTextStyles.f14W400(
+                                        color: AppColors.blackColor),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          trailing: Text(menuItem.quantity != null
-                              ? "x ${menuItem.quantity.toString()}"
-                              : ""),
                         );
                       },
                     ),

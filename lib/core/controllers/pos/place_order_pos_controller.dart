@@ -20,6 +20,7 @@ class PlaceOrderPosController extends GetxController {
   LogoLoading loading = LogoLoading();
 
   RxList<Menu> menuList = RxList();
+  final TextEditingController searchMenuController = TextEditingController();
 
   @override
   void onInit() {

@@ -1,5 +1,7 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/pos/place_order_pos_controller.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/menu_model.dart';
@@ -8,6 +10,7 @@ import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
+import 'package:saralnova/features/screens/More/pos/make_order_pos_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
@@ -20,12 +23,69 @@ class PlaceOrderScreenPOS extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   actions: [
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AnimSearchBar(
+              // textFieldColor: AppColors.fillColor,
+              textFieldIconColor: Colors.white,
+              rtl: true,
+              prefixIcon: const Icon(
+                Icons.search,
+                size: 15,
+                color: AppColors.splashBackgroundColor,
+              ),
 
-      //   ]
-      
-      // ),
+              boxShadow: false,
+              helpText: "Search....",
+              suffixIcon: const Icon(
+                Icons.search,
+                size: 15,
+                color: AppColors.blackColor,
+              ),
+              searchIconColor: AppColors.textColor,
+              color: AppColors.fillColor,
+              width: 250,
+              textController: c.searchMenuController,
+              onSuffixTap: () {},
+              onSubmitted: (String) {},
+            ),
+          ),
+          Obx(
+            () => IconButton(
+              onPressed: () {
+                Get.toNamed(MakeOrderPosScreen.routeName);
+              },
+              icon: badges.Badge(
+                showBadge: Get.find<PlaceOrderPosController>()
+                    .selectedMenuList
+                    .isNotEmpty,
+                position: badges.BadgePosition.topEnd(top: -8, end: -5),
+                badgeContent: Text(
+                  c.selectedMenuList.length > 9
+                      ? "9+"
+                      : "${c.selectedMenuList.length}",
+                  style: CustomTextStyles.f13W400(
+                      color: AppColors.splashBackgroundColor),
+                ),
+                badgeStyle: const badges.BadgeStyle(
+                  badgeColor: AppColors.orangeColor,
+                  shape: badges.BadgeShape.circle,
+                ),
+                child: SvgPicture.asset(
+                  IconPath.placeOrder,
+                  height: 20,
+                  width: 20,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(

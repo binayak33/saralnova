@@ -146,4 +146,51 @@ class PosRepo {
       onError(Messages.error);
     }
   }
+
+  // KOT --Pending Order
+  static Future<void> serveKotItems({
+    required List<String> kotItemsIds,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.serveKotItems;
+      var body = {"kot_item_ids": kotItemsIds};
+      http.Response response = await SkyRequest.post(url, body: body);
+      var data = json.decode(response.body);
+
+      if (data['status']) {
+        var message = data['message'];
+        onSuccess(message);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.serveKotItems, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> cancelKotItems({
+    required List<String> kotItemsIds,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.cancelKotItems;
+      var body = {"kot_item_ids": kotItemsIds};
+      http.Response response = await SkyRequest.post(url, body: body);
+      var data = json.decode(response.body);
+
+      if (data['status']) {
+        var message = data['message'];
+        onSuccess(message);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.cancelKotItems, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
 }

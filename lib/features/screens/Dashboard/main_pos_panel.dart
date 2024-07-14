@@ -1,14 +1,8 @@
-import 'package:anim_search_bar/anim_search_bar.dart';
-import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Dashboard/main_pos_panel_controller.dart';
-import 'package:saralnova/core/controllers/pos/place_order_pos_controller.dart';
-import 'package:saralnova/core/utils/constants/colors.dart';
-import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
-import 'package:saralnova/features/screens/More/pos/make_order_pos_screen.dart';
 
 class MainPosPanel extends StatelessWidget {
   static const String routeName = "/pos-panel";
@@ -19,73 +13,73 @@ class MainPosPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          if (c.currnetIndex.value == 0)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: AnimSearchBar(
-                // textFieldColor: AppColors.fillColor,
-                textFieldIconColor: Colors.white,
-                rtl: true,
-                prefixIcon: const Icon(
-                  Icons.search,
-                  size: 15,
-                  color: AppColors.splashBackgroundColor,
-                ),
+      // appBar: AppBar(
+      //     // actions: [
+      //     //   if (c.currnetIndex.value == 0)
+      //     //     Padding(
+      //     //       padding: const EdgeInsets.all(8.0),
+      //     //       child: AnimSearchBar(
+      //     //         // textFieldColor: AppColors.fillColor,
+      //     //         textFieldIconColor: Colors.white,
+      //     //         rtl: true,
+      //     //         prefixIcon: const Icon(
+      //     //           Icons.search,
+      //     //           size: 15,
+      //     //           color: AppColors.splashBackgroundColor,
+      //     //         ),
 
-                boxShadow: false,
-                helpText: "Search....",
-                suffixIcon: const Icon(
-                  Icons.search,
-                  size: 15,
-                  color: AppColors.blackColor,
-                ),
-                searchIconColor: AppColors.textColor,
-                color: AppColors.fillColor,
-                width: 250,
-                textController: c.searchMenuController,
-                onSuffixTap: () {},
-                onSubmitted: (String) {},
-              ),
-            ),
-          if (c.currnetIndex.value == 0)
-            Obx(
-              () => IconButton(
-                onPressed: () {
-                  // final placeOrderPosController =
-                  //     Get.find<PlaceOrderPosController>();
-                  Get.toNamed(MakeOrderPosScreen.routeName);
-                },
-                icon: badges.Badge(
-                  showBadge: Get.find<PlaceOrderPosController>()
-                      .selectedMenuList
-                      .isNotEmpty,
-                  position: badges.BadgePosition.topEnd(top: -8, end: -5),
-                  badgeContent: Text(
-                    c.placeOrderPosController.selectedMenuList.length > 9
-                        ? "9+"
-                        : "${c.placeOrderPosController.selectedMenuList.length}",
-                    style: CustomTextStyles.f13W400(
-                        color: AppColors.splashBackgroundColor),
-                  ),
-                  badgeStyle: const badges.BadgeStyle(
-                    badgeColor: AppColors.orangeColor,
-                    shape: badges.BadgeShape.circle,
-                  ),
-                  child: SvgPicture.asset(
-                    IconPath.placeOrder,
-                    height: 20,
-                    width: 20,
-                  ),
-                ),
-              ),
-            ),
-          const SizedBox(
-            width: 10,
-          ),
-        ],
-      ),
+      //     //         boxShadow: false,
+      //     //         helpText: "Search....",
+      //     //         suffixIcon: const Icon(
+      //     //           Icons.search,
+      //     //           size: 15,
+      //     //           color: AppColors.blackColor,
+      //     //         ),
+      //     //         searchIconColor: AppColors.textColor,
+      //     //         color: AppColors.fillColor,
+      //     //         width: 250,
+      //     //         textController: c.searchMenuController,
+      //     //         onSuffixTap: () {},
+      //     //         onSubmitted: (String) {},
+      //     //       ),
+      //     //     ),
+      //     //   if (c.currnetIndex.value == 0)
+      //     //     Obx(
+      //     //       () => IconButton(
+      //     //         onPressed: () {
+      //     //           // final placeOrderPosController =
+      //     //           //     Get.find<PlaceOrderPosController>();
+      //     //           Get.toNamed(MakeOrderPosScreen.routeName);
+      //     //         },
+      //     //         icon: badges.Badge(
+      //     //           showBadge: Get.find<PlaceOrderPosController>()
+      //     //               .selectedMenuList
+      //     //               .isNotEmpty,
+      //     //           position: badges.BadgePosition.topEnd(top: -8, end: -5),
+      //     //           badgeContent: Text(
+      //     //             c.placeOrderPosController.selectedMenuList.length > 9
+      //     //                 ? "9+"
+      //     //                 : "${c.placeOrderPosController.selectedMenuList.length}",
+      //     //             style: CustomTextStyles.f13W400(
+      //     //                 color: AppColors.splashBackgroundColor),
+      //     //           ),
+      //     //           badgeStyle: const badges.BadgeStyle(
+      //     //             badgeColor: AppColors.orangeColor,
+      //     //             shape: badges.BadgeShape.circle,
+      //     //           ),
+      //     //           child: SvgPicture.asset(
+      //     //             IconPath.placeOrder,
+      //     //             height: 20,
+      //     //             width: 20,
+      //     //           ),
+      //     //         ),
+      //     //       ),
+      //     //     ),
+      //     //   const SizedBox(
+      //     //     width: 10,
+      //     //   ),
+      //     // ],
+      //     ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           showSelectedLabels: true,

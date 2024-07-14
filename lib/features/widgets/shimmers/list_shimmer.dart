@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
 import 'package:shimmer/shimmer.dart';
@@ -573,34 +572,128 @@ class SaralNovaShimmer {
     );
   }
 
-  // static Widget productGrid({SliverGridDelegate? gridDelegate}) {
-  //   return Shimmer.fromColors(
-  //     baseColor: AppColors.shimmerBase,
-  //     highlightColor: AppColors.shimmerHighlight,
-  //     child: GridView.builder(
-  //       shrinkWrap: true,
-  //       physics: const NeverScrollableScrollPhysics(),
-  //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-  //         crossAxisCount: 2,
-  //         childAspectRatio: 1,
-  //         mainAxisSpacing: 10,
-  //         crossAxisSpacing: 10,
-  //       ),
-  //       padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 8),
-  //       itemCount: 6,
-  //       itemBuilder: (context, index) {
-  //         return Container(
-  //           width: 150,
-  //           margin: const EdgeInsets.only(right: 8),
-  //           decoration: BoxDecoration(
-  //             color: AppColors.shimmerBase,
-  //             borderRadius: BorderRadius.circular(8),
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
+  static Widget pendingOrderShimmer() {
+    return Shimmer.fromColors(
+      baseColor: AppColors.shimmerBase,
+      highlightColor: AppColors.shimmerHighlight,
+      child: GridView.builder(
+        key: const PageStorageKey(""),
+        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          childAspectRatio: 1,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
+        itemCount: 20,
+        itemBuilder: (context, index) {
+          return Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppColors.borderColor),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: AppColors.shimmerBase,
+                        ),
+                        height: 20,
+                        width: 20,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.shimmerBase,
+                            ),
+                            height: 20,
+                            width: 20,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.shimmerBase,
+                            ),
+                            height: 20,
+                            width: 20,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(
+                  color: AppColors.borderColor,
+                  height: 10,
+                ),
+                Container(
+                  height: 200,
+                  padding: const EdgeInsets.all(4),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            color: AppColors.shimmerBase,
+                            height: 20,
+                            width: 60,
+                          ),
+                          Container(
+                            color: AppColors.shimmerBase,
+                            height: 20,
+                            width: 60,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      Container(
+                        color: AppColors.shimmerBase,
+                        height: 50,
+                        width: Get.width,
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Container(
+                        color: AppColors.shimmerBase,
+                        height: 50,
+                        width: Get.width,
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Container(
+                        color: AppColors.shimmerBase,
+                        height: 50,
+                        width: Get.width,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
 
   // static Widget sellerComponent({SliverGridDelegate? gridDelegate}) {
   //   return Shimmer.fromColors(

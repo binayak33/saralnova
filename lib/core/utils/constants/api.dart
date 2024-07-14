@@ -122,4 +122,7 @@ class Api {
   static String placeKotOrder = "$apiBaseUrl/restaurant/kot/order";
 
   static String getKotOrders = "$apiBaseUrl/restaurant/kot/all-orders";
+
+  static String serveKotItems = "$apiBaseUrl/restaurant/kot/serve-kot-items";
+  static String cancelKotItems = "$apiBaseUrl/restaurant/kot/cancel-kot-item";
 }
