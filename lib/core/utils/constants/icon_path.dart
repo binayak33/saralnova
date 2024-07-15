@@ -21,6 +21,7 @@ class IconPath {
   static const String circleCross = "$basePath/circleCross.svg";
 
   static const String circleTick = "$basePath/tick.svg";
+  static const String up = "$basePath/up.svg";
 
   static const String circlePlus = "$basePath/circlePlus.svg";
 

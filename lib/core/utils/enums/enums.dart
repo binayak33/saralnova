@@ -10,3 +10,5 @@ enum BookingState { DATEROOMS, OPTIONS, INFORMATION, CONFIRM }
 enum StatusState { Available, Occupied, Reserved }
 
 enum VariantState { Variant, Addon }
+
+enum PaymentMethod { Esewa, Khalti, Card, Credit, Cash }

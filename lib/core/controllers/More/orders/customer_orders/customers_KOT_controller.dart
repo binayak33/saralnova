@@ -134,4 +134,10 @@ class CustomersKOTCheckoutController extends GetxController {
     }
   }
   // double calculateGrandTotal() {}
+
+  RxBool enlarge = RxBool(false);
+
+  void toggleBottomSheet() {
+    enlarge.value = !enlarge.value;
+  }
 }
