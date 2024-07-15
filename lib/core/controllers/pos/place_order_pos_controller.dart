@@ -115,10 +115,13 @@ class PlaceOrderPosController extends GetxController {
           ),
           child: SelectCustomerBottomSheet(
             onSelectOrderedCustomer: (Customer alreadyOrderedCustomer) {
+              // selectedCustomerNameController.text =
+              //     alreadyOrderedCustomer.customerName.toString();
               selectedCustomerNameController.text =
-                  alreadyOrderedCustomer.customerName.toString();
+                  "${alreadyOrderedCustomer.customerName} - ${alreadyOrderedCustomer.tables?[0].name}";
 
               customer.value = alreadyOrderedCustomer;
+              table.value = alreadyOrderedCustomer.tables?[0];
             },
             onTap: (isEnabled) {
               isCustomerNameFieldEnabled.value = isEnabled;
@@ -129,7 +132,8 @@ class PlaceOrderPosController extends GetxController {
               }
               if (isCustomerNameFieldEnabled.value == false) {
                 //when selected clear the typedController value
-
+                // table.value = null;
+                tableController.clear();
                 newlyAddedCustomerNameController.clear();
               }
             },
@@ -225,6 +229,8 @@ class PlaceOrderPosController extends GetxController {
   final placeKotFormKey = GlobalKey<FormState>();
 
   Future<void> placeKotOrder() async {
+    String customerName = selectedCustomerNameController.text.split(' - ')[0];
+
     if (placeKotFormKey.currentState!.validate()) {
       if (selectedMenuList.isNotEmpty) {
         loading.show();
@@ -233,19 +239,13 @@ class PlaceOrderPosController extends GetxController {
           return Items(menuId: entry.key, quantity: entry.value, variants: []);
         }).toList();
         PlaceOrderRequestModel requestPlaceOrderModel = PlaceOrderRequestModel(
-          // guestData: GuestData(
-          //   name: nameController.text,
-          //   contact: contactController.text,
-          //   email: emailController.text,
-          //   address: addressController.text,
-          //   nationality: countryController.text,
-
-          // ),
-
           restaurantCustomerId: customer.value?.id,
           tableId: table.value?.id,
+          // customerName: selectedCustomerNameController.text.isNotEmpty
+          //     ? selectedCustomerNameController.text
+          //     : newlyAddedCustomerNameController.text,
           customerName: selectedCustomerNameController.text.isNotEmpty
-              ? selectedCustomerNameController.text
+              ? customerName //splitted
               : newlyAddedCustomerNameController.text,
           customerEmail: customer.value?.customerEmail,
           customerPhone: customer.value?.customerPhone,

@@ -65,7 +65,8 @@ class SelectCustomerBottomSheet extends StatelessWidget {
                         onSelectOrderedCustomer(alreadyOrderedCustomer);
                       },
                       title: Text(
-                        alreadyOrderedCustomer.customerName ?? "",
+                        "${alreadyOrderedCustomer.customerName} - ${alreadyOrderedCustomer.tables?[0].name}" ??
+                            "",
                         style: CustomTextStyles.f16W400(),
                       ),
                       dense: true,

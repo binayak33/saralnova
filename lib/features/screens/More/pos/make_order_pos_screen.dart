@@ -272,18 +272,25 @@ class MakeOrderPosScreen extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      SkyTextField(
-                        hint: "Select a table",
-                        controller: c.tableController,
-                        textInputAction: TextInputAction.next,
-                        textInputType: TextInputType.name,
-                        readOnly: true,
-                        suffixIconPath: IconPath.down,
-                        validator: (value) => Validator.validateEmpty(value!),
-                        onTap: () {
-                          c.openAvailableTableBottomSheet();
-                        },
-                      ),
+                      Obx(() {
+                        if (c.isCustomerNameFieldEnabled.value == true) {
+                          return SkyTextField(
+                            hint: "Select a table",
+                            controller: c.tableController,
+                            textInputAction: TextInputAction.next,
+                            textInputType: TextInputType.name,
+                            readOnly: true,
+                            suffixIconPath: IconPath.down,
+                            validator: (value) =>
+                                Validator.validateEmpty(value!),
+                            onTap: () {
+                              c.openAvailableTableBottomSheet();
+                            },
+                          );
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      })
                     ],
                   ),
                 ),
