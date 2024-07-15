@@ -22,9 +22,14 @@ class KotScreenPOS extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Text(
-          "Pending Order",
-          style: CustomTextStyles.f14W600(),
+        title: InkWell(
+          onTap: () {
+            print(c.selectedItems);
+          },
+          child: Text(
+            "Pending Order",
+            style: CustomTextStyles.f14W600(),
+          ),
         ),
       ),
       body: Padding(
@@ -62,39 +67,23 @@ class KotScreenPOS extends StatelessWidget {
                         return PendingOrderBox(
                           pendingOrders: pOrder,
                           onSuccess: () {
-                            c.serveKotItems(pOrder: pOrder);
+                            // Get selected item IDs for the current pOrder
+                            List<String> selectedItemIds =
+                                c.selectedItems[pOrder.id!] ?? [];
+                            // Now call the serveKotItems with the selected item IDs
+                            c.serveKotItems(
+                                kotItemsIds: selectedItemIds, pOrder: pOrder);
                           },
                           onCancel: () {
-                            c.cancelKotItems(pOrder: pOrder);
+                            List<String> selectedItemIds =
+                                c.selectedItems[pOrder.id!] ?? [];
+                            // Now call the serveKotItems with the selected item IDs
+                            c.cancelKotItems(
+                                kotItemsIds: selectedItemIds, pOrder: pOrder);
                           },
-
-                          // ==========================
-                          // onSuccess: () {
-                          //   List<String> itemIds = pOrder.items
-                          //           ?.where((item) =>
-                          //               !item.isCancelled! &&
-                          //               !item.isServed! &&
-                          //               !item.isPaid!)
-                          //           .map((item) => item.id!)
-                          //           .toList() ??
-                          //       [];
-                          //   c.serveKotItems(menuIds: itemIds, pOrder: pOrder);
-                          // },
-                          // onCancel: () {
-                          //   List<String> itemIds = pOrder.items
-                          //           ?.where((item) =>
-                          //               !item.isCancelled! &&
-                          //               !item.isServed! &&
-                          //               !item.isPaid!)
-                          //           .map((item) => item.id!)
-                          //           .toList() ??
-                          //       [];
-                          //   c.cancelKotItems(menuIds: itemIds);
-                          // },
-
-                          onSelected: (String menuItemId) {
+                          onSelected: (String orderId, String menuItemId) {
                             // c.toggleSelection(menuItemId);
-                            c.toggleSelection(menuItemId, pOrder.id!);
+                            c.toggleSelection(pOrder.id!, menuItemId);
                           },
                         );
                       },
@@ -123,7 +112,7 @@ class PendingOrderBox extends StatelessWidget {
   final Function() onCancel;
   // final Function()? onSelected;
 
-  final Function(String menuItemId)? onSelected;
+  final Function(String orderId, String menuItemId)? onSelected;
   PendingOrderBox({
     super.key,
     required this.pendingOrders,
@@ -235,57 +224,75 @@ class PendingOrderBox extends StatelessWidget {
                         }
 
                         return Obx(
-                          () => InkWell(
-                            onTap: () {
-                              // if (!menuItem.isPaid! &&
-                              //     !menuItem.isServed! &&
-                              //     !menuItem.isCancelled!) {
-                              //   pendingOrderController
-                              //       .toggleSelection(menuItem.id!);
-                              // }
-                              if (onSelected != null &&
-                                  !menuItem.isPaid! &&
-                                  !menuItem.isServed! &&
-                                  !menuItem.isCancelled!) {
-                                onSelected!(menuItem.id!);
-                              }
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                color: AppColors.fillColor,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: pendingOrderController
-                                          .selectedMenuItemListId
-                                          .contains(menuItem.id)
-                                      ? AppColors.orangeColor
-                                      : AppColors.borderColor,
+                          () {
+                            bool isSelected = pendingOrderController
+                                    .selectedItems[pendingOrders.id!]
+                                    ?.contains(menuItem.id) ??
+                                false;
+
+                            return InkWell(
+                              onTap: () {
+                                if (onSelected != null &&
+                                    !menuItem.isPaid! &&
+                                    !menuItem.isServed! &&
+                                    !menuItem.isCancelled!) {
+                                  onSelected!(pendingOrders.id!, menuItem.id!);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  color: AppColors.fillFadedColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: isSelected
+                                        ? AppColors.orangeColor
+                                        : AppColors.borderColor,
+                                  ),
+                                ),
+                                padding: const EdgeInsets.all(12),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        if (status == "Cancelled")
+                                          SvgPicture.asset(
+                                            IconPath.redCross,
+                                            height: 12,
+                                            width: 12,
+                                          ),
+                                        if (status == "Served")
+                                          SvgPicture.asset(
+                                            IconPath.greenTick,
+                                            height: 16,
+                                            width: 12,
+                                          ),
+                                        if (status == "")
+                                          const SizedBox(
+                                            height: 12,
+                                            width: 12,
+                                          ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          menuItem.menuTitle ?? "",
+                                          style: CustomTextStyles.f14W400(
+                                              color: AppColors.blackColor),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(menuItem.quantity != null
+                                        ? "x ${menuItem.quantity.toString()}"
+                                        : ""),
+                                  ],
                                 ),
                               ),
-                              padding: const EdgeInsets.all(12),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    menuItem.menuTitle ?? "",
-                                    style: CustomTextStyles.f14W400(
-                                        color: AppColors.blackColor),
-                                  ),
-                                  Text(menuItem.quantity != null
-                                      ? "x ${menuItem.quantity.toString()}"
-                                      : ""),
-                                  Text(
-                                    status,
-                                    style: CustomTextStyles.f14W400(
-                                        color: AppColors.blackColor),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                            );
+                          },
                         );
                       },
                     ),

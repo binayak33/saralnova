@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:saralnova/core/model/feature_model/pos/pending_orders_for_kot_model.dart';
 import 'package:saralnova/core/repo/more_repo/pos_repo/pos_repo.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
+import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 
@@ -35,158 +36,113 @@ class PendingOrderController extends GetxController {
 
   String? lastSelectedOrderId;
 
-  List<String> selectedMenuItemListId = RxList();
+  // List<String> selectedMenuItemListId = RxList();
   RxList<PendingOrders> pendingOrders = RxList();
 
-  // void toggleSelection(String menuItemId, PendingOrders pendingOrder) {
-  //   if (selectedMenuItemListId.contains(menuItemId)) {
-  //     selectedMenuItemListId.remove(menuItemId);
-  //   } else {
-  //     selectedMenuItemListId.add(menuItemId);
-  //   }
-  // }
+  RxMap<String, List<String>> selectedItems = <String, List<String>>{}.obs;
 
-  void toggleSelection(String menuItemId, String orderId) {
-    if (lastSelectedOrderId != orderId) {
-      selectedMenuItemListId.clear();
-      lastSelectedOrderId = orderId;
-    }
-    if (selectedMenuItemListId.contains(menuItemId)) {
-      selectedMenuItemListId.remove(menuItemId);
+  void toggleSelection(String orderId, String menuItemId) {
+    if (selectedItems.containsKey(orderId)) {
+      if (selectedItems[orderId]!.contains(menuItemId)) {
+        selectedItems[orderId]!.remove(menuItemId);
+      } else {
+        selectedItems[orderId]!.add(menuItemId);
+      }
     } else {
-      selectedMenuItemListId.add(menuItemId);
+      selectedItems[orderId] = [menuItemId];
     }
+
+    // Explicitly notify observers of the change
+    selectedItems.refresh();
   }
 
   void clearSelections() {
-    selectedMenuItemListId.clear();
-    lastSelectedOrderId = null;
+    selectedItems.clear();
   }
-  // TODO handle if user didn't select any items then that container must be able to post
 
-  // Future<void> serveKotItems(
-  //     {PendingOrders? pOrder, List<String>? menuIds}) async {
-  //   // loading.show();
-
-  //   List<String> idsToServe = menuIds ?? selectedMenuItemListId;
-
-  //   print("====ids to serve======>${idsToServe}");
-
-  //   // List<String> matchedIds = [];
-
-  //   // if (pOrder != null) {
-  //   //   for (var p in pOrder.items!) {
-  //   //     if (idsToServe.contains(p.id)) {
-  //   //       matchedIds.add(p.id!);
-  //   //     }
-  //   //   }
-  //   // }
-  //   // print("====ids of not selecting to serve======>${menuIds}");
-
-  //   // print("====ids matched to serve======>${matchedIds}");
-
-  //   // await PosRepo.serveKotItems(
-  //   //     // kotItemsIds: selectedMenuItemListId ,
-  //   //     kotItemsIds: idsToServe,
-  //   //     onSuccess: (message) {
-  //   //       loading.hide();
-  //   //       selectedMenuItemListId.clear();
-
-  //   //       getPendingOrders(); //TODO either update all or insert the response index to that list (api bata bannu parxa)
-  //   //       SkySnackBar.success(title: "Kot", message: message);
-  //   //     },
-  //   //     onError: (message) {
-  //   //       loading.hide();
-
-  //   //       SkySnackBar.error(title: "Kot", message: message);
-  //   //     });
-  // }
-
-  // Future<void> cancelKotItems({List<String>? menuIds}) async {
-  //   print(menuIds);
-  //   //   loading.show();
-  //   //   List<String> idsToCancel = menuIds ?? selectedMenuItemListId;
-
-  //   List<String> idsToCancel = menuIds ?? selectedMenuItemListId;
-
-  //   print("====ids to cancel======>${idsToCancel}");
-
-  //   //   await PosRepo.cancelKotItems(
-  //   //       kotItemsIds: idsToCancel,
-  //   //       onSuccess: (message) {
-  //   //         loading.hide();
-  //   //         selectedMenuItemListId.clear();
-
-  //   //         getPendingOrders();
-  //   //         SkySnackBar.success(title: "Kot", message: message);
-  //   //       },
-  //   //       onError: (message) {
-  //   //         loading.hide();
-
-  //   //         SkySnackBar.error(title: "Kot", message: message);
-  //   //       });
-  // }
-
-  Future<void> serveKotItems({PendingOrders? pOrder}) async {
-    List<String> matchedIds = [];
-    if (selectedMenuItemListId.isNotEmpty) {
-      matchedIds.addAll(selectedMenuItemListId);
-    } else {
+  Future<void> serveKotItems({
+    PendingOrders? pOrder,
+    required List<String> kotItemsIds,
+  }) async {
+    loading.show();
+    List<String> allMenuItemsIdsOfpOrder = [];
+    if (kotItemsIds.isEmpty) {
       if (pOrder != null) {
-        for (var item in pOrder.items!) {
-          if (!item.isCancelled! && !item.isServed! && !item.isPaid!) {
-            matchedIds.add(item.id!);
+        if (pOrder.items != null && pOrder.items!.isNotEmpty) {
+          // for (var i in pOrder.items!) {
+          //   allMenuItemsIdsOfpOrder.add(i.id!);
+          // }
+          for (var i in pOrder.items!) {
+            if (!(i.isCancelled ?? false) &&
+                !(i.isPaid ?? false) &&
+                !(i.isServed ?? false)) {
+              allMenuItemsIdsOfpOrder.add(i.id!);
+            }
           }
         }
       }
     }
 
-    print("======>${matchedIds}");
-    // await PosRepo.serveKotItems(
-    //     kotItemsIds: matchedIds,
-    //     onSuccess: (message) {
-    //       loading.hide();
-    //       selectedMenuItemListId.clear();
+    LogHelper.warning("===kotItemsSelected========>${kotItemsIds}");
 
-    //       getPendingOrders(); //TODO either update all or insert the response index to that list (api bata bannu parxa)
-    //       SkySnackBar.success(title: "Kot", message: message);
-    //     },
-    //     onError: (message) {
-    //       loading.hide();
+    LogHelper.warning(
+        "===kotItems--NotSelected========>${allMenuItemsIdsOfpOrder}");
+    await PosRepo.serveKotItems(
+        kotItemsIds:
+            kotItemsIds.isEmpty ? allMenuItemsIdsOfpOrder : kotItemsIds,
+        onSuccess: (message) {
+          loading.hide();
+          getPendingOrders();
+          selectedItems.clear();
+          SkySnackBar.success(title: "KOT order", message: message);
+        },
+        onError: (message) {
+          loading.hide();
 
-    //       SkySnackBar.error(title: "Kot", message: message);
-    //     });
+          SkySnackBar.success(title: "KOT order", message: message);
+        });
   }
 
-  Future<void> cancelKotItems({PendingOrders? pOrder}) async {
-    // loading.show();
-    List<String> matchedIds = [];
-    if (selectedMenuItemListId.isNotEmpty) {
-      matchedIds.addAll(selectedMenuItemListId);
-    } else {
+  Future<void> cancelKotItems({
+    PendingOrders? pOrder,
+    required List<String> kotItemsIds,
+  }) async {
+    loading.show();
+    List<String> allMenuItemstoCancelpOrder = [];
+    if (kotItemsIds.isEmpty) {
       if (pOrder != null) {
-        for (var item in pOrder.items!) {
-          if (!item.isCancelled! && !item.isServed! && !item.isPaid!) {
-            matchedIds.add(item.id!);
+        if (pOrder.items != null && pOrder.items!.isNotEmpty) {
+          // for (var i in pOrder.items!) {
+          //   allMenuItemsIdsOfpOrder.add(i.id!);
+          // }
+          for (var i in pOrder.items!) {
+            if (!(i.isCancelled ?? false) &&
+                !(i.isPaid ?? false) &&
+                !(i.isServed ?? false)) {
+              allMenuItemstoCancelpOrder.add(i.id!);
+            }
           }
         }
       }
     }
 
-    print("============${matchedIds}");
-    // await PosRepo.cancelKotItems(
-    //     kotItemsIds: matchedIds,
-    //     onSuccess: (message) {
-    //       loading.hide();
-    //       selectedMenuItemListId.clear();
+    LogHelper.warning("===kotItemsSelected========>${kotItemsIds}");
 
-    //       getPendingOrders();
-    //       SkySnackBar.success(title: "Kot", message: message);
-    //     },
-    //     onError: (message) {
-    //       loading.hide();
+    LogHelper.warning(
+        "===kotItems--NotSelected========>${allMenuItemstoCancelpOrder}");
+    await PosRepo.cancelKotItems(
+        kotItemsIds:
+            kotItemsIds.isEmpty ? allMenuItemstoCancelpOrder : kotItemsIds,
+        onSuccess: (message) {
+          loading.hide();
+          getPendingOrders();
+          selectedItems.clear();
+          SkySnackBar.info(title: "KOT order", message: message);
+        },
+        onError: (message) {
+          loading.hide();
 
-    //       SkySnackBar.error(title: "Kot", message: message);
-    //     });
+          SkySnackBar.success(title: "KOT order", message: message);
+        });
   }
 }

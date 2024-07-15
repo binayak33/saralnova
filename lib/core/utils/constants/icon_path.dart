@@ -84,4 +84,7 @@ class IconPath {
   static const String errorimg = "$basePath/errorimg.svg";
 
   static const String successBook = "$basePath/success_book.svg";
+
+  static const String redCross = "$basePath/redCross.svg";
+  static const String greenTick = "$basePath/greenTick.svg";
 }

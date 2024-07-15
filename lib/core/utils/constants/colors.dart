@@ -15,6 +15,8 @@ class AppColors {
   static const Color borderColor = Color(0xFFB6B6B6);
   static const Color blackColor = Colors.black;
   static const Color fillColor = Color.fromARGB(255, 219, 219, 219);
+  static const Color fillFadedColor = Color.fromARGB(255, 226, 226, 226);
+
   static const Color orangeColor = Colors.orange;
   static final Color shadowColor = Colors.black.withOpacity(0.1);
 
