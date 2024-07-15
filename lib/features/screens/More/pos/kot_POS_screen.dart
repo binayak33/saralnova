@@ -22,14 +22,9 @@ class KotScreenPOS extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: InkWell(
-          onTap: () {
-            print(c.selectedItems);
-          },
-          child: Text(
-            "Pending Order",
-            style: CustomTextStyles.f14W600(),
-          ),
+        title: Text(
+          "Pending Order",
+          style: CustomTextStyles.f14W600(),
         ),
       ),
       body: Padding(

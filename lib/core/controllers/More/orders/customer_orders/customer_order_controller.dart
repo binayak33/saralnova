@@ -13,7 +13,6 @@ class CustomerOrderController extends GetxController {
   var pageState = PageState.LOADING.obs;
   @override
   void onInit() {
-    // TODO: implement onInit
     getAllCustomers();
     super.onInit();
   }
@@ -32,4 +31,6 @@ class CustomerOrderController extends GetxController {
       LogHelper.error(message);
     });
   }
+
+  
 }

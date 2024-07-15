@@ -4,10 +4,10 @@ import 'package:saralnova/core/model/feature_model/pos/order_customers_model.dar
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
-import 'package:saralnova/core/utils/helpers/date_helper.dart';
-import 'package:saralnova/features/screens/More/pos/customer_order/customer_kot_screen.dart';
+import 'package:saralnova/features/screens/More/pos/customer_order/customer_kot_checkout_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
+import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
 
 import '../../../../../core/controllers/More/orders/customer_orders/customer_order_controller.dart';
 import '../../../../../core/utils/constants/colors.dart';
@@ -21,14 +21,11 @@ class CustomerOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        iconTheme: const IconThemeData(
-          color: AppColors.scaffoldColor, //change your color here
-        ),
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(
           "Customer Orders",
-          style: CustomTextStyles.f16W600(color: AppColors.scaffoldColor),
+          style: CustomTextStyles.f14W600(),
         ),
       ),
       body: SingleChildScrollView(
@@ -38,15 +35,14 @@ class CustomerOrderScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return const Center(
-                    child: LinearProgressIndicator(),
-                  );
+                  return Expanded(
+                      child: SaralNovaShimmer.pendingOrderShimmer());
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
-                    message: "Empty!!",
-                    title: "Empty",
+                    message: "No checkout orders at the moment",
+                    title: "No checkout orders",
                     media: IconPath.empty,
-                    mediaSize: 500,
+                    // mediaSize: 500,
                   );
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return ListView.separated(
@@ -93,71 +89,53 @@ class CustomerCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.toNamed(
-          CustomersKotScreen.routeName,
+          CustomersKotCheckoutScreen.routeName,
           arguments: {
             "customer": customer,
-            "customer_name": customer.customerName,
           },
         );
       },
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            border: Border.all(color: AppColors.borderColor),
+            border: Border.all(color: AppColors.fillColor),
             borderRadius: BorderRadius.circular(8),
             color: customer.isPaid == true
                 ? Colors.green[200]
-                : AppColors.fillColor),
+                : AppColors.fillFadedColor),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            customer.tables != null && customer.tables!.isNotEmpty
-                ? SizedBox(
-                    height: 20, //height of the listview
-                    child: ListView.separated(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        // physics: const NeverScrollableScrollPhysics(),
-                        itemCount: customer.tables!.length,
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(
-                            width: 5,
-                          );
-                        },
-                        itemBuilder: (context, index) {
-                          var table = customer.tables![index];
-
-                          return Text(
-                            table.name ?? "",
-                            style: CustomTextStyles.f14W400(
-                              color: AppColors.blackColor,
-                            ),
-                          );
-                        }),
-                  )
-                : const SizedBox.shrink(),
-            const Divider(
-              color: AppColors.secondaryTextColor,
-              height: 5,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  customer.customerName ?? "",
-                  style: CustomTextStyles.f16W600(
-                    color: AppColors.blackColor,
-                  ),
-                ),
+                customer.tables != null && customer.tables!.isNotEmpty
+                    ? Text(customer.tables?[0].name ?? "")
+                    : const SizedBox.shrink(),
+                // customer.createdAt != null
+                //     ? Text(
+                //         DateTimeHelper.prettyDateWithDay(customer.createdAt)!,
+                //         style: CustomTextStyles.f14W400(
+                //           color: AppColors.blackColor,
+                //         ),
+                //       )
                 customer.createdAt != null
                     ? Text(
-                        DateTimeHelper.prettyDateWithDay(customer.createdAt)!,
+                        customer.createdAt!,
                         style: CustomTextStyles.f14W400(
-                          color: AppColors.blackColor,
+                          color: AppColors.primary,
                         ),
                       )
                     : const SizedBox.shrink()
               ],
+            ),
+            const Divider(
+              color: AppColors.secondaryTextColor,
+              height: 20,
+            ),
+            Text(
+              customer.customerName ?? "",
+              style: CustomTextStyles.f18W500(color: AppColors.primary),
             ),
             const SizedBox(
               height: 5,

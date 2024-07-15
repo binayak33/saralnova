@@ -45,7 +45,6 @@ class PosRepo {
     required Function(String message) onError,
   }) async {
     try {
-      // String url = Api.getCustomersOrder;
       String url = (Api.getCustomersOrder.replaceAll("#id#", customerId));
 
       http.Response response = await SkyRequest.get(
@@ -190,6 +189,39 @@ class PosRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.cancelKotItems, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> splitCheckout({
+    required List<String> kotItemsIds,
+    required String paidBy,
+    required String method,
+    double? discount,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.serveKotItems;
+      var body = {
+        {
+          "kot_item_id": kotItemsIds,
+          "paid_by": paidBy,
+          "payment_method": method,
+          "discount": discount
+        }
+      };
+      http.Response response = await SkyRequest.post(url, body: body);
+      var data = json.decode(response.body);
+
+      if (data['status']) {
+        var message = data['message'];
+        onSuccess(message);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.serveKotItems, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }
