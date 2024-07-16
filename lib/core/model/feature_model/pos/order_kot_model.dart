@@ -169,6 +169,7 @@ class Items {
   bool? isServed;
   String? menuImg;
   int? price;
+  int? total;
 
   Items(
       {this.id,
@@ -178,6 +179,7 @@ class Items {
       this.isCancelled,
       this.menuImg,
       this.price,
+      this.total,
       this.isServed});
 
   Items.fromJson(Map<String, dynamic> json) {
@@ -189,6 +191,7 @@ class Items {
     isServed = json['is_served'];
     menuImg = json['menu_image'];
     price = json['menu_price'];
+    total = json['total'];
   }
 
   Map<String, dynamic> toJson() {
@@ -201,6 +204,7 @@ class Items {
     data['is_served'] = this.isServed;
     data['menu_image'] = this.menuImg;
     data['menu_price'] = this.price;
+    data['total'] = this.total;
 
     return data;
   }

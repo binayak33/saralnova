@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:saralnova/core/model/feature_model/pos/payment_method_model.dart';
 import 'package:saralnova/core/model/feature_model/pos/pending_orders_for_kot_model.dart';
 import 'package:saralnova/core/model/feature_model/pos/pos_request_model.dart/place_order_request_model.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/menu_model.dart';
@@ -193,27 +194,52 @@ class PosRepo {
     }
   }
 
+  static Future<void> getPaymentMethod({
+    required Function(List<PaymentMethod> paymentMethods) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.paymentMethod;
+
+      http.Response response = await SkyRequest.get(url);
+
+      var data = json.decode(response.body);
+
+      if (data["status"]) {
+        var paymentMethods = peymentMethodFromJson(data['data']);
+        onSuccess(paymentMethods);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.paymentMethod, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
   static Future<void> splitCheckout({
     required List<String> kotItemsIds,
     required String paidBy,
     required String method,
-    double? discount,
+    int? discount,
     required Function(String message) onSuccess,
     required Function(String message) onError,
   }) async {
     try {
-      String url = Api.serveKotItems;
+      String url = Api.splitCheckout;
       var body = {
-        {
-          "kot_item_id": kotItemsIds,
-          "paid_by": paidBy,
-          "payment_method": method,
-          "discount": discount
-        }
+        "kot_item_id": kotItemsIds,
+        "paid_by": paidBy,
+        "payment_method": method,
+        "discount": discount
       };
-      http.Response response = await SkyRequest.post(url, body: body);
-      var data = json.decode(response.body);
 
+      print("=============body===============$body");
+      http.Response response = await SkyRequest.post(url, body: body);
+
+      print("=============${response}");
+      var data = json.decode(response.body);
+      print(data);
       if (data['status']) {
         var message = data['message'];
         onSuccess(message);
@@ -221,7 +247,42 @@ class PosRepo {
         onError(data['message']);
       }
     } catch (e, s) {
-      LogHelper.error(Api.serveKotItems, error: e, stackTrace: s);
+      LogHelper.error(Api.splitCheckout, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> wholeCheckout({
+    required String restaurantCustomerId,
+    required String paidBy,
+    required String method,
+    int? discount,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.orderCheckout;
+      var body = {
+        "restaurant_customer_id": restaurantCustomerId,
+        "paid_by": paidBy,
+        "payment_method": method,
+        "discount": discount
+      };
+
+      print("=============body===============$body");
+      http.Response response = await SkyRequest.post(url, body: body);
+
+      print("=============${response}");
+      var data = json.decode(response.body);
+      print(data);
+      if (data['status']) {
+        var message = data['message'];
+        onSuccess(message);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.orderCheckout, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

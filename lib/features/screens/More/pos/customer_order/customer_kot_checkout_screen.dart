@@ -1,10 +1,13 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/More/orders/customer_orders/customers_KOT_controller.dart';
 import 'package:saralnova/core/model/feature_model/pos/order_kot_model.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
+import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
 
 import '../../../../../core/utils/constants/icon_path.dart';
 import '../../../../../core/utils/enums/enums.dart';
@@ -21,23 +24,59 @@ class CustomersKotCheckoutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: AppColors.primary, //change your color here
+          color: AppColors.primary,
         ),
         centerTitle: true,
         title: Obx(
-          () => GestureDetector(
-            onTap: () {
-              for (var i in c.selectedMenuItemsId) {
-                print(i.id);
-              }
-            },
-            child: Text(
-              "${c.customer.value?.customerName}- ${c.customer.value?.tables?[0].name}" ??
-                  "Customer KOT Checkout",
-              style: CustomTextStyles.f16W600(),
-            ),
+          () => Text(
+            "${c.customer.value?.customerName}- ${c.customer.value?.tables?[0].name}" ??
+                "Customer KOT Checkout",
+            style: CustomTextStyles.f16W600(),
           ),
         ),
+        actions: [
+          // GestureDetector(
+          //   onTap: () {
+          //     c.selectedMenuItemsId.clear();
+          //   },
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(right: 10),
+          //     child: SvgPicture.asset(
+          //       IconPath.clear,
+          //       height: 20,
+          //       width: 20,
+          //     ),
+          //   ),
+          // ),
+
+          Obx(
+            () => IconButton(
+              onPressed: () {
+                c.selectedMenuItemsId.clear();
+              },
+              icon: badges.Badge(
+                showBadge: c.selectedMenuItemsId.isNotEmpty,
+                position: badges.BadgePosition.topEnd(top: -8, end: -5),
+                badgeContent: Text(
+                  c.selectedMenuItemsId.length > 9
+                      ? "9+"
+                      : "${c.selectedMenuItemsId.length}",
+                  style: CustomTextStyles.f13W400(
+                      color: AppColors.splashBackgroundColor),
+                ),
+                badgeStyle: const badges.BadgeStyle(
+                  badgeColor: AppColors.orangeColor,
+                  shape: badges.BadgeShape.circle,
+                ),
+                child: SvgPicture.asset(
+                  IconPath.clear,
+                  height: 20,
+                  width: 20,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -46,9 +85,7 @@ class CustomersKotCheckoutScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return const Center(
-                    child: LinearProgressIndicator(),
-                  );
+                  return SaralNovaShimmer.listShimmer150();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
                     message:
@@ -65,6 +102,7 @@ class CustomersKotCheckoutScreen extends StatelessWidget {
                           height: 10,
                         );
                       },
+                      padding: const EdgeInsets.only(bottom: 100),
                       itemCount: c.kitchenOrderTicketList.length,
                       physics: const ClampingScrollPhysics(),
                       shrinkWrap: true,
@@ -94,17 +132,28 @@ class CustomersKotCheckoutScreen extends StatelessWidget {
       ),
       floatingActionButton: InkResponse(
         radius: 20,
-        onTap: c.openCheckoutBottomSheet,
+        onTap: () {
+          if (c.selectedMenuItemsId.isNotEmpty) {
+            c.isWholeCheckout.value = false;
+          } else {
+            c.isWholeCheckout.value = true;
+            c.addAllServedValue();
+          }
+          // c.discountController.clear();
+          c.openCheckoutBottomSheet();
+        },
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
             color: AppColors.primary,
           ),
-          child: Text(
-            "Checkout",
-            style: CustomTextStyles.f16W600(
-              color: AppColors.scaffoldColor,
+          child: Obx(
+            () => Text(
+              c.selectedMenuItemsId.isNotEmpty ? "Split Checkout" : "Checkout",
+              style: CustomTextStyles.f16W600(
+                color: AppColors.scaffoldColor,
+              ),
             ),
           ),
         ),
@@ -233,48 +282,63 @@ class CustomerKotCard extends StatelessWidget {
                                               )
                                             ]),
                                       ),
-                                      if (item.isPaid == true)
-                                        Container(
-                                          padding: const EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                              color: AppColors.bookingColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          child: Text(
-                                            "Paid",
-                                            style: CustomTextStyles.f10W400(
-                                                color: AppColors
-                                                    .splashBackgroundColor),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          if (item.isPaid == true)
+                                            Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.greenColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Text(
+                                                "Paid",
+                                                style: CustomTextStyles.f10W400(
+                                                    color: AppColors
+                                                        .splashBackgroundColor),
+                                              ),
+                                            ),
+                                          const SizedBox(
+                                            width: 5,
                                           ),
-                                        ),
-                                      if (item.isCancelled == true)
-                                        Container(
-                                          padding: const EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                              color: AppColors.errorColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          child: Text(
-                                            "Cancelled",
-                                            style: CustomTextStyles.f10W400(
-                                                color: AppColors
-                                                    .splashBackgroundColor),
+                                          if (item.isCancelled == true)
+                                            Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.errorColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Text(
+                                                "Cancelled",
+                                                style: CustomTextStyles.f10W400(
+                                                    color: AppColors
+                                                        .splashBackgroundColor),
+                                              ),
+                                            ),
+                                          const SizedBox(
+                                            width: 5,
                                           ),
-                                        ),
-                                      if (item.isServed == true)
-                                        Container(
-                                          padding: const EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                              color: AppColors.bookingColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          child: Text(
-                                            "Served",
-                                            style: CustomTextStyles.f10W400(
-                                                color: AppColors
-                                                    .splashBackgroundColor),
+                                          if (item.isServed == true)
+                                            Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.bookingColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Text(
+                                                "Served",
+                                                style: CustomTextStyles.f10W400(
+                                                    color: AppColors
+                                                        .splashBackgroundColor),
+                                              ),
+                                            ),
+                                          const SizedBox(
+                                            width: 5,
                                           ),
-                                        ),
+                                        ],
+                                      )
                                     ],
                                   ),
                                 ],

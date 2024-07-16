@@ -18,6 +18,8 @@ class IconPath {
   static const String roomType = "$basePath/room_type.svg";
   static const String placeOrder = "$basePath/placeOrder.svg";
 
+  static const String clear = "$basePath/clear.svg";
+
   static const String circleCross = "$basePath/circleCross.svg";
 
   static const String circleTick = "$basePath/tick.svg";
@@ -88,4 +90,12 @@ class IconPath {
 
   static const String redCross = "$basePath/redCross.svg";
   static const String greenTick = "$basePath/greenTick.svg";
+
+  // payment method
+
+  static const String esewa = "$basePath/esewa.svg";
+  static const String khalti = "$basePath/khalti.svg";
+  static const String credit = "$basePath/creditCard.svg";
+  static const String card = "$basePath/card.svg";
+  static const String cash = "$basePath/cash.svg";
 }

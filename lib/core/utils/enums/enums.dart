@@ -11,4 +11,4 @@ enum StatusState { Available, Occupied, Reserved }
 
 enum VariantState { Variant, Addon }
 
-enum PaymentMethod { Esewa, Khalti, Card, Credit, Cash }
+// enum PaymentMethod { Card, Credit, Cash }

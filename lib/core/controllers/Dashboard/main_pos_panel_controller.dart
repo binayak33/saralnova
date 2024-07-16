@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/core/controllers/More/orders/customer_orders/customer_order_controller.dart';
 import 'package:saralnova/core/controllers/Splash/core_controller.dart';
 import 'package:saralnova/core/controllers/pos/pending_order_pos_controller.dart';
 import 'package:saralnova/core/controllers/pos/place_order_pos_controller.dart';
@@ -23,6 +24,9 @@ class MainPosPanelController extends GetxController {
 
     if (currnetIndex.value == 1) {
       Get.find<PendingOrderController>().getPendingOrders();
+    }
+    if (currnetIndex.value == 2) {
+      Get.find<CustomerOrderController>().getAllCustomers();
     }
   }
 

@@ -123,14 +123,14 @@ class CustomerCard extends StatelessWidget {
                     ? Text(
                         customer.createdAt!,
                         style: CustomTextStyles.f14W400(
-                          color: AppColors.primary,
+                          color: AppColors.occupiedColor,
                         ),
                       )
                     : const SizedBox.shrink()
               ],
             ),
             const Divider(
-              color: AppColors.secondaryTextColor,
+              color: AppColors.fillColor,
               height: 20,
             ),
             Text(
@@ -149,44 +149,42 @@ class CustomerCard extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            if (customer.kotCount != null)
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'KOT: ',
-                      style: CustomTextStyles.f12W400(
-                        color: AppColors.secondaryTextColor,
-                      ),
-                    ),
-                    TextSpan(
-                      text: customer.kotCount.toString(),
-                      style: CustomTextStyles.f12W400(
-                        color: AppColors
-                            .blackColor, // Example of different color for this segment
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            const SizedBox(
-              height: 5,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (customer.isPaid != null)
+                // if (customer.isPaid != null)
+                //   RichText(
+                //     text: TextSpan(
+                //       children: [
+                //         TextSpan(
+                //           text: 'Status: ',
+                //           style: CustomTextStyles.f12W400(
+                //             color: AppColors.secondaryTextColor,
+                //           ),
+                //         ),
+                //         TextSpan(
+                //           text: customer.isPaid == false ? "Not paid" : "Paid",
+                //           style: CustomTextStyles.f12W400(
+                //             color: AppColors
+                //                 .blackColor, // Example of different color for this segment
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+
+                if (customer.kotCount != null)
                   RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Status: ',
+                          text: 'KOT: ',
                           style: CustomTextStyles.f12W400(
                             color: AppColors.secondaryTextColor,
                           ),
                         ),
                         TextSpan(
-                          text: customer.isPaid == false ? "Not paid" : "Paid",
+                          text: customer.kotCount.toString(),
                           style: CustomTextStyles.f12W400(
                             color: AppColors
                                 .blackColor, // Example of different color for this segment
@@ -195,6 +193,9 @@ class CustomerCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
                 if (customer.kotCount != null)
                   RichText(
                     text: TextSpan(
@@ -209,7 +210,7 @@ class CustomerCard extends StatelessWidget {
                           text: "Rs. ${customer.total.toString()}",
                           style: CustomTextStyles.f12W400(
                             color: AppColors
-                                .blackColor, // Example of different color for this segment
+                                .occupiedColor, // Example of different color for this segment
                           ),
                         ),
                       ],

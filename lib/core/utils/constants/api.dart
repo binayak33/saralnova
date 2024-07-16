@@ -125,4 +125,11 @@ class Api {
 
   static String serveKotItems = "$apiBaseUrl/restaurant/kot/serve-kot-items";
   static String cancelKotItems = "$apiBaseUrl/restaurant/kot/cancel-kot-item";
+
+  static String paymentMethod = "$apiBaseUrl/restaurant/payment-method";
+
+  static String splitCheckout =
+      "$apiBaseUrl/restaurant/customer/split/checkout";
+
+  static String orderCheckout = "$apiBaseUrl/restaurant/customer/checkout";
 }

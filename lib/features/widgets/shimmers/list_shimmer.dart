@@ -695,6 +695,87 @@ class SaralNovaShimmer {
     );
   }
 
+  static Widget listShimmer150() {
+    return Shimmer.fromColors(
+      baseColor: AppColors.shimmerBase,
+      highlightColor: AppColors.shimmerHighlight,
+      child: ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: 15,
+        separatorBuilder: (context, index) {
+          return const SizedBox(
+            height: 10,
+          );
+        },
+        itemBuilder: (context, index) {
+          return Container(
+              // height: 70,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.shimmerBase,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.shimmerHighlight,
+                        ),
+                        height: 80,
+                        width: 100,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.shimmerHighlight,
+                        ),
+                        height: 40,
+                        width: 150,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.shimmerHighlight,
+                        ),
+                        height: 80,
+                        width: 100,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.shimmerHighlight,
+                        ),
+                        height: 40,
+                        width: 150,
+                      ),
+                    ],
+                  ),
+                ],
+              ));
+        },
+      ),
+    );
+  }
+
   // static Widget sellerComponent({SliverGridDelegate? gridDelegate}) {
   //   return Shimmer.fromColors(
   //     baseColor: AppColors.shimmerBase,

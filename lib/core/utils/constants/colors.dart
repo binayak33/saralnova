@@ -26,6 +26,8 @@ class AppColors {
   static const Color errorColor = Color(0xFFDC3545);
   static const Color secondaryTextColor = Color(0xFF8F8F8F);
 
+  static const Color greenColor = Colors.green;
+
   // Card Colors
   static const Color cardColor = Color(0xFFF5F6F9);
   static const Color cardVariantColor = Color(0xFFE8EAED);
