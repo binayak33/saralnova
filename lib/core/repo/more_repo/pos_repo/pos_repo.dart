@@ -5,6 +5,8 @@ import 'package:saralnova/core/model/feature_model/pos/payment_method_model.dart
 import 'package:saralnova/core/model/feature_model/pos/pending_orders_for_kot_model.dart';
 import 'package:saralnova/core/model/feature_model/pos/pos_request_model.dart/place_order_request_model.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/menu_model.dart';
+import 'package:saralnova/core/model/feature_model/tables/available_table_by_space_model.dart';
+import 'package:saralnova/core/model/feature_model/tables/merge_table_model.dart';
 import 'package:saralnova/core/utils/constants/api.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
@@ -269,12 +271,9 @@ class PosRepo {
         "discount": discount
       };
 
-      print("=============body===============$body");
       http.Response response = await SkyRequest.post(url, body: body);
 
-      print("=============${response}");
       var data = json.decode(response.body);
-      print(data);
       if (data['status']) {
         var message = data['message'];
         onSuccess(message);
@@ -283,6 +282,110 @@ class PosRepo {
       }
     } catch (e, s) {
       LogHelper.error(Api.orderCheckout, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> getAvailableTablesBySpace({
+    required Function(List<AvailableTableBySpace> availableTablesBySpace)
+        onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.tablesBySpace;
+
+      http.Response response = await SkyRequest.get(
+        url,
+      );
+
+      var data = json.decode(response.body);
+
+      if (data["status"]) {
+        var availableTablesBySpace =
+            availableTablesBySpaceFromJson(data['data']);
+        onSuccess(availableTablesBySpace);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.tablesBySpace, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> getMergeTable({
+    required Function(List<MergeTable> mergeTable) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.getMergedTables;
+
+      http.Response response = await SkyRequest.get(
+        url,
+      );
+
+      var data = json.decode(response.body);
+
+      if (data["status"]) {
+        var mergeTable = mergeTablesFromJson(data['data']);
+        onSuccess(mergeTable);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.getMergedTables, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> unmergeTable({
+    required String tableId,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.unMergeTable;
+      var body = {
+        "merged_id": tableId,
+      };
+
+      http.Response response = await SkyRequest.post(url, body: body);
+      var data = json.decode(response.body);
+
+      if (data['status']) {
+        var message = data['message'];
+        onSuccess(message);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.unMergeTable, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
+
+  static Future<void> mergeTable({
+    required List<String> tableIds,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.mergeTables;
+      var body = {
+        "selected_table_ids": tableIds,
+      };
+
+      http.Response response = await SkyRequest.post(url, body: body);
+      var data = json.decode(response.body);
+
+      if (data['status']) {
+        var message = data['message'];
+        onSuccess(message);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.mergeTables, error: e, stackTrace: s);
       onError(Messages.error);
     }
   }

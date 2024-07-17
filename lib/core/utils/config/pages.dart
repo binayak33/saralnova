@@ -22,8 +22,10 @@ import 'package:saralnova/core/controllers/Splash/splash_controller.dart';
 import 'package:saralnova/core/controllers/menu/add_menu_controller.dart';
 import 'package:saralnova/core/controllers/menu/menu_controller.dart';
 import 'package:saralnova/core/controllers/pos/checkout_order_pos_controller.dart';
+import 'package:saralnova/core/controllers/pos/merged_table_manage_controller.dart';
 import 'package:saralnova/core/controllers/pos/pending_order_pos_controller.dart';
 import 'package:saralnova/core/controllers/pos/place_order_pos_controller.dart';
+import 'package:saralnova/core/controllers/pos/table_pos_controller.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
 import 'package:saralnova/features/screens/Dashboard/main_pos_panel.dart';
 import 'package:saralnova/features/screens/More/Booking/booking_screen.dart';
@@ -37,6 +39,9 @@ import 'package:saralnova/features/screens/More/order/order_screen.dart';
 import 'package:saralnova/features/screens/More/pos/customer_order/customer_kot_checkout_screen.dart';
 import 'package:saralnova/features/screens/More/pos/kot_POS_screen.dart';
 import 'package:saralnova/features/screens/More/pos/make_order_pos_screen.dart';
+import 'package:saralnova/features/screens/More/pos/table/manage_table_screen.dart';
+import 'package:saralnova/features/screens/More/pos/table/merged_table_view_screen.dart';
+import 'package:saralnova/features/screens/More/pos/tables_POS_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/category/category_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/variants/add_variant_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/variants/variants_screen.dart';
@@ -260,6 +265,7 @@ final List<GetPage> pages = [
       Get.lazyPut(() => PendingOrderController());
       Get.lazyPut(() => CheckoutOrderPOSController());
       Get.lazyPut(() => CustomerOrderController());
+      Get.lazyPut(() => TablesPosController());
     }),
   ),
 
@@ -292,6 +298,29 @@ final List<GetPage> pages = [
     page: () => CustomersKotCheckoutScreen(),
     binding: BindingsBuilder(() {
       Get.lazyPut(() => CustomersKOTCheckoutController());
+    }),
+  ),
+
+  GetPage(
+    name: TablesScreenPOS.routeName,
+    page: () => TablesScreenPOS(),
+    binding: BindingsBuilder(() {
+      // Get.lazyPut(() => TablesPosController());
+    }),
+  ),
+  GetPage(
+    name: MergeTableScreen.routeName,
+    page: () => MergeTableScreen(),
+    binding: BindingsBuilder(() {
+      // Get.lazyPut(() => ManageTableController());
+    }),
+  ),
+
+  GetPage(
+    name: MergedTableViewScreen.routeName,
+    page: () => MergedTableViewScreen(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => MergedTableManageController());
     }),
   ),
 ];

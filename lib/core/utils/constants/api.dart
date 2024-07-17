@@ -132,4 +132,10 @@ class Api {
       "$apiBaseUrl/restaurant/customer/split/checkout";
 
   static String orderCheckout = "$apiBaseUrl/restaurant/customer/checkout";
+
+  //tables == pos
+  static String tablesBySpace = "$apiBaseUrl/restaurant/tables-by-space";
+  static String getMergedTables = "$apiBaseUrl/restaurant/get-merged-tables";
+  static String unMergeTable = "$apiBaseUrl/restaurant/unmerge-tables";
+  static String mergeTables = "$apiBaseUrl/restaurant/merge-tables";
 }

@@ -24,6 +24,8 @@ class AppColors {
   static const Color hintTextColor = Color(0xFF8F8F8F);
   static const Color textColor = Color(0xFF374151);
   static const Color errorColor = Color(0xFFDC3545);
+  static const Color errorAccent = Color(0xfffda9a0);
+
   static const Color secondaryTextColor = Color(0xFF8F8F8F);
 
   static const Color greenColor = Colors.green;

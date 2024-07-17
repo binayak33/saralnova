@@ -94,7 +94,7 @@ class MainPosPanel extends StatelessWidget {
             customNavItem(
                 theme: theme, iconPath: IconPath.pos, label: "Checkout"),
             customNavItem(
-                theme: theme, iconPath: IconPath.more, label: "Tables"),
+                theme: theme, iconPath: IconPath.table, label: "Tables"),
             customNavItem(
                 theme: theme, iconPath: IconPath.more, label: "Activity"),
           ],

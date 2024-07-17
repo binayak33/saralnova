@@ -96,24 +96,8 @@ class CheckoutBottomSheet extends StatelessWidget {
                       },
                       textInputAction: TextInputAction.done,
                       textInputType: TextInputType.number,
-                      // onValueChange: (value) { //This doesnot handles when the textfield is empty
-                      //   if (double.tryParse(value) != null) {
-                      //     double discountValue = double.parse(value);
-                      //     if (discountValue >
-                      //         c.calculateSubtotal().toDouble()) {
-                      //       c.discountController.text =
-                      //           c.calculateSubtotal().toString();
-                      //       c.discountText.value =
-                      //           c.calculateSubtotal().toString();
-                      //     } else {
-                      //       c.discountText.value = value;
-                      //     }
-                      //   }
-
-                      // },
                       onValueChange: (value) {
                         if (value.isEmpty) {
-                          // Set discount to 0 if input is empty
                           c.discountText.value = '0';
                         } else if (double.tryParse(value) != null) {
                           double discountValue = double.parse(value);
@@ -127,7 +111,6 @@ class CheckoutBottomSheet extends StatelessWidget {
                             c.discountText.value = value;
                           }
                         } else {
-                          // Set discount to 0 if input is invalid
                           c.discountText.value = '0';
                         }
                       },
@@ -153,6 +136,9 @@ class CheckoutBottomSheet extends StatelessWidget {
                           ]),
                     ),
                   ),
+                ),
+                const SizedBox(
+                  height: 6,
                 ),
                 if (c.isWholeCheckout.value == false)
                   Obx(
