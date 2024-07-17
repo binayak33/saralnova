@@ -39,7 +39,6 @@ import 'package:saralnova/features/screens/More/order/order_screen.dart';
 import 'package:saralnova/features/screens/More/pos/customer_order/customer_kot_checkout_screen.dart';
 import 'package:saralnova/features/screens/More/pos/kot_POS_screen.dart';
 import 'package:saralnova/features/screens/More/pos/make_order_pos_screen.dart';
-import 'package:saralnova/features/screens/More/pos/table/manage_table_screen.dart';
 import 'package:saralnova/features/screens/More/pos/table/merged_table_view_screen.dart';
 import 'package:saralnova/features/screens/More/pos/tables_POS_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/category/category_screen.dart';
@@ -308,13 +307,13 @@ final List<GetPage> pages = [
       // Get.lazyPut(() => TablesPosController());
     }),
   ),
-  GetPage(
-    name: MergeTableScreen.routeName,
-    page: () => MergeTableScreen(),
-    binding: BindingsBuilder(() {
-      // Get.lazyPut(() => ManageTableController());
-    }),
-  ),
+  // GetPage( //TODO This screen can be delete
+  //   name: MergeTableScreen.routeName,
+  //   page: () => MergeTableScreen(),
+  //   binding: BindingsBuilder(() {
+  //     // Get.lazyPut(() => ManageTableController());
+  //   }),
+  // ),
 
   GetPage(
     name: MergedTableViewScreen.routeName,

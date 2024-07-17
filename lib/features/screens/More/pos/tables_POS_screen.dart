@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/pos/table_pos_controller.dart';
 import 'package:saralnova/core/model/feature_model/tables/available_table_by_space_model.dart';
+import 'package:saralnova/core/model/feature_model/tables/table_model.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
@@ -105,30 +107,32 @@ class TablesScreenPOS extends StatelessWidget {
                     ],
                   ),
                 ),
-                // PopupMenuItem(
-                //   onTap: () {},
-                //   value: '/hello',
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Text(
-                //         "Clear selected",
-                //         style: CustomTextStyles.f14W400(),
-                //       ),
-                //       SvgPicture.asset(IconPath.clear)
-                //     ],
-                //   ),
-                // ),
                 PopupMenuItem(
                   onTap: () {
-                    Get.toNamed(MergeTableScreen.routeName);
+                    c.selectedTableList.clear();
                   },
                   value: '/hello',
-                  child: Text(
-                    "Merge Tables",
-                    style: CustomTextStyles.f14W400(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Clear selected",
+                        style: CustomTextStyles.f14W400(),
+                      ),
+                      SvgPicture.asset(IconPath.clear)
+                    ],
                   ),
                 ),
+                // PopupMenuItem(
+                //   onTap: () {
+                //     Get.toNamed(MergeTableScreen.routeName);
+                //   },
+                //   value: '/hello',
+                //   child: Text(
+                //     "Merge Tables",
+                //     style: CustomTextStyles.f14W400(),
+                //   ),
+                // ),
                 PopupMenuItem(
                   onTap: () {
                     Get.toNamed(MergedTableViewScreen.routeName);
@@ -176,6 +180,10 @@ class TablesScreenPOS extends StatelessWidget {
 
                         return TableWidget(
                           availableTableBySpace: availabTableBySpace,
+                          ontap: (tableModel) {
+                            c.toggleSelectionTable(tableModel);
+                          },
+                          selectedTableList: c.selectedTableList,
                         );
                       },
                     ),
@@ -192,69 +200,96 @@ class TablesScreenPOS extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: Obx(() {
+        if (c.selectedTableList.isNotEmpty) {
+          return FloatingActionButton(
+            onPressed: () {
+              c.mergeTable();
+            },
+            child: Text(
+              "Merge",
+              style: CustomTextStyles.f16W600(
+                  color: AppColors.splashBackgroundColor),
+            ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      }),
     );
   }
 }
 
 class TableWidget extends StatelessWidget {
   final AvailableTableBySpace availableTableBySpace;
-  final Function()? ontap;
+  final Function(TableModel tableModel)? ontap;
+  final RxList<TableModel> selectedTableList;
+
   const TableWidget({
     super.key,
     required this.availableTableBySpace,
     this.ontap,
+    required this.selectedTableList,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            availableTableBySpace.spaceName ?? "",
-            style: CustomTextStyles.f14W500(color: AppColors.textColor),
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          if (availableTableBySpace.tables != null &&
-              availableTableBySpace.tables!.isNotEmpty)
-            GridView.builder(
-              key: const PageStorageKey("tables"),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 1,
-                mainAxisSpacing: 6,
-                crossAxisSpacing: 6,
-              ),
-              itemCount: availableTableBySpace.tables!.length,
-              itemBuilder: (context, index) {
-                var table = availableTableBySpace.tables![index];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          availableTableBySpace.spaceName ?? "",
+          style: CustomTextStyles.f14W500(color: AppColors.textColor),
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        if (availableTableBySpace.tables != null &&
+            availableTableBySpace.tables!.isNotEmpty)
+          GridView.builder(
+            key: const PageStorageKey("tables"),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 1,
+              mainAxisSpacing: 6,
+              crossAxisSpacing: 6,
+            ),
+            itemCount: availableTableBySpace.tables!.length,
+            itemBuilder: (context, index) {
+              var table = availableTableBySpace.tables![index];
 
-                Color color;
-                if (table.status == "Occupied") {
-                  color = AppColors.errorAccent;
-                } else if (table.status == "Available") {
-                  color = AppColors.bookingColor;
-                } else {
-                  color = AppColors.reservedColor;
-                }
+              Color color;
+              if (table.status == "Occupied") {
+                color = AppColors.errorAccent;
+              } else if (table.status == "Available") {
+                color = AppColors.bookingColor;
+              } else {
+                color = AppColors.reservedColor;
+              }
 
+              return Obx(() {
+                var isSelected = selectedTableList.contains(table);
                 return GestureDetector(
                     onTap: () {
                       if (ontap != null) {
-                        ontap!(); //send if anything required to make callback
+                        if (table.status != "Unavailable") {
+                          ontap!(
+                              table); //send if anything required to make callback
+                        }
                       }
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: color,
-                          border: Border.all(color: AppColors.fillColor),
+                          border: Border.all(
+                              width: 2,
+                              // color: AppColors.fillColor,
+                              color: isSelected
+                                  ? AppColors.orangeColor
+                                  : AppColors.borderColor),
                           borderRadius: BorderRadius.circular(10)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -294,10 +329,10 @@ class TableWidget extends StatelessWidget {
                         ],
                       ),
                     ));
-              },
-            )
-        ],
-      ),
+              });
+            },
+          )
+      ],
     );
   }
 }
