@@ -168,7 +168,7 @@ class MoreScreen extends StatelessWidget {
                 height: 10,
               ),
               CustomListTile(
-                title: "View Staffs",
+                title: "Staffs",
                 onTap: () {
                   Get.toNamed(StaffScreen.routeName);
                 },

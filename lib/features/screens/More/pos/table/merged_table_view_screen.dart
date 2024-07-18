@@ -21,7 +21,7 @@ class MergedTableViewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("View merged tables"),
+        title: const Text("Merged tables"),
       ),
       body: SingleChildScrollView(
         child: Padding(
