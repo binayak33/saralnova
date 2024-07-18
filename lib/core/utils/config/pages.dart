@@ -55,12 +55,12 @@ import 'package:saralnova/features/screens/More/tables/tables_screen.dart';
 import 'package:saralnova/features/screens/Splash/splash_screen.dart';
 
 import '../../../features/screens/Auth/login_screen.dart';
-import '../../../features/screens/More/activites/activites_screen.dart';
 import '../../../features/screens/More/menu/add_menu_screen.dart';
+import '../../../features/screens/More/pos/activites_screen.dart';
 import '../../../features/screens/More/pos/customer_order/customer_orders_screen.dart';
 import '../../controllers/Auth/login_controller.dart';
-import '../../controllers/More/activites/activities_controller.dart';
 import '../../controllers/More/orders/customer_orders/customer_order_controller.dart';
+import '../../controllers/pos/activities_controller.dart';
 
 final List<GetPage> pages = [
   GetPage(
@@ -84,9 +84,7 @@ final List<GetPage> pages = [
       Get.lazyPut(() => DashPanelController());
       Get.lazyPut(() => HomeController());
       Get.lazyPut(() => CalendarController());
-      // Get.lazyPut(() => GuestController());
       Get.lazyPut(() => MainPosPanelController());
-
       Get.lazyPut(() => MoreController());
     }),
   ),
@@ -265,6 +263,7 @@ final List<GetPage> pages = [
       Get.lazyPut(() => CheckoutOrderPOSController());
       Get.lazyPut(() => CustomerOrderController());
       Get.lazyPut(() => TablesPosController());
+      Get.lazyPut(() => ActivitiesController());
     }),
   ),
 

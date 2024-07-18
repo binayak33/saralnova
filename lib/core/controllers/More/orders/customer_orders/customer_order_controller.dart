@@ -19,6 +19,8 @@ class CustomerOrderController extends GetxController {
 
   void getAllCustomers() async {
     customerList.clear();
+    pageState.value = PageState.LOADING;
+
     PosRepo.getAllOrdersByCustomers(onSuccess: (customersData) {
       if (customersData.isEmpty) {
         pageState.value = PageState.EMPTY;
@@ -31,6 +33,4 @@ class CustomerOrderController extends GetxController {
       LogHelper.error(message);
     });
   }
-
-  
 }

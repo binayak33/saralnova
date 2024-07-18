@@ -389,4 +389,33 @@ class PosRepo {
       onError(Messages.error);
     }
   }
+
+  static Future<void> transferTable({
+    required String currentTableId,
+    required String newTableId,
+    required String customerId,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.transferTable;
+      var body = {
+        "current_table_id": currentTableId,
+        "new_table_id": newTableId,
+        "customer_id": customerId
+      };
+      http.Response response = await SkyRequest.post(url, body: body);
+      var data = json.decode(response.body);
+
+      if (data['status']) {
+        var message = data['message'];
+        onSuccess(message);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.transferTable, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
 }

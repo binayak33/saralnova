@@ -21,6 +21,8 @@ class CoreController extends GetxController {
     currentUser.value = StorageHelper.getUser();
   }
 
+  
+
   void logOut() async {
     // final ProgressDialog loading = ProgressDialog();
     // loading.show(message: "Logging out");

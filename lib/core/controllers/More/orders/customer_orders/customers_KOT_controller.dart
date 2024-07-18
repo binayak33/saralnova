@@ -1,12 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/More/orders/customer_orders/customer_order_controller.dart';
 import 'package:saralnova/core/model/feature_model/pos/payment_method_model.dart';
+import 'package:saralnova/core/model/feature_model/tables/table_model.dart';
 import 'package:saralnova/core/repo/more_repo/pos_repo/pos_repo.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/features/screens/More/pos/customer_order/checkout_bottom_sheet.dart';
 import 'package:saralnova/features/screens/More/pos/customer_order/payment_method_bottomsheet.dart';
+import 'package:saralnova/features/screens/More/pos/customer_order/transfer_table_bottom_sheet.dart';
+import 'package:saralnova/features/screens/More/pos/pos_bottom_sheets/select_table_pos_bottomSheet.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 
 import '../../../../../features/widgets/common_widgets/sky_snack_bar.dart';
@@ -32,6 +37,13 @@ class CustomersKOTCheckoutController extends GetxController {
   TextEditingController discountController = TextEditingController();
 
   RxString discountText = ''.obs;
+  RxBool enlarge = RxBool(false);
+
+  RxBool isLoadingPaymentMethod = RxBool(false);
+  RxBool isWholeCheckout = RxBool(false);
+
+  final RxList<Items> wholeMenuItems =
+      RxList(); // KitchenOrderTicket model => Items (only served and nonserve but not cancelled and paid)
 
   @override
   void onInit() {
@@ -123,8 +135,6 @@ class CustomersKOTCheckoutController extends GetxController {
     }
   }
 
-  RxBool enlarge = RxBool(false);
-
   void toggleBottomSheet() {
     enlarge.value = !enlarge.value;
   }
@@ -163,7 +173,6 @@ class CustomersKOTCheckoutController extends GetxController {
     }
   }
 
-  RxBool isLoadingPaymentMethod = RxBool(false);
   Future<void> getPaymentMethods() async {
     pageState.value = PageState.LOADING;
     isLoadingPaymentMethod.value = true;
@@ -239,10 +248,6 @@ class CustomersKOTCheckoutController extends GetxController {
     }
   }
 
-  RxBool isWholeCheckout = RxBool(false);
-
-  final RxList<Items> wholeMenuItems =
-      RxList(); // KitchenOrderTicket model => Items (only served and nonserve but not cancelled and paid)
   void addAllServedValue() {
     wholeMenuItems.clear();
 
@@ -252,8 +257,89 @@ class CustomersKOTCheckoutController extends GetxController {
           if (item.isCancelled != true && item.isPaid != true) {
             wholeMenuItems.add(item);
           }
-          print(item.isServed);
         }
+      }
+    }
+  }
+
+  final transferTableKey = GlobalKey<FormState>();
+  final TextEditingController transferringTableController =
+      TextEditingController();
+
+  Rxn<TableModel> table = Rxn();
+  openTransferTableBottomSheet() async {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: Get.context!,
+      showDragHandle: true,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: TransferTableBottomSheet(),
+        );
+      },
+    );
+  }
+
+  openAvailableTableBottomSheet() async {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: Get.context!,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: SelectAvailableTableBottomSheet(
+            onSelectAvailableTable: (TableModel table) {
+              transferringTableController.text = table.name.toString();
+
+              this.table.value = table;
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> transferTable() async {
+    log("customer id ============>${customer.value!.id!}");
+    log("customerId ============>${customer.value!.tables![0].id!}");
+
+    log("newTableId  ============>${table.value!.id!}");
+
+    if (transferTableKey.currentState!.validate()) {
+      loading.show();
+
+      if (customer.value != null &&
+          customer.value!.tables != null &&
+          customer.value!.tables!.isNotEmpty) {
+        await PosRepo.transferTable(
+            currentTableId: customer.value!.tables![0].id!,
+            newTableId: table.value!.id!, //select garera aako
+            customerId: customer.value!.id!,
+            onSuccess: (message) {
+              loading.hide();
+              getCustomerKots();
+              Get.back();
+              transferringTableController.clear();
+              table.value = null;
+              SkySnackBar.success(title: "Table", message: message);
+            },
+            onError: (message) {
+              loading.hide();
+
+              SkySnackBar.error(title: "Table", message: message);
+            });
+      } else {
+        loading.hide();
+
+        SkySnackBar.error(
+          title: "Table",
+          message: Messages.error,
+        );
       }
     }
   }

@@ -6,8 +6,8 @@ import 'package:saralnova/core/repo/more_repo/activity_repo.dart';
 import 'package:saralnova/core/utils/helpers/log_helper.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 
-import '../../../utils/constants/icon_path.dart';
-import '../../../utils/enums/enums.dart';
+import '../../utils/constants/icon_path.dart';
+import '../../utils/enums/enums.dart';
 
 class ActivitiesController extends GetxController {
   final LogoLoading loading = LogoLoading();

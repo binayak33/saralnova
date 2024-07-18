@@ -25,7 +25,7 @@ class TablesScreenPOS extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: const Text("Available Tables"),
+        title: const Text("Tables"),
         actions: [
           PopupMenuButton(
             surfaceTintColor: AppColors.fillFadedColor,
@@ -164,7 +164,7 @@ class TablesScreenPOS extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Expanded(child: SaralNovaShimmer.menuGridShimmer());
+                  return SaralNovaShimmer.menuGridShimmer();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
                     message: "No data available",

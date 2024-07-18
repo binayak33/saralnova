@@ -9,7 +9,6 @@ class IconPath {
   //Icons
   static const String arrowRightCircle = "$basePath/arrow-right-circle.svg";
   static const String keySquare = "$basePath/key_square.svg";
-  static const String logout = "$basePath/log-out.svg";
   static const String cheveronDown = "$basePath/chevron-down.svg";
   static const String arrowLeftCircle = "$basePath/arrow-left-circle.svg";
   static const String camera = "$basePath/camera.svg";
@@ -23,6 +22,7 @@ class IconPath {
   static const String merged = "$basePath/merged.svg";
 
   static const String clear = "$basePath/clear.svg";
+  static const String logout = "$basePath/logout.svg";
 
   static const String circleCross = "$basePath/circleCross.svg";
 
@@ -102,4 +102,13 @@ class IconPath {
   static const String credit = "$basePath/creditCard.svg";
   static const String card = "$basePath/card.svg";
   static const String cash = "$basePath/cash.svg";
+
+  // -----
+
+  static const String rooms = "$basePath/rooms.svg";
+  static const String calendarTick = "$basePath/calendarTick.svg";
+  static const String calander = "$basePath/calander.svg";
+
+  static const String cancelCalendar = "$basePath/cancelCalendar.svg";
+  static const String doorLocked = "$basePath/doorLocked.svg";
 }

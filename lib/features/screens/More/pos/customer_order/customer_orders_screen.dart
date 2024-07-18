@@ -35,8 +35,7 @@ class CustomerOrderScreen extends StatelessWidget {
             children: [
               Obx(() {
                 if (c.pageState.value == PageState.LOADING) {
-                  return Expanded(
-                      child: SaralNovaShimmer.pendingOrderShimmer());
+                  return SaralNovaShimmer.customerOrderShimmer();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
                     message: "No checkout orders at the moment",

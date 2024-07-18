@@ -138,4 +138,10 @@ class Api {
   static String getMergedTables = "$apiBaseUrl/restaurant/get-merged-tables";
   static String unMergeTable = "$apiBaseUrl/restaurant/unmerge-tables";
   static String mergeTables = "$apiBaseUrl/restaurant/merge-tables";
+
+  // dashboard
+  static String hotelDashboard = "$apiBaseUrl/hotel/dashboard";
+  static String restaurantDashboard = "$apiBaseUrl/restaurant/dashboard";
+    static String transferTable = "$apiBaseUrl/restaurant/transfer-table";
+
 }

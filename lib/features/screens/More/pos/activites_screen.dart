@@ -6,7 +6,7 @@ import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 
-import '../../../../core/controllers/More/activites/activities_controller.dart';
+import '../../../../core/controllers/pos/activities_controller.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/enums/enums.dart';
 import '../../../widgets/common_widgets/empty_view.dart';
@@ -21,6 +21,7 @@ class ActivitiesScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          automaticallyImplyLeading: false,
           title: const Text("Activities"),
         ),
         body: SingleChildScrollView(

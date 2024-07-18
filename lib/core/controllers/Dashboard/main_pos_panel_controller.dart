@@ -4,7 +4,8 @@ import 'package:saralnova/core/controllers/More/orders/customer_orders/customer_
 import 'package:saralnova/core/controllers/Splash/core_controller.dart';
 import 'package:saralnova/core/controllers/pos/pending_order_pos_controller.dart';
 import 'package:saralnova/core/controllers/pos/place_order_pos_controller.dart';
-import 'package:saralnova/features/screens/More/pos/activity_POS_screen.dart';
+import 'package:saralnova/core/controllers/pos/table_pos_controller.dart';
+import 'package:saralnova/features/screens/More/pos/activites_screen.dart';
 import 'package:saralnova/features/screens/More/pos/customer_order/customer_orders_screen.dart';
 import 'package:saralnova/features/screens/More/pos/kot_POS_screen.dart';
 import 'package:saralnova/features/screens/More/pos/place_order_POS_screen.dart';
@@ -28,15 +29,17 @@ class MainPosPanelController extends GetxController {
     if (currnetIndex.value == 2) {
       Get.find<CustomerOrderController>().getAllCustomers();
     }
+    if (currnetIndex.value == 3) {
+      Get.find<TablesPosController>().getAllAvailabletablesBySpace();
+    }
   }
 
   var pages = <Widget>[
     PlaceOrderScreenPOS(),
     KotScreenPOS(),
     CustomerOrderScreen(), // this is the later page
-    // CheckoutScreenPOS(),
     TablesScreenPOS(),
-    ActivityScreenPOS(),
+    ActivitiesScreen(),
   ];
 
   TextEditingController searchMenuController =

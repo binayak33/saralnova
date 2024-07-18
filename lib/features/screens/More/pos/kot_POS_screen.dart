@@ -105,7 +105,6 @@ class PendingOrderBox extends StatelessWidget {
   final PendingOrders pendingOrders;
   final Function() onSuccess;
   final Function() onCancel;
-  // final Function()? onSelected;
 
   final Function(String orderId, String menuItemId)? onSelected;
   PendingOrderBox({

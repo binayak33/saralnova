@@ -35,25 +35,14 @@ class CustomersKotCheckoutScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          // GestureDetector(
-          //   onTap: () {
-          //     c.selectedMenuItemsId.clear();
-          //   },
-          //   child: Padding(
-          //     padding: const EdgeInsets.only(right: 10),
-          //     child: SvgPicture.asset(
-          //       IconPath.clear,
-          //       height: 20,
-          //       width: 20,
-          //     ),
-          //   ),
-          // ),
-
-          Obx(
-            () => IconButton(
-              onPressed: () {
-                c.selectedMenuItemsId.clear();
-              },
+          // ----------------
+          Obx(() {
+            return PopupMenuButton(
+              surfaceTintColor: AppColors.fillFadedColor,
+              // icon: const Icon(
+              //   Icons.more_vert,
+              //   color: AppColors.textColor,
+              // ),
               icon: badges.Badge(
                 showBadge: c.selectedMenuItemsId.isNotEmpty,
                 position: badges.BadgePosition.topEnd(top: -8, end: -5),
@@ -68,14 +57,63 @@ class CustomersKotCheckoutScreen extends StatelessWidget {
                   badgeColor: AppColors.orangeColor,
                   shape: badges.BadgeShape.circle,
                 ),
-                child: SvgPicture.asset(
-                  IconPath.clear,
-                  height: 20,
-                  width: 20,
+                child: const Icon(
+                  Icons.more_vert,
+                  color: AppColors.textColor,
                 ),
               ),
-            ),
-          ),
+
+              onSelected: (value) {
+                // your logic
+              },
+              itemBuilder: (BuildContext bc) {
+                return [
+                  PopupMenuItem(
+                    onTap: () {
+                      c.selectedMenuItemsId.clear();
+                    },
+                    value: '/hello',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Clear selected menu",
+                          style: CustomTextStyles.f14W400(),
+                        ),
+                        SvgPicture.asset(
+                          IconPath.clear,
+                          height: 20,
+                          width: 20,
+                        )
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {
+                      //open bottom sheet from here
+                      c.transferringTableController.clear();
+                      c.openTransferTableBottomSheet();
+                    },
+                    value: '/hello',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Transfer table",
+                          style: CustomTextStyles.f14W400(),
+                        ),
+                        SvgPicture.asset(
+                          IconPath.merged,
+                          height: 20,
+                          width: 20,
+                        )
+                      ],
+                    ),
+                  ),
+                ];
+              },
+            );
+          })
         ],
       ),
       body: SingleChildScrollView(

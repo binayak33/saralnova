@@ -55,32 +55,104 @@ class SaralNovaShimmer {
                 borderRadius: BorderRadius.circular(10),
                 color: AppColors.shimmerBase,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 10, bottom: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.shimmerHighlight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 10, bottom: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: AppColors.shimmerHighlight,
+                      ),
+                      height: 30,
+                      width: 100,
                     ),
-                    height: 30,
-                    width: 100,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 10, bottom: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.shimmerHighlight,
+                    const SizedBox(
+                      height: 5,
                     ),
-                    height: 30,
-                    width: 150,
-                  ),
-                ],
+                    Container(
+                      margin: const EdgeInsets.only(top: 10, bottom: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: AppColors.shimmerHighlight,
+                      ),
+                      height: 30,
+                      width: 150,
+                    ),
+                  ],
+                ),
+              ));
+        },
+      ),
+    );
+  }
+
+  static Widget customerOrderShimmer() {
+    return Shimmer.fromColors(
+      baseColor: AppColors.shimmerBase,
+      highlightColor: AppColors.shimmerHighlight,
+      child: ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: 15,
+        separatorBuilder: (context, index) {
+          return const SizedBox(
+            height: 10,
+          );
+        },
+        itemBuilder: (context, index) {
+          return Container(
+              // height: 70,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.shimmerBase,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 10, bottom: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: AppColors.shimmerHighlight,
+                      ),
+                      height: 30,
+                      width: 100,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(top: 10, bottom: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.shimmerHighlight,
+                          ),
+                          height: 30,
+                          width: 100,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 10, bottom: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.shimmerHighlight,
+                          ),
+                          height: 30,
+                          width: 100,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ));
         },
       ),

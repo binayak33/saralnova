@@ -7,7 +7,6 @@ import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/features/screens/More/Booking/booking_screen.dart';
-import 'package:saralnova/features/screens/More/activites/activites_screen.dart';
 import 'package:saralnova/features/screens/More/activity_log/activity_log_screen.dart';
 import 'package:saralnova/features/screens/More/aminity_type/amenity_screen.dart';
 import 'package:saralnova/features/screens/More/facility_type/facility_screen.dart';
@@ -50,40 +49,123 @@ class MoreScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Hotel",
-                  style: CustomTextStyles.f16W500(),
+              Theme(
+                data: Theme.of(context)
+                    .copyWith(dividerColor: Colors.transparent),
+                child: ExpansionTile(
+                  title: Text(
+                    "Hotel",
+                    style: CustomTextStyles.f16W500(),
+                  ),
+                  children: [
+                    CustomListTile(
+                      title: "Room Types",
+                      onTap: () {
+                        Get.toNamed(RoomTypeScreen.routeName);
+                      },
+                      iconPath: IconPath.roomType,
+                    ),
+                    CustomListTile(
+                      title: "Facilities",
+                      onTap: () {
+                        Get.toNamed(FacilityScreen.routeName);
+                      },
+                      iconPath: IconPath.facilities,
+                    ),
+                    CustomListTile(
+                      title: "Aminities",
+                      onTap: () {
+                        Get.toNamed(AmenitiesScreen.routeName);
+                      },
+                      iconPath: IconPath.amenities,
+                    ),
+                    CustomListTile(
+                      title: "View Rooms",
+                      onTap: () {
+                        Get.toNamed(RoomsScreen.routeName);
+                      },
+                      iconPath: IconPath.viewRooms,
+                    ),
+                    CustomListTile(
+                      title: "Booking",
+                      onTap: () {
+                        Get.toNamed(BookingScreen.routeName);
+                      },
+                      iconPath: IconPath.booking,
+                    ),
+                    CustomListTile(
+                      title: "Activity Log",
+                      onTap: () {
+                        Get.toNamed(ActivityLogScreen.routeName);
+                      },
+                      iconPath: IconPath.activity,
+                    ),
+                  ],
+                  // title: Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+
+                  //   ],
+                  // ),
                 ),
               ),
-              CustomListTile(
-                title: "Room Types",
-                onTap: () {
-                  Get.toNamed(RoomTypeScreen.routeName);
-                },
-                iconPath: IconPath.roomType,
+
+              const Divider(
+                height: 0,
+                color: AppColors.fillColor,
               ),
-              CustomListTile(
-                title: "Facilities",
-                onTap: () {
-                  Get.toNamed(FacilityScreen.routeName);
-                },
-                iconPath: IconPath.facilities,
+              const SizedBox(
+                height: 10,
               ),
-              CustomListTile(
-                title: "Aminities",
-                onTap: () {
-                  Get.toNamed(AmenitiesScreen.routeName);
-                },
-                iconPath: IconPath.amenities,
+              Theme(
+                data: Theme.of(context)
+                    .copyWith(dividerColor: Colors.transparent),
+                child: ExpansionTile(
+                  title: Text(
+                    "Restaurant ",
+                    style: CustomTextStyles.f16W500(),
+                  ),
+                  children: [
+                    CustomListTile(
+                      title: "Category",
+                      onTap: () {
+                        Get.toNamed(CategoryScreen.routeName);
+                      },
+                      iconPath: IconPath.category,
+                    ),
+                    // CustomListTile(
+                    //   title: "Variants",
+                    //   onTap: () {
+                    //     Get.toNamed(VariantScreen.routeName);
+                    //   },
+                    //   iconPath: IconPath.variants,
+                    // ),
+                    CustomListTile(
+                      title: "Menus",
+                      onTap: () {
+                        Get.toNamed(MenuScreen.routeName);
+                      },
+                      iconPath: IconPath.menu,
+                    ),
+                    CustomListTile(
+                      title: "Order",
+                      onTap: () {
+                        Get.toNamed(
+                            OrderScreen.routeName); //TODO this is previous code
+                      },
+                      iconPath: IconPath.order,
+                    ),
+                  ],
+                ),
               ),
-              CustomListTile(
-                title: "View Rooms",
-                onTap: () {
-                  Get.toNamed(RoomsScreen.routeName);
-                },
-                iconPath: IconPath.viewRooms,
+
+              const Divider(
+                height: 0,
+                color: AppColors.fillColor,
+              ),
+
+              const SizedBox(
+                height: 10,
               ),
               CustomListTile(
                 title: "View Staffs",
@@ -91,72 +173,6 @@ class MoreScreen extends StatelessWidget {
                   Get.toNamed(StaffScreen.routeName);
                 },
                 iconPath: IconPath.staffs,
-              ),
-              CustomListTile(
-                title: "Booking",
-                onTap: () {
-                  Get.toNamed(BookingScreen.routeName);
-                },
-                iconPath: IconPath.booking,
-              ),
-              CustomListTile(
-                title: "Activity Log",
-                onTap: () {
-                  Get.toNamed(ActivityLogScreen.routeName);
-                },
-                iconPath: IconPath.activity,
-              ),
-              const Divider(
-                height: 0,
-                color: AppColors.fillColor,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Restaurant ",
-                  style: CustomTextStyles.f16W500(),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomListTile(
-                title: "Category",
-                onTap: () {
-                  Get.toNamed(CategoryScreen.routeName);
-                },
-                iconPath: IconPath.category,
-              ),
-              // CustomListTile(
-              //   title: "Variants",
-              //   onTap: () {
-              //     Get.toNamed(VariantScreen.routeName);
-              //   },
-              //   iconPath: IconPath.variants,
-              // ),
-              CustomListTile(
-                title: "Menus",
-                onTap: () {
-                  Get.toNamed(MenuScreen.routeName);
-                },
-                iconPath: IconPath.menu,
-              ),
-              const Divider(
-                height: 0,
-                color: AppColors.fillColor,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Tables ",
-                  style: CustomTextStyles.f16W500(),
-                ),
               ),
               const SizedBox(
                 height: 10,
@@ -179,57 +195,40 @@ class MoreScreen extends StatelessWidget {
                 height: 0,
                 color: AppColors.fillColor,
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Order",
-                  style: CustomTextStyles.f16W500(),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomListTile(
-                title: "Order",
-                onTap: () {
-                  Get.toNamed(
-                      OrderScreen.routeName); //TODO this is previous code
-                },
-                iconPath: IconPath.order,
-              ),
-              const Divider(
-                height: 0,
-                color: AppColors.fillColor,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Activities",
-                  style: CustomTextStyles.f16W500(),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomListTile(
-                title: "Activities",
-                onTap: () {
-                  Get.toNamed(ActivitiesScreen.routeName);
-                },
-                iconPath: IconPath.activities,
-              ),
 
               const Divider(
                 height: 0,
                 color: AppColors.fillColor,
               ),
+              // Align(
+              //   alignment: Alignment.centerLeft,
+              //   child: Text(
+              //     "Activities",
+              //     style: CustomTextStyles.f16W500(),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // CustomListTile(
+              //   title: "Activities",
+              //   onTap: () {
+              //     Get.toNamed(ActivitiesScreen.routeName);
+              //   },
+              //   iconPath: IconPath.activities,
+              // ),
+
+              // const Divider(
+              //   height: 0,
+              //   color: AppColors.fillColor,
+              // ),
 
               CustomListTile(
                 title: "Logout",
                 onTap: () {
                   Get.find<CoreController>().logOut();
                 },
-                iconPath: IconPath.menu,
+                iconPath: IconPath.logout,
               ),
               const SizedBox(
                 height: 20,
