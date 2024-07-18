@@ -13,73 +13,7 @@ class MainPosPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Scaffold(
-      // appBar: AppBar(
-      //     // actions: [
-      //     //   if (c.currnetIndex.value == 0)
-      //     //     Padding(
-      //     //       padding: const EdgeInsets.all(8.0),
-      //     //       child: AnimSearchBar(
-      //     //         // textFieldColor: AppColors.fillColor,
-      //     //         textFieldIconColor: Colors.white,
-      //     //         rtl: true,
-      //     //         prefixIcon: const Icon(
-      //     //           Icons.search,
-      //     //           size: 15,
-      //     //           color: AppColors.splashBackgroundColor,
-      //     //         ),
-
-      //     //         boxShadow: false,
-      //     //         helpText: "Search....",
-      //     //         suffixIcon: const Icon(
-      //     //           Icons.search,
-      //     //           size: 15,
-      //     //           color: AppColors.blackColor,
-      //     //         ),
-      //     //         searchIconColor: AppColors.textColor,
-      //     //         color: AppColors.fillColor,
-      //     //         width: 250,
-      //     //         textController: c.searchMenuController,
-      //     //         onSuffixTap: () {},
-      //     //         onSubmitted: (String) {},
-      //     //       ),
-      //     //     ),
-      //     //   if (c.currnetIndex.value == 0)
-      //     //     Obx(
-      //     //       () => IconButton(
-      //     //         onPressed: () {
-      //     //           // final placeOrderPosController =
-      //     //           //     Get.find<PlaceOrderPosController>();
-      //     //           Get.toNamed(MakeOrderPosScreen.routeName);
-      //     //         },
-      //     //         icon: badges.Badge(
-      //     //           showBadge: Get.find<PlaceOrderPosController>()
-      //     //               .selectedMenuList
-      //     //               .isNotEmpty,
-      //     //           position: badges.BadgePosition.topEnd(top: -8, end: -5),
-      //     //           badgeContent: Text(
-      //     //             c.placeOrderPosController.selectedMenuList.length > 9
-      //     //                 ? "9+"
-      //     //                 : "${c.placeOrderPosController.selectedMenuList.length}",
-      //     //             style: CustomTextStyles.f13W400(
-      //     //                 color: AppColors.splashBackgroundColor),
-      //     //           ),
-      //     //           badgeStyle: const badges.BadgeStyle(
-      //     //             badgeColor: AppColors.orangeColor,
-      //     //             shape: badges.BadgeShape.circle,
-      //     //           ),
-      //     //           child: SvgPicture.asset(
-      //     //             IconPath.placeOrder,
-      //     //             height: 20,
-      //     //             width: 20,
-      //     //           ),
-      //     //         ),
-      //     //       ),
-      //     //     ),
-      //     //   const SizedBox(
-      //     //     width: 10,
-      //     //   ),
-      //     // ],
-      //     ),
+      
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           showSelectedLabels: true,

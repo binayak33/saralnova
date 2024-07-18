@@ -3,6 +3,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/core/controllers/Dashboard/dashboard_panel_controller.dart';
 import 'package:saralnova/core/controllers/pos/place_order_pos_controller.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/menu_model.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
@@ -18,12 +19,24 @@ import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
 class PlaceOrderScreenPOS extends StatelessWidget {
   static const String routeName = "/place-order-screen-pos";
   final c = Get.find<PlaceOrderPosController>();
+  final dpc = Get.find<DashPanelController>();
   PlaceOrderScreenPOS({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: InkResponse(
+          radius: 10,
+          borderRadius: BorderRadius.circular(10),
+          onTap: () {
+            Get.back();
+            dpc.onUpdatePage(3);
+          },
+          child: const Icon(
+            Icons.arrow_back,
+          ),
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),

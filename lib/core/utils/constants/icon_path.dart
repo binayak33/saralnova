@@ -20,6 +20,7 @@ class IconPath {
   static const String dining = "$basePath/dining.svg";
 
   static const String table = "$basePath/table.svg";
+  static const String merged = "$basePath/merged.svg";
 
   static const String clear = "$basePath/clear.svg";
 

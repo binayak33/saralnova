@@ -16,8 +16,6 @@ class DashPanelController extends GetxController {
   var pages = <Widget>[
     HomeScreen(),
     CalendarScreen(),
-    // CustomerOrderScreen(), // this is the later page
-    // MainPosPanel(), //main pos panel kholera tes vitra aru bottom navigation banaune
     MoreScreen(),
   ];
 

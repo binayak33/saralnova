@@ -9,7 +9,6 @@ import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/constants/image_path.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
-import 'package:saralnova/features/screens/More/pos/table/manage_table_screen.dart';
 import 'package:saralnova/features/screens/More/pos/table/merged_table_view_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
@@ -138,9 +137,19 @@ class TablesScreenPOS extends StatelessWidget {
                     Get.toNamed(MergedTableViewScreen.routeName);
                   },
                   value: '/hello',
-                  child: Text(
-                    "See merged Tables",
-                    style: CustomTextStyles.f14W400(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "See merged tables",
+                        style: CustomTextStyles.f14W400(),
+                      ),
+                      SvgPicture.asset(
+                        IconPath.merged,
+                        height: 20,
+                        width: 20,
+                      )
+                    ],
                   ),
                 ),
               ];
@@ -165,6 +174,7 @@ class TablesScreenPOS extends StatelessWidget {
                 } else if (c.pageState.value == PageState.NORMAL) {
                   return Obx(
                     () => ListView.separated(
+                      padding: const EdgeInsets.only(bottom: 100),
                       key: const PageStorageKey("tablePos"),
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
