@@ -1,4 +1,3 @@
-import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,33 +37,33 @@ class PlaceOrderScreenPOS extends StatelessWidget {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: AnimSearchBar(
-              // textFieldColor: AppColors.fillColor,
-              textFieldIconColor: Colors.white,
-              rtl: true,
-              prefixIcon: const Icon(
-                Icons.search,
-                size: 15,
-                color: AppColors.splashBackgroundColor,
-              ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: AnimSearchBar(
+          //     // textFieldColor: AppColors.fillColor,
+          //     textFieldIconColor: Colors.white,
+          //     rtl: true,
+          //     prefixIcon: const Icon(
+          //       Icons.search,
+          //       size: 15,
+          //       color: AppColors.splashBackgroundColor,
+          //     ),
 
-              boxShadow: false,
-              helpText: "Search....",
-              suffixIcon: const Icon(
-                Icons.search,
-                size: 15,
-                color: AppColors.blackColor,
-              ),
-              searchIconColor: AppColors.textColor,
-              color: AppColors.fillColor,
-              width: 250,
-              textController: c.searchMenuController,
-              onSuffixTap: () {},
-              onSubmitted: (String) {},
-            ),
-          ),
+          //     boxShadow: false,
+          //     helpText: "Search....",
+          //     suffixIcon: const Icon(
+          //       Icons.search,
+          //       size: 15,
+          //       color: AppColors.blackColor,
+          //     ),
+          //     searchIconColor: AppColors.textColor,
+          //     color: AppColors.fillColor,
+          //     width: 250,
+          //     textController: c.searchMenuController,
+          //     onSuffixTap: () {},
+          //     onSubmitted: (String) {},
+          //   ),
+          // ),
           Obx(
             () => IconButton(
               onPressed: () {

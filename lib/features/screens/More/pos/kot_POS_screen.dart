@@ -38,7 +38,9 @@ class KotScreenPOS extends StatelessWidget {
                 return EmptyView(
                   message: "No pending orders at the moment",
                   title: "No pending orders",
-                  media: IconPath.nodata,
+                  // media: IconPath.nodata,
+                  media: IconPath.empty,
+                  mediaSize: 300,
                 );
               } else if (c.pageState.value == PageState.NORMAL) {
                 return Expanded(
