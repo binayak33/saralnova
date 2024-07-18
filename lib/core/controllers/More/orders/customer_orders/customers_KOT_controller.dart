@@ -10,6 +10,7 @@ import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/features/screens/More/pos/customer_order/checkout_bottom_sheet.dart';
 import 'package:saralnova/features/screens/More/pos/customer_order/payment_method_bottomsheet.dart';
+import 'package:saralnova/features/screens/More/pos/customer_order/qr_bottom_sheet.dart';
 import 'package:saralnova/features/screens/More/pos/customer_order/transfer_table_bottom_sheet.dart';
 import 'package:saralnova/features/screens/More/pos/pos_bottom_sheets/select_table_pos_bottomSheet.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
@@ -206,7 +207,28 @@ class CustomersKOTCheckoutController extends GetxController {
           child: PaymentMethodBottomSheet(
             onSelectedPaymentMethod: (paymentMethod) {
               paymentTypeController.text = paymentMethod;
+//  if (paymentTypeController.text == "khalti") {
+//                 openQrBottomSheet(String );
+//               }
             },
+          ),
+        );
+      },
+    );
+  }
+
+  openQrBottomSheet(String qr, String paymentMethod) async {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: Get.context!,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: QrBottomSheet(
+            qrString: qr,
+            paymentMethod: paymentMethod,
           ),
         );
       },

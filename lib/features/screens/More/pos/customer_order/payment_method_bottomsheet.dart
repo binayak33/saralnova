@@ -97,6 +97,12 @@ class PaymentMethodBottomSheet extends StatelessWidget {
                       Navigator.of(context).pop();
                       // onTap!(false);
                       onSelectedPaymentMethod(paymentType.title ?? "Cash");
+                      if (paymentType.title == "khalti") {
+                        c.openQrBottomSheet("${paymentType.image}", "Khalti");
+                      }
+                      if (paymentType.title == "esewa") {
+                        c.openQrBottomSheet("${paymentType.image}", "e-Sewa");
+                      }
                     },
                     title: Text(
                       paymentType.title ?? "",

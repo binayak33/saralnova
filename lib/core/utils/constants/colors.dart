@@ -45,13 +45,12 @@ class AppColors {
   static const Color shimmerHighlight = Color(0xFFE1E1E1);
   static final Color shimmerBaseLight = Colors.grey.withOpacity(0.10);
 
-  //Box Colors
-  static final Color box1 = Color(0xFFF2C4DE);
-  static final Color box2 = Color(0xFFFFFFE1);
-  static final Color box3 = Color(0xFFA9B5D9);
-  static final Color box4 = Color(0xFFC4D7D1);
-  static final Color box5 = Color(0xFFF2DDD0);
-  static final Color box6 = Color(0xFFD9BCF2);
-  static final Color box7 = Color(0xFFFEF4FF);
-  static final Color box8 = Color(0xFFDEE3FF);
+
+    static final Color khaltiColor =Color(0xFF582d96);
+
+
+  static final Color esewaColor = Color(0xFF60ba47);
+
+
+  
 }
