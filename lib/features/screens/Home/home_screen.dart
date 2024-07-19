@@ -7,6 +7,7 @@ import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
+import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -21,6 +22,7 @@ class HomeScreen extends StatelessWidget {
         c.coreController.currentUser.value?.hasRestaurant ?? false;
     bool hasHotel = c.coreController.currentUser.value?.hasHotel ?? false;
     int tabCount = (hasRestaurant && hasHotel) ? 2 : 1;
+
     return DefaultTabController(
       // length: (c.coreController.currentUser.value?.hasRestaurant == true &&
       //         c.coreController.currentUser.value?.hasHotel == true)
@@ -244,6 +246,14 @@ class HomeScreen extends StatelessWidget {
                   }),
                 ),
               ),
+            if (c.coreController.currentUser.value?.hasRestaurant == false &&
+                c.coreController.currentUser.value?.hasHotel == false)
+              ErrorView(
+                errorTitle: "Something went wrong!!",
+                errorMessage: "Something went wrong",
+                imageHeight: 400,
+                imagePath: IconPath.somethingWentWrong,
+              )
           ],
         ),
       ),
