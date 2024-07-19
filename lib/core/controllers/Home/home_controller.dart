@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/core/controllers/Splash/core_controller.dart';
 import 'package:saralnova/core/model/hotel_dashboard_model.dart';
 import 'package:saralnova/core/model/restaurant_dashboard_model.dart';
 import 'package:saralnova/core/repo/dashboard_repo/dashboard_repo.dart';
@@ -9,6 +10,7 @@ import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 class HomeController extends GetxController {
   var pageState = PageState.LOADING.obs;
   RxInt currentIndex = RxInt(0);
+  final coreController = Get.find<CoreController>();
   final PageController pageController = PageController();
   final ScrollController scrollController = ScrollController();
 

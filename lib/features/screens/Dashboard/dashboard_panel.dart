@@ -23,7 +23,10 @@ class DashPanel extends StatelessWidget {
             customNavItem(theme: theme, iconPath: IconPath.home, label: "Home"),
             customNavItem(
                 theme: theme, iconPath: IconPath.calendar, label: "Calendar"),
-            customNavItem(theme: theme, iconPath: IconPath.pos, label: "Pos"),
+            if ((c.coreController.currentUser.value?.role == "admin" ||
+                    c.coreController.currentUser.value?.role == "staffs") &&
+                c.coreController.currentUser.value?.hasRestaurant == true)
+              customNavItem(theme: theme, iconPath: IconPath.pos, label: "Pos"),
             customNavItem(theme: theme, iconPath: IconPath.more, label: "More"),
           ],
         ),

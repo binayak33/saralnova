@@ -12,6 +12,7 @@ class DashPanelController extends GetxController {
   final coreController = Get.find<CoreController>();
   RxInt currnetIndex = RxInt(0);
   PageController pageController = PageController();
+  
 
   var pages = <Widget>[
     HomeScreen(),
@@ -24,10 +25,14 @@ class DashPanelController extends GetxController {
     pageController.animateToPage(currnetIndex.value,
         duration: const Duration(milliseconds: 100), curve: Curves.linear);
 
-    if (value == 2) {
-      Get.toNamed(MainPosPanel.routeName);
+    if ((coreController.currentUser.value?.role == "admin" ||
+            coreController.currentUser.value?.role == "staffs") &&
+        coreController.currentUser.value?.hasRestaurant == true) {
+      if (value == 2) {
+        Get.toNamed(MainPosPanel.routeName);
 
-      return;
+        return;
+      }
     }
   }
 

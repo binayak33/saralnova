@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/core/controllers/Splash/core_controller.dart';
 import 'package:saralnova/core/repo/Auth_repo.dart';
 import 'package:saralnova/features/screens/Dashboard/dashboard_panel.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
@@ -12,6 +12,7 @@ class LoginController extends GetxController {
   final LogoLoading loading = LogoLoading();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final CoreController coreController = Get.find();
 
   RxBool showPassword = RxBool(false);
 
@@ -30,7 +31,7 @@ class LoginController extends GetxController {
         password: password,
         onSuccess: (user, accessToken) {
           loading.hide();
-
+          coreController.loadCurrentUser();
           Get.offAllNamed(DashPanel.routeName);
           SkySnackBar.success(title: "Login", message: "Logged in Succesfully");
         },

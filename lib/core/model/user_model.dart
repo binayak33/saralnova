@@ -1,5 +1,5 @@
 class User {
-  int? id;
+  String? id;
   String? name;
   String? email;
   String? emailVerifiedAt;
@@ -34,7 +34,7 @@ class User {
   });
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['id'].toString();
     name = json['name'];
     email = json['email'];
     emailVerifiedAt = json['email_verified_at'];
@@ -42,10 +42,14 @@ class User {
     role = json['role'];
     lastLogin = json['last_login'];
     verfiedAt = json['verified_at'];
-    vendorId = json['vendor_id'];
+    vendorId = json['vendor_id'].toString();
     fcmToken = json['fcm_token'];
-    hasHotel = json['has_hotel'] == 1 ? true : false;
-    hasRestaurant = json['has_restaurant'] == 1 ? true : false;
+    // hasHotel = json['has_hotel'] == 1 ? true : false;
+    hasHotel = json['has_hotel'] == 1 || json['has_hotel'] == true;
+    // hasRestaurant = json['has_restaurant'] == 1 ? true : false;
+    hasRestaurant =
+        json['has_restaurant'] == 1 || json['has_restaurant'] == true;
+
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

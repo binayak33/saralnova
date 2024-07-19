@@ -17,210 +17,233 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasRestaurant =
+        c.coreController.currentUser.value?.hasRestaurant ?? false;
+    bool hasHotel = c.coreController.currentUser.value?.hasHotel ?? false;
+    int tabCount = (hasRestaurant && hasHotel) ? 2 : 1;
     return DefaultTabController(
-      length: 2,
+      // length: (c.coreController.currentUser.value?.hasRestaurant == true &&
+      //         c.coreController.currentUser.value?.hasHotel == true)
+      //     ? 2
+      //     : 1,
+      length: tabCount,
       initialIndex: c.currentIndex.value,
       child: Scaffold(
         appBar: AppBar(
-          title: const TabBar(
+          title: TabBar(
             padding: EdgeInsets.zero,
             tabs: [
-              Tab(
-                // text: "Hotel",
-                child: Text("Hotel"),
-              ),
-              Tab(
-                // text: "Restaurant",
-                child: Text("Restaurant"),
-              ),
+              if ((c.coreController.currentUser.value?.role == "admin" ||
+                      c.coreController.currentUser.value?.role == "staffs") &&
+                  c.coreController.currentUser.value?.hasHotel == true)
+                const Tab(
+                  // text: "Hotel",
+                  child: Text("Hotel"),
+                ),
+              if ((c.coreController.currentUser.value?.role == "admin" ||
+                      c.coreController.currentUser.value?.role == "staffs") &&
+                  c.coreController.currentUser.value?.hasRestaurant == true)
+                const Tab(
+                  // text: "Restaurant",
+                  child: Text("Restaurant"),
+                ),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Obx(() {
-                if (c.pageState.value == PageState.LOADING) {
-                  return SaralNovaShimmer.menuGridShimmer();
-                } else {
-                  return GridView(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.only(bottom: 40),
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                    ),
-                    children: [
-                      CountWidget(
-                        title: "Rooms",
-                        count: c.hotelDashboard.value?.roomCount ?? 0,
-                        icon: IconPath.rooms,
-                      ),
-                      CountWidget(
-                        title: "New Bookings",
-                        count: c.hotelDashboard.value?.newBookingCount ?? 0,
-                        icon: IconPath.calander,
-                      ),
-                      CountWidget(
-                        title: "Total Bookings",
-                        count: c.hotelDashboard.value?.totalBookingCount ?? 0,
-                        icon: IconPath.calendarTick,
-                      ),
-                      CountWidget(
-                        title: "Available Rooms",
-                        count: c.hotelDashboard.value?.availableRoomsCount ?? 0,
-                        icon: IconPath.roomType,
-                      ),
-                      CountWidget(
-                        title: "Cancelled Bookings",
-                        count: c.hotelDashboard.value?.cancelledCount ?? 0,
-                        icon: IconPath.cancelCalendar,
-                      ),
-                      CountWidget(
-                        title: "Occupied Rooms",
-                        count: c.hotelDashboard.value?.occupiedRooms ?? 0,
-                        icon: IconPath.doorLocked,
-                      ),
-                      CountWidget(
-                        title: "Reserved Rooms",
-                        count: c.hotelDashboard.value?.reservedRooms ?? 0,
-                        icon: IconPath.doorLocked,
-                      ),
-                      CountWidget(
-                        title: "Vacant Rooms",
-                        count: c.hotelDashboard.value?.vacantRooms ?? 0,
-                        icon: IconPath.roomDoor,
-                      ),
-                    ],
-                  );
-                }
-              }),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SingleChildScrollView(
+            if ((c.coreController.currentUser.value?.role == "admin" ||
+                    c.coreController.currentUser.value?.role == "staffs") &&
+                c.coreController.currentUser.value?.hasHotel == true)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Obx(() {
                   if (c.pageState.value == PageState.LOADING) {
                     return SaralNovaShimmer.menuGridShimmer();
                   } else {
-                    return Column(
+                    return GridView(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(bottom: 40),
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                      ),
                       children: [
-                        GridView(
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.only(bottom: 40),
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                          ),
-                          children: [
-                            CountWidget(
-                              title: "Categories",
-                              count:
-                                  c.restaurantDashboard.value?.categoryCount ??
-                                      0,
-                              icon: IconPath.category,
-                            ),
-                            CountWidget(
-                              title: "Menu",
-                              count:
-                                  c.restaurantDashboard.value?.menuCount ?? 0,
-                              icon: IconPath.menu,
-                            ),
-                            CountWidget(
-                              title: "Table Count",
-                              count:
-                                  c.restaurantDashboard.value?.tableCount ?? 0,
-                              icon: IconPath.tables,
-                            ),
-                            CountWidget(
-                              title: "Order Count",
-                              count:
-                                  c.restaurantDashboard.value?.orderCount ?? 0,
-                              icon: IconPath.order,
-                            ),
-                            CountWidget(
-                              title: "New Order",
-                              count:
-                                  c.restaurantDashboard.value?.newOrderCount ??
-                                      0,
-                              icon: IconPath.placeOrder,
-                            ),
-                          ],
+                        CountWidget(
+                          title: "Rooms",
+                          count: c.hotelDashboard.value?.roomCount ?? 0,
+                          icon: IconPath.rooms,
                         ),
-                        const SizedBox(
-                          height: 16,
+                        CountWidget(
+                          title: "New Bookings",
+                          count: c.hotelDashboard.value?.newBookingCount ?? 0,
+                          icon: IconPath.calander,
                         ),
-                        if (c.restaurantDashboard.value != null &&
-                            c.restaurantDashboard.value!.bestSellingMenus!
-                                .isNotEmpty)
-                          ListView.separated(
-                            padding: const EdgeInsets.only(bottom: 40),
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: c.restaurantDashboard.value!
-                                .bestSellingMenus!.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              var item = c.restaurantDashboard.value!
-                                  .bestSellingMenus![index];
-                              return ListTile(
-                                contentPadding: const EdgeInsets.all(10),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                tileColor: AppColors.splashBackgroundColor,
-                                leading: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: SkyNetworkImage(
-                                    imageUrl: item.imageUrl ?? "",
-                                    height: 70,
-                                    width: 70,
-                                  ),
-                                ),
-                                title: Column(
-                                  children: [
-                                    Text(
-                                      item.title ?? "",
-                                      style: CustomTextStyles.f18W500(),
-                                    ),
-                                    Text(
-                                      item.categoryName ?? "",
-                                      style: CustomTextStyles.f14W400(
-                                          color: AppColors.occupiedColor),
-                                    ),
-                                  ],
-                                ),
-                                trailing: RichText(
-                                  text: TextSpan(
-                                      text: 'Sold: ',
-                                      style: CustomTextStyles.f14W400(),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: ' ${item.count.toString()}',
-                                          style: CustomTextStyles.f16W600(),
-                                        )
-                                      ]),
-                                ),
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(
-                                height: 10,
-                              );
-                            },
-                          )
+                        CountWidget(
+                          title: "Total Bookings",
+                          count: c.hotelDashboard.value?.totalBookingCount ?? 0,
+                          icon: IconPath.calendarTick,
+                        ),
+                        CountWidget(
+                          title: "Available Rooms",
+                          count:
+                              c.hotelDashboard.value?.availableRoomsCount ?? 0,
+                          icon: IconPath.roomType,
+                        ),
+                        CountWidget(
+                          title: "Cancelled Bookings",
+                          count: c.hotelDashboard.value?.cancelledCount ?? 0,
+                          icon: IconPath.cancelCalendar,
+                        ),
+                        CountWidget(
+                          title: "Occupied Rooms",
+                          count: c.hotelDashboard.value?.occupiedRooms ?? 0,
+                          icon: IconPath.doorLocked,
+                        ),
+                        CountWidget(
+                          title: "Reserved Rooms",
+                          count: c.hotelDashboard.value?.reservedRooms ?? 0,
+                          icon: IconPath.doorLocked,
+                        ),
+                        CountWidget(
+                          title: "Vacant Rooms",
+                          count: c.hotelDashboard.value?.vacantRooms ?? 0,
+                          icon: IconPath.roomDoor,
+                        ),
                       ],
                     );
                   }
                 }),
               ),
-            ),
+            if ((c.coreController.currentUser.value?.role == "admin" ||
+                    c.coreController.currentUser.value?.role == "staffs") &&
+                c.coreController.currentUser.value?.hasRestaurant == true)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SingleChildScrollView(
+                  child: Obx(() {
+                    if (c.pageState.value == PageState.LOADING) {
+                      return SaralNovaShimmer.menuGridShimmer();
+                    } else {
+                      return Column(
+                        children: [
+                          GridView(
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.only(bottom: 40),
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                            ),
+                            children: [
+                              CountWidget(
+                                title: "Categories",
+                                count: c.restaurantDashboard.value
+                                        ?.categoryCount ??
+                                    0,
+                                icon: IconPath.category,
+                              ),
+                              CountWidget(
+                                title: "Menu",
+                                count:
+                                    c.restaurantDashboard.value?.menuCount ?? 0,
+                                icon: IconPath.menu,
+                              ),
+                              CountWidget(
+                                title: "Table Count",
+                                count:
+                                    c.restaurantDashboard.value?.tableCount ??
+                                        0,
+                                icon: IconPath.tables,
+                              ),
+                              CountWidget(
+                                title: "Order Count",
+                                count:
+                                    c.restaurantDashboard.value?.orderCount ??
+                                        0,
+                                icon: IconPath.order,
+                              ),
+                              CountWidget(
+                                title: "New Order",
+                                count: c.restaurantDashboard.value
+                                        ?.newOrderCount ??
+                                    0,
+                                icon: IconPath.placeOrder,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          if (c.restaurantDashboard.value != null &&
+                              c.restaurantDashboard.value!.bestSellingMenus!
+                                  .isNotEmpty)
+                            ListView.separated(
+                              padding: const EdgeInsets.only(bottom: 40),
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: c.restaurantDashboard.value!
+                                  .bestSellingMenus!.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                var item = c.restaurantDashboard.value!
+                                    .bestSellingMenus![index];
+                                return ListTile(
+                                  contentPadding: const EdgeInsets.all(10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  tileColor: AppColors.splashBackgroundColor,
+                                  leading: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: SkyNetworkImage(
+                                      imageUrl: item.imageUrl ?? "",
+                                      height: 70,
+                                      width: 70,
+                                    ),
+                                  ),
+                                  title: Column(
+                                    children: [
+                                      Text(
+                                        item.title ?? "",
+                                        style: CustomTextStyles.f18W500(),
+                                      ),
+                                      Text(
+                                        item.categoryName ?? "",
+                                        style: CustomTextStyles.f14W400(
+                                            color: AppColors.occupiedColor),
+                                      ),
+                                    ],
+                                  ),
+                                  trailing: RichText(
+                                    text: TextSpan(
+                                        text: 'Sold: ',
+                                        style: CustomTextStyles.f14W400(),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: ' ${item.count.toString()}',
+                                            style: CustomTextStyles.f16W600(),
+                                          )
+                                        ]),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  height: 10,
+                                );
+                              },
+                            )
+                        ],
+                      );
+                    }
+                  }),
+                ),
+              ),
           ],
         ),
       ),

@@ -23,6 +23,7 @@ import 'package:saralnova/features/widgets/app_widgets/custom_list_tile.dart';
 class MoreScreen extends StatelessWidget {
   static const String routeName = "/more-screen";
   final c = Get.find<MoreController>();
+  final coreController = Get.find<CoreController>();
   MoreScreen({super.key});
 
   @override
@@ -33,173 +34,191 @@ class MoreScreen extends StatelessWidget {
           "More",
           style: CustomTextStyles.f20W600(),
         ),
-        actions: [
-          SvgPicture.asset(
-            IconPath.search,
-            height: 20,
-            width: 20,
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           child: Column(
             children: [
-              Theme(
-                data: Theme.of(context)
-                    .copyWith(dividerColor: Colors.transparent),
-                child: ExpansionTile(
-                  title: Text(
-                    "Hotel",
-                    style: CustomTextStyles.f16W500(),
+              if ((coreController.currentUser.value?.role == "admin" ||
+                      coreController.currentUser.value?.role == "staffs") &&
+                  coreController.currentUser.value?.hasHotel == true)
+                Theme(
+                  data: Theme.of(context)
+                      .copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          10), // Adjust the value as needed
+                    ),
+                    collapsedShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          10), // Adjust the value as needed
+                    ),
+                    backgroundColor: AppColors.fillFadedColor,
+                    title: Text(
+                      "Hotel",
+                      style: CustomTextStyles.f16W500(),
+                    ),
+                    children: [
+                      if (coreController.currentUser.value?.role == "admin")
+                        CustomListTile(
+                          title: "Room Types",
+                          onTap: () {
+                            Get.toNamed(RoomTypeScreen.routeName);
+                          },
+                          iconPath: IconPath.roomType,
+                        ),
+                      if (coreController.currentUser.value?.role == "admin")
+                        CustomListTile(
+                          title: "Facilities",
+                          onTap: () {
+                            Get.toNamed(FacilityScreen.routeName);
+                          },
+                          iconPath: IconPath.facilities,
+                        ),
+                      if (coreController.currentUser.value?.role == "admin")
+                        CustomListTile(
+                          title: "Aminities",
+                          onTap: () {
+                            Get.toNamed(AmenitiesScreen.routeName);
+                          },
+                          iconPath: IconPath.amenities,
+                        ),
+                      if (coreController.currentUser.value?.role == "admin")
+                        CustomListTile(
+                          title: "View Rooms",
+                          onTap: () {
+                            Get.toNamed(RoomsScreen.routeName);
+                          },
+                          iconPath: IconPath.viewRooms,
+                        ),
+                      CustomListTile(
+                        title: "Booking",
+                        onTap: () {
+                          Get.toNamed(BookingScreen.routeName);
+                        },
+                        iconPath: IconPath.booking,
+                      ),
+                      if (coreController.currentUser.value?.role == "admin")
+                        CustomListTile(
+                          title: "Activity Log",
+                          onTap: () {
+                            Get.toNamed(ActivityLogScreen.routeName);
+                          },
+                          iconPath: IconPath.activity,
+                        ),
+                    ],
                   ),
+                ),
+              const Divider(
+                height: 0,
+                color: AppColors.fillColor,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              if ((coreController.currentUser.value?.role == "admin" ||
+                      coreController.currentUser.value?.role == "staffs") &&
+                  coreController.currentUser.value?.hasRestaurant == true)
+                Theme(
+                  data: Theme.of(context)
+                      .copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          10), // Adjust the value as needed
+                    ),
+                    collapsedShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          10), // Adjust the value as needed
+                    ),
+                    backgroundColor: AppColors.fillFadedColor,
+                    title: Text(
+                      "Restaurant ",
+                      style: CustomTextStyles.f16W500(),
+                    ),
+                    children: [
+                      if (coreController.currentUser.value?.role == "admin")
+                        CustomListTile(
+                          title: "Category",
+                          onTap: () {
+                            Get.toNamed(CategoryScreen.routeName);
+                          },
+                          iconPath: IconPath.category,
+                        ),
+                      // CustomListTile(
+                      //   title: "Variants",
+                      //   onTap: () {
+                      //     Get.toNamed(VariantScreen.routeName);
+                      //   },
+                      //   iconPath: IconPath.variants,
+                      // ),
+                      if (coreController.currentUser.value?.role == "admin")
+                        CustomListTile(
+                          title: "Menus",
+                          onTap: () {
+                            Get.toNamed(MenuScreen.routeName);
+                          },
+                          iconPath: IconPath.menu,
+                        ),
+                      CustomListTile(
+                        title: "Order",
+                        onTap: () {
+                          Get.toNamed(OrderScreen.routeName);
+                        },
+                        iconPath: IconPath.order,
+                      ),
+                      if (coreController.currentUser.value?.role == "admin")
+                        CustomListTile(
+                          title: "Tables",
+                          onTap: () {
+                            Get.toNamed(TablesScreen.routeName);
+                          },
+                          iconPath: IconPath.tables,
+                        ),
+                      if (coreController.currentUser.value?.role == "admin")
+                        CustomListTile(
+                          title: "Space",
+                          onTap: () {
+                            Get.toNamed(SpaceScreen.routeName);
+                          },
+                          iconPath: IconPath.space,
+                        ),
+                    ],
+                  ),
+                ),
+
+              if (c.coreConTroller.currentUser.value?.role == "admin")
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomListTile(
-                      title: "Room Types",
-                      onTap: () {
-                        Get.toNamed(RoomTypeScreen.routeName);
-                      },
-                      iconPath: IconPath.roomType,
+                    const SizedBox(
+                      height: 10,
                     ),
-                    CustomListTile(
-                      title: "Facilities",
+                    ListTile(
+                      title: Text(
+                        "Staffs",
+                        style: CustomTextStyles.f16W500(),
+                      ),
                       onTap: () {
-                        Get.toNamed(FacilityScreen.routeName);
+                        Get.toNamed(StaffScreen.routeName);
                       },
-                      iconPath: IconPath.facilities,
+                      // iconPath: IconPath.staffs,
+                      leading: SvgPicture.asset(
+                        IconPath.staffs,
+                        height: 20,
+                        width: 20,
+                      ),
                     ),
-                    CustomListTile(
-                      title: "Aminities",
-                      onTap: () {
-                        Get.toNamed(AmenitiesScreen.routeName);
-                      },
-                      iconPath: IconPath.amenities,
-                    ),
-                    CustomListTile(
-                      title: "View Rooms",
-                      onTap: () {
-                        Get.toNamed(RoomsScreen.routeName);
-                      },
-                      iconPath: IconPath.viewRooms,
-                    ),
-                    CustomListTile(
-                      title: "Booking",
-                      onTap: () {
-                        Get.toNamed(BookingScreen.routeName);
-                      },
-                      iconPath: IconPath.booking,
-                    ),
-                    CustomListTile(
-                      title: "Activity Log",
-                      onTap: () {
-                        Get.toNamed(ActivityLogScreen.routeName);
-                      },
-                      iconPath: IconPath.activity,
+                    const Divider(
+                      height: 0,
+                      color: AppColors.fillColor,
                     ),
                   ],
-                  // title: Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-
-                  //   ],
-                  // ),
                 ),
-              ),
-
-              const Divider(
-                height: 0,
-                color: AppColors.fillColor,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Theme(
-                data: Theme.of(context)
-                    .copyWith(dividerColor: Colors.transparent),
-                child: ExpansionTile(
-                  title: Text(
-                    "Restaurant ",
-                    style: CustomTextStyles.f16W500(),
-                  ),
-                  children: [
-                    CustomListTile(
-                      title: "Category",
-                      onTap: () {
-                        Get.toNamed(CategoryScreen.routeName);
-                      },
-                      iconPath: IconPath.category,
-                    ),
-                    // CustomListTile(
-                    //   title: "Variants",
-                    //   onTap: () {
-                    //     Get.toNamed(VariantScreen.routeName);
-                    //   },
-                    //   iconPath: IconPath.variants,
-                    // ),
-                    CustomListTile(
-                      title: "Menus",
-                      onTap: () {
-                        Get.toNamed(MenuScreen.routeName);
-                      },
-                      iconPath: IconPath.menu,
-                    ),
-                    CustomListTile(
-                      title: "Order",
-                      onTap: () {
-                        Get.toNamed(
-                            OrderScreen.routeName); //TODO this is previous code
-                      },
-                      iconPath: IconPath.order,
-                    ),
-                  ],
-                ),
-              ),
-
-              const Divider(
-                height: 0,
-                color: AppColors.fillColor,
-              ),
-
-              const SizedBox(
-                height: 10,
-              ),
-              CustomListTile(
-                title: "Staffs",
-                onTap: () {
-                  Get.toNamed(StaffScreen.routeName);
-                },
-                iconPath: IconPath.staffs,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomListTile(
-                title: "Space",
-                onTap: () {
-                  Get.toNamed(SpaceScreen.routeName);
-                },
-                iconPath: IconPath.space,
-              ),
-              CustomListTile(
-                title: "Tables",
-                onTap: () {
-                  Get.toNamed(TablesScreen.routeName);
-                },
-                iconPath: IconPath.tables,
-              ),
-              const Divider(
-                height: 0,
-                color: AppColors.fillColor,
-              ),
-
-              const Divider(
-                height: 0,
-                color: AppColors.fillColor,
-              ),
               // Align(
               //   alignment: Alignment.centerLeft,
               //   child: Text(

@@ -18,7 +18,7 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SaralNovaApppBar(
+      appBar:const  SaralNovaApppBar(
         title: "Orders",
       ),
       body: SingleChildScrollView(
@@ -33,8 +33,8 @@ class OrderScreen extends StatelessWidget {
                   return SaralNovaShimmer.orderShimmer();
                 } else if (c.pageState.value == PageState.EMPTY) {
                   return EmptyView(
-                    message: "Empty!!",
-                    title: "Empty",
+                    message: "No orders available at the moment",
+                    title: "No data available",
                     media: IconPath.empty,
                     mediaSize: Get.height / 2,
                   );
