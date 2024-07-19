@@ -1,6 +1,6 @@
+import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/Dashboard/dashboard_panel_controller.dart';
 import 'package:saralnova/core/controllers/pos/place_order_pos_controller.dart';
@@ -37,60 +37,31 @@ class PlaceOrderScreenPOS extends StatelessWidget {
           ),
         ),
         actions: [
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: AnimSearchBar(
-          //     // textFieldColor: AppColors.fillColor,
-          //     textFieldIconColor: Colors.white,
-          //     rtl: true,
-          //     prefixIcon: const Icon(
-          //       Icons.search,
-          //       size: 15,
-          //       color: AppColors.splashBackgroundColor,
-          //     ),
-
-          //     boxShadow: false,
-          //     helpText: "Search....",
-          //     suffixIcon: const Icon(
-          //       Icons.search,
-          //       size: 15,
-          //       color: AppColors.blackColor,
-          //     ),
-          //     searchIconColor: AppColors.textColor,
-          //     color: AppColors.fillColor,
-          //     width: 250,
-          //     textController: c.searchMenuController,
-          //     onSuffixTap: () {},
-          //     onSubmitted: (String) {},
-          //   ),
-          // ),
-          Obx(
-            () => IconButton(
-              onPressed: () {
-                Get.toNamed(MakeOrderPosScreen.routeName);
-              },
-              icon: badges.Badge(
-                showBadge: Get.find<PlaceOrderPosController>()
-                    .selectedMenuList
-                    .isNotEmpty,
-                position: badges.BadgePosition.topEnd(top: -8, end: -5),
-                badgeContent: Text(
-                  c.selectedMenuList.length > 9
-                      ? "9+"
-                      : "${c.selectedMenuList.length}",
-                  style: CustomTextStyles.f13W400(
-                      color: AppColors.splashBackgroundColor),
-                ),
-                badgeStyle: const badges.BadgeStyle(
-                  badgeColor: AppColors.orangeColor,
-                  shape: badges.BadgeShape.circle,
-                ),
-                child: SvgPicture.asset(
-                  IconPath.placeOrder,
-                  height: 20,
-                  width: 20,
-                ),
+          Padding(
+            padding: const EdgeInsets.all(0),
+            child: AnimSearchBar(
+              // textFieldColor: AppColors.fillColor,
+              textFieldIconColor: Colors.white,
+              rtl: true,
+              prefixIcon: const Icon(
+                Icons.search,
+                size: 15,
+                color: AppColors.splashBackgroundColor,
               ),
+
+              boxShadow: false,
+              helpText: "Search....",
+              suffixIcon: const Icon(
+                Icons.search,
+                size: 15,
+                color: AppColors.blackColor,
+              ),
+              searchIconColor: AppColors.textColor,
+              color: AppColors.fillColor,
+              width: 300,
+              textController: c.searchMenuController,
+              onSuffixTap: () {},
+              onSubmitted: (String) {},
             ),
           ),
           const SizedBox(
@@ -226,6 +197,7 @@ class PlaceOrderScreenPOS extends StatelessWidget {
                   child: Obx(
                     () => GridView.builder(
                       key: const PageStorageKey("products"),
+                      padding: const EdgeInsets.only(bottom: 100),
                       shrinkWrap: true,
                       physics: const AlwaysScrollableScrollPhysics(),
                       gridDelegate:
@@ -267,6 +239,47 @@ class PlaceOrderScreenPOS extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: Obx(() {
+        if (c.selectedMenuList.isNotEmpty) {
+          return Stack(
+            children: [
+              FloatingActionButton.extended(
+                shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: Colors.brown),
+                    borderRadius: BorderRadius.circular(30)),
+                label: const Text("Place order"),
+                onPressed: () {
+                  Get.toNamed(MakeOrderPosScreen.routeName);
+                },
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: badges.Badge(
+                  showBadge: Get.find<PlaceOrderPosController>()
+                      .selectedMenuList
+                      .isNotEmpty,
+                  position: badges.BadgePosition.topEnd(top: -8, end: -5),
+                  badgeContent: Text(
+                    c.selectedMenuList.length > 9
+                        ? "9+"
+                        : "${c.selectedMenuList.length}",
+                    style: CustomTextStyles.f13W400(
+                      color: AppColors.splashBackgroundColor,
+                    ),
+                  ),
+                  badgeStyle: const badges.BadgeStyle(
+                    badgeColor: AppColors.orangeColor,
+                    shape: badges.BadgeShape.circle,
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      }),
     );
   }
 }
