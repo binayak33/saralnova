@@ -171,7 +171,7 @@ class CustomersKotCheckoutScreen extends StatelessWidget {
       ),
       floatingActionButton:
           (c.customer.value != null && c.customer.value!.tableEmptyStatus! ||
-                      c.customer.value!.isCancelled!) !=
+                      c.customer.value!.cancelledStatus!) !=
                   true
               ? InkResponse(
                   radius: 20,

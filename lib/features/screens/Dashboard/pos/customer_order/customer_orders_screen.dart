@@ -151,7 +151,7 @@ class CustomerCard extends StatelessWidget {
                 //           CustomTextStyles.f12W400(color: AppColors.errorColor),
                 //     ),
                 //   ),
-                if (customer.isCancelled == true)
+                if (customer.cancelledStatus == true)
                   Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 4, vertical: 6),

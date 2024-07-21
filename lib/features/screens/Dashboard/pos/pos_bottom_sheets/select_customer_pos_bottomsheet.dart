@@ -4,6 +4,10 @@ import 'package:saralnova/core/controllers/More/orders/customer_orders/customer_
 import 'package:saralnova/core/model/feature_model/pos/order_customers_model.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
+import 'package:saralnova/core/utils/constants/icon_path.dart';
+import 'package:saralnova/core/utils/enums/enums.dart';
+import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
+import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 
 class SelectCustomerBottomSheet extends StatelessWidget {
   final c = Get.put(CustomerOrderController());
@@ -47,10 +51,52 @@ class SelectCustomerBottomSheet extends StatelessWidget {
               Navigator.of(context).pop();
             },
           ),
+          // Obx(() {
+          //   if (c.customerList.isEmpty) {
+          //     return const LinearProgressIndicator();
+          //   } else {
+          //     return Expanded(
+          //       child: ListView.builder(
+          //         shrinkWrap: true,
+          //         physics: const ClampingScrollPhysics(),
+          //         itemCount: c.customerList.length,
+          //         itemBuilder: (context, index) {
+          //           var alreadyOrderedCustomer = c.customerList[index];
+          //           return ListTile(
+          //             onTap: () {
+          //               Navigator.of(context).pop();
+          //               onTap!(false);
+          //               onSelectOrderedCustomer(alreadyOrderedCustomer);
+          //             },
+          //             title: Text(
+          //               "${alreadyOrderedCustomer.customerName} - ${alreadyOrderedCustomer.tables?[0].name}" ??
+          //                   "",
+          //               style: CustomTextStyles.f16W400(),
+          //             ),
+          //             dense: true,
+          //             shape: RoundedRectangleBorder(
+          //               borderRadius: BorderRadius.circular(10),
+          //             ),
+          //             tileColor: AppColors.errorColor,
+          //             selected: true,
+          //             style: ListTileStyle.drawer,
+          //           );
+          //         },
+          //       ),
+          //     );
+          //   }
+          // })
           Obx(() {
-            if (c.customerList.isEmpty) {
+            if (c.pageState.value == PageState.LOADING) {
               return const LinearProgressIndicator();
-            } else {
+            } else if (c.pageState.value == PageState.EMPTY) {
+              return EmptyView(
+                message: "No Customers available at the moment",
+                title: "No data",
+                media: IconPath.nodata,
+                mediaSize: 50,
+              );
+            } else if (c.pageState.value == PageState.NORMAL) {
               return Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -79,6 +125,13 @@ class SelectCustomerBottomSheet extends StatelessWidget {
                     );
                   },
                 ),
+              );
+            } else {
+              return const ErrorView(
+                imageHeight: 50,
+                imagePath: IconPath.somethingWentWrong,
+                errorTitle: "Customers Data",
+                errorMessage: "Something went wrong  ",
               );
             }
           })

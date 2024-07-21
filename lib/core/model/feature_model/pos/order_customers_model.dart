@@ -15,6 +15,7 @@ class Customer {
   List<TableModel>? tables;
   bool? tableEmptyStatus;
   bool? isCancelled;
+  bool? cancelledStatus;
   String? createdAt;
   String? updatedAt;
 
@@ -29,6 +30,7 @@ class Customer {
       this.tables,
       this.tableEmptyStatus,
       this.isCancelled,
+      this.cancelledStatus,
       this.createdAt,
       this.updatedAt});
 
@@ -49,6 +51,8 @@ class Customer {
       });
     }
     isCancelled = json['is_cancelled'] == 1 || json['is_cancelled'] == true;
+    cancelledStatus =
+        json['cancelled_status'] == 1 || json['cancelled_status'] == true;
 
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -65,6 +69,8 @@ class Customer {
     data['total'] = this.total;
     data['empty_table_status'] = this.tableEmptyStatus;
     data['is_cancelled'] = this.isCancelled;
+    data['cancelled_status'] = this.cancelledStatus;
+
     if (this.tables != null) {
       data['table'] = this.tables!.map((v) => v.toJson()).toList();
     }

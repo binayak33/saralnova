@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:saralnova/core/controllers/More/orders/customer_orders/customer_order_controller.dart';
 import 'package:saralnova/core/controllers/More/restaurant/category/category_controller.dart';
 import 'package:saralnova/core/controllers/More/table/table_controller.dart';
 import 'package:saralnova/core/model/feature_model/pos/order_customers_model.dart';
@@ -108,6 +109,7 @@ class PlaceOrderPosController extends GetxController {
   final FocusNode customerNameFocusNode = FocusNode();
 
   openSelectCustomerBottomSheet() async {
+    Get.find<CustomerOrderController>().getAllCustomers();
     showModalBottomSheet(
       isScrollControlled: true,
       context: Get.context!,
