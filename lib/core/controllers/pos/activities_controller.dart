@@ -20,6 +20,8 @@ class ActivitiesController extends GetxController {
   RxnString nextPageUrl = RxnString();
   final ScrollController scrollController = ScrollController();
 
+  RxList<Activity> groupedActivityListWithDate = RxList();
+
   @override
   void onInit() {
     getRestaurantActivities();
@@ -69,6 +71,12 @@ class ActivitiesController extends GetxController {
         isLoadingMore.value = false;
       },
     );
+  }
+
+  void groupedActivityList() {
+    // for (var x in activityList){
+    //   if(x.date)
+    // }
   }
 
   Widget showStatusTypeIcon(Activities activitiesData) {

@@ -381,8 +381,8 @@ class CustomersKOTCheckoutController extends GetxController {
             tableId: customer.value!.tables![0].id!,
             customerId: customer.value!.id!,
             onSuccess: (message) {
+              Get.find<CustomerOrderController>().getAllCustomers();
               loading.hide();
-              getCustomerKots();
               Get.back();
               transferringTableController.clear();
               table.value = null;
