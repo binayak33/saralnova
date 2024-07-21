@@ -75,6 +75,9 @@ class ActivitiesScreen extends StatelessWidget {
                     );
                   }
                 }),
+                const SizedBox(
+                  height: 50,
+                ),
                 Obx(
                   () => c.nextPageUrl.value != null
                       ? const Padding(
