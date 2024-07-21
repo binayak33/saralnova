@@ -9,7 +9,7 @@ import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/constants/image_path.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
-import 'package:saralnova/features/screens/More/pos/table/merged_table_view_screen.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/table/merged_table_view_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
@@ -211,7 +211,7 @@ class TablesScreenPOS extends StatelessWidget {
         ),
       ),
       floatingActionButton: Obx(() {
-        if (c.selectedTableList.isNotEmpty) {
+        if (c.selectedTableList.length >= 2) {
           return FloatingActionButton(
             onPressed: () {
               c.mergeTable();
@@ -281,63 +281,95 @@ class TableWidget extends StatelessWidget {
 
               return Obx(() {
                 var isSelected = selectedTableList.contains(table);
+                var hasSelectedTable = selectedTableList.isNotEmpty;
+                var isDisabled =
+                    hasSelectedTable && table.mergedMain == true && !isSelected;
+
                 return GestureDetector(
                     onTap: () {
-                      if (ontap != null) {
-                        if (table.status != "Unavailable") {
-                          ontap!(
-                              table); //send if anything required to make callback
-                        }
+                      if (ontap != null &&
+                          table.status != "Unavailable" &&
+                          !table.mergedChild! &&
+                          !isDisabled) {
+                        ontap!(table);
                       }
                     },
                     child: Container(
-                      padding: const EdgeInsets.all(10),
+                      // padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: color,
                           border: Border.all(
-                              width: 2,
-                              // color: AppColors.fillColor,
-                              color: isSelected
-                                  ? AppColors.orangeColor
-                                  : AppColors.borderColor),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          if (table.status == "Occupied")
-                            Image.asset(
-                              ImagePath.fullDining,
-                              fit: BoxFit.cover,
-                              height: 50,
-                              width: 50,
-                            ),
-                          if (table.status == "Available")
-                            Image.asset(
-                              ImagePath.dining,
-                              fit: BoxFit.cover,
-                              height: 50,
-                              width: 50,
-                            ),
-                          if (table.status == "Unavailable")
-                            Image.asset(
-                              ImagePath.dining,
-                              fit: BoxFit.cover,
-                              height: 50,
-                              width: 50,
-                            ),
-                          Text(
-                            table.name ?? "",
-                            style: CustomTextStyles.f14W500(
-                                color: AppColors.textColor),
+                            width: 2,
+                            color: isSelected
+                                ? AppColors.orangeColor
+                                : AppColors.borderColor,
                           ),
-                          if (table.capacity != null)
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Stack(alignment: Alignment.center, children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            if (table.status == "Occupied")
+                              Image.asset(
+                                ImagePath.fullDining,
+                                fit: BoxFit.cover,
+                                height: 50,
+                                width: 50,
+                              ),
+                            if (table.status == "Available")
+                              Image.asset(
+                                ImagePath.dining,
+                                fit: BoxFit.cover,
+                                height: 50,
+                                width: 50,
+                              ),
+                            if (table.status == "Unavailable")
+                              Image.asset(
+                                ImagePath.dining,
+                                fit: BoxFit.cover,
+                                height: 50,
+                                width: 50,
+                              ),
                             Text(
-                              "capacity: ${table.capacity.toString()}",
-                              style: CustomTextStyles.f10W400(
-                                  color: AppColors.blackColor),
+                              table.name ?? "",
+                              style: CustomTextStyles.f14W500(
+                                  color: AppColors.primary),
                             ),
-                        ],
-                      ),
+                            if (table.capacity != null)
+                              Text(
+                                "capacity: ${table.capacity.toString()}",
+                                style: CustomTextStyles.f10W400(
+                                    color: AppColors.blackColor),
+                              ),
+                            if (table.mergedMessage != null)
+                              FittedBox(
+                                child: Text(
+                                  table.mergedMessage ?? "",
+                                  style: CustomTextStyles.f10W400(
+                                      color: AppColors.blackColor),
+                                ),
+                              ),
+                          ],
+                        ),
+                        if (table.mergedMain == true)
+                          Positioned(
+                              top: 0,
+                              right: 0,
+                              child: SvgPicture.asset(
+                                IconPath.mergeMain,
+                                height: 20,
+                                width: 20,
+                              )),
+                        if (table.mergedChild == true)
+                          Positioned(
+                              top: 0,
+                              right: 0,
+                              child: SvgPicture.asset(
+                                IconPath.mergedTable,
+                                height: 20,
+                                width: 20,
+                              ))
+                      ]),
                     ));
               });
             },

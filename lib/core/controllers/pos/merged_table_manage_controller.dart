@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:saralnova/core/controllers/pos/table_pos_controller.dart';
 import 'package:saralnova/core/model/feature_model/tables/merge_table_model.dart';
 import 'package:saralnova/core/repo/more_repo/pos_repo/pos_repo.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
@@ -41,6 +42,7 @@ class MergedTableManageController extends GetxController {
       tableId: tableId,
       onSuccess: (message) {
         getMergedTables();
+        Get.find<TablesPosController>().getAllAvailabletablesBySpace();
         loading.hide();
 
         SkySnackBar.success(title: "Table", message: message);

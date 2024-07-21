@@ -10,7 +10,7 @@ import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
 import 'package:saralnova/core/utils/helpers/sky_network_image.dart';
-import 'package:saralnova/features/screens/More/pos/make_order_pos_screen.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/make_order_pos_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';

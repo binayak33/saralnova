@@ -13,6 +13,8 @@ class Customer {
   int? kotCount;
   num? total;
   List<TableModel>? tables;
+  bool? tableEmptyStatus;
+  bool? isCancelled;
   String? createdAt;
   String? updatedAt;
 
@@ -25,6 +27,8 @@ class Customer {
       this.kotCount,
       this.total,
       this.tables,
+      this.tableEmptyStatus,
+      this.isCancelled,
       this.createdAt,
       this.updatedAt});
 
@@ -35,6 +39,8 @@ class Customer {
     customerEmail = json['customer_email'];
     isPaid = json['is_paid'];
     kotCount = json['kot_count'];
+    tableEmptyStatus =
+        json['empty_table_status'] == 1 || json['empty_table_status'] == true;
     total = json['total'];
     if (json['table'] != null) {
       tables = <TableModel>[];
@@ -42,6 +48,7 @@ class Customer {
         tables!.add(new TableModel.fromJson(v));
       });
     }
+    isCancelled = json['is_cancelled'] == 1 || json['is_cancelled'] == true;
 
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -56,6 +63,8 @@ class Customer {
     data['is_paid'] = this.isPaid;
     data['kot_count'] = this.kotCount;
     data['total'] = this.total;
+    data['empty_table_status'] = this.tableEmptyStatus;
+    data['is_cancelled'] = this.isCancelled;
     if (this.tables != null) {
       data['table'] = this.tables!.map((v) => v.toJson()).toList();
     }

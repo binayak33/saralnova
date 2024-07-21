@@ -88,28 +88,29 @@ class CustomersKotCheckoutScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  PopupMenuItem(
-                    onTap: () {
-                      //open bottom sheet from here
-                      c.transferringTableController.clear();
-                      c.openTransferTableBottomSheet();
-                    },
-                    value: '/hello',
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Transfer table",
-                          style: CustomTextStyles.f14W400(),
-                        ),
-                        SvgPicture.asset(
-                          IconPath.merged,
-                          height: 20,
-                          width: 20,
-                        )
-                      ],
-                    ),
-                  ),
+                  if (c.customer.value?.isCancelled != true)
+                    PopupMenuItem(
+                      onTap: () {
+                        //open bottom sheet from here
+                        c.transferringTableController.clear();
+                        c.openTransferTableBottomSheet();
+                      },
+                      value: '/hello',
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Transfer table",
+                            style: CustomTextStyles.f14W400(),
+                          ),
+                          SvgPicture.asset(
+                            IconPath.merged,
+                            height: 20,
+                            width: 20,
+                          )
+                        ],
+                      ),
+                    )
                 ];
               },
             );
@@ -168,34 +169,60 @@ class CustomersKotCheckoutScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: InkResponse(
-        radius: 20,
-        onTap: () {
-          if (c.selectedMenuItemsId.isNotEmpty) {
-            c.isWholeCheckout.value = false;
-          } else {
-            c.isWholeCheckout.value = true;
-            c.addAllServedValue();
-          }
-          // c.discountController.clear();
-          c.openCheckoutBottomSheet();
-        },
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: AppColors.primary,
-          ),
-          child: Obx(
-            () => Text(
-              c.selectedMenuItemsId.isNotEmpty ? "Split Checkout" : "Checkout",
-              style: CustomTextStyles.f16W600(
-                color: AppColors.scaffoldColor,
-              ),
-            ),
-          ),
-        ),
-      ),
+      floatingActionButton:
+          (c.customer.value != null && c.customer.value!.tableEmptyStatus! ||
+                      c.customer.value!.isCancelled!) !=
+                  true
+              ? InkResponse(
+                  radius: 20,
+                  onTap: () {
+                    if (c.selectedMenuItemsId.isNotEmpty) {
+                      c.isWholeCheckout.value = false;
+                    } else {
+                      c.isWholeCheckout.value = true;
+                      c.addAllServedValue();
+                    }
+                    // c.discountController.clear();
+                    c.openCheckoutBottomSheet();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: AppColors.primary,
+                    ),
+                    child: Obx(
+                      () => Text(
+                        c.selectedMenuItemsId.isNotEmpty
+                            ? "Split Checkout"
+                            : "Checkout",
+                        style: CustomTextStyles.f16W600(
+                          color: AppColors.scaffoldColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : InkResponse(
+                  radius: 20,
+                  onTap: () {
+                    //make empty table
+                    c.emptyTable();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: AppColors.errorColor,
+                    ),
+                    child: Text(
+                      "Empty Table",
+                      style: CustomTextStyles.f16W600(
+                        color: AppColors.scaffoldColor,
+                      ),
+                    ),
+                  ),
+                ),
     );
   }
 }

@@ -254,16 +254,22 @@ class PendingOrderBox extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        if (status == "Cancelled")
+                                        if (status == "Paid")
                                           SvgPicture.asset(
-                                            IconPath.redCross,
-                                            height: 12,
+                                            IconPath.dollar,
+                                            height: 16,
                                             width: 12,
                                           ),
                                         if (status == "Served")
                                           SvgPicture.asset(
                                             IconPath.greenTick,
                                             height: 16,
+                                            width: 12,
+                                          ),
+                                        if (status == "Cancelled")
+                                          SvgPicture.asset(
+                                            IconPath.redCross,
+                                            height: 12,
                                             width: 12,
                                           ),
                                         if (status == "")

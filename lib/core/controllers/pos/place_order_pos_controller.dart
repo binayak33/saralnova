@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:saralnova/core/controllers/More/restaurant/category/category_controller.dart';
+import 'package:saralnova/core/controllers/More/table/table_controller.dart';
 import 'package:saralnova/core/model/feature_model/pos/order_customers_model.dart';
 import 'package:saralnova/core/model/feature_model/pos/pos_request_model.dart/place_order_request_model.dart';
 import 'package:saralnova/core/model/feature_model/restaurant_model/category_model.dart';
@@ -8,14 +9,16 @@ import 'package:saralnova/core/model/feature_model/restaurant_model/menu_model.d
 import 'package:saralnova/core/model/feature_model/tables/table_model.dart';
 import 'package:saralnova/core/repo/more_repo/pos_repo/pos_repo.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
-import 'package:saralnova/features/screens/More/pos/pos_bottom_sheets/select_customer_pos_bottomsheet.dart';
-import 'package:saralnova/features/screens/More/pos/pos_bottom_sheets/select_table_pos_bottomSheet.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/pos_bottom_sheets/select_customer_pos_bottomsheet.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/pos_bottom_sheets/select_table_pos_bottomSheet.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 import 'package:saralnova/features/widgets/common_widgets/sky_snack_bar.dart';
 
 class PlaceOrderPosController extends GetxController {
   RxList<Category> categories = RxList();
   final categoryController = Get.put(CategoryController());
+  final tableModelController = Get.put(TableController());
+
   var pageState = PageState.LOADING.obs;
   LogoLoading loading = LogoLoading();
 
@@ -144,6 +147,7 @@ class PlaceOrderPosController extends GetxController {
   }
 
   openAvailableTableBottomSheet() async {
+    tableModelController.getAllAvailableTables();
     showModalBottomSheet(
       isScrollControlled: true,
       context: Get.context!,

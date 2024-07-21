@@ -11,6 +11,9 @@ class TableModel {
   String? name;
   int? capacity;
   String? status;
+  bool? mergedMain;
+  bool? mergedChild;
+  String? mergedMessage;
   String? createdAt;
   String? updatedAt;
 
@@ -21,6 +24,9 @@ class TableModel {
       this.name,
       this.capacity,
       this.status,
+      this.mergedMain,
+      this.mergedChild,
+      this.mergedMessage,
       this.createdAt,
       this.updatedAt});
 
@@ -31,6 +37,9 @@ class TableModel {
     name = json['name'];
     capacity = json['capacity'];
     status = json['status'];
+    mergedMain = json['merged_main'] == 1 || json['merged_main'] == true;
+    mergedChild = json['merged_child'] == 1 || json['merged_child'] == true;
+    mergedMessage = json['merged_message'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     space = json['space'] != null ? new Space.fromJson(json['space']) : null;
@@ -48,6 +57,9 @@ class TableModel {
     if (this.space != null) {
       data['space'] = this.space!.toJson();
     }
+    data['merged_main'] = mergedMain;
+    data['merged_child'] = mergedChild;
+    data['merged_message'] = mergedMessage;
     return data;
   }
 }

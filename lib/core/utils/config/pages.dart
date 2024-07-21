@@ -36,11 +36,11 @@ import 'package:saralnova/features/screens/More/facility_type/facility_screen.da
 import 'package:saralnova/features/screens/More/menu/menu_screen.dart';
 import 'package:saralnova/features/screens/More/order/order_detail_screen.dart';
 import 'package:saralnova/features/screens/More/order/order_screen.dart';
-import 'package:saralnova/features/screens/More/pos/customer_order/customer_kot_checkout_screen.dart';
-import 'package:saralnova/features/screens/More/pos/kot_POS_screen.dart';
-import 'package:saralnova/features/screens/More/pos/make_order_pos_screen.dart';
-import 'package:saralnova/features/screens/More/pos/table/merged_table_view_screen.dart';
-import 'package:saralnova/features/screens/More/pos/tables_POS_screen.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/customer_order/customer_kot_checkout_screen.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/kot_POS_screen.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/make_order_pos_screen.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/table/merged_table_view_screen.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/tables_POS_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/category/category_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/variants/add_variant_screen.dart';
 import 'package:saralnova/features/screens/More/restaurant/variants/variants_screen.dart';
@@ -56,8 +56,8 @@ import 'package:saralnova/features/screens/Splash/splash_screen.dart';
 
 import '../../../features/screens/Auth/login_screen.dart';
 import '../../../features/screens/More/menu/add_menu_screen.dart';
-import '../../../features/screens/More/pos/activites_screen.dart';
-import '../../../features/screens/More/pos/customer_order/customer_orders_screen.dart';
+import '../../../features/screens/Dashboard/pos/activites_screen.dart';
+import '../../../features/screens/Dashboard/pos/customer_order/customer_orders_screen.dart';
 import '../../controllers/Auth/login_controller.dart';
 import '../../controllers/More/orders/customer_orders/customer_order_controller.dart';
 import '../../controllers/pos/activities_controller.dart';

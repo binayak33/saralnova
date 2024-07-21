@@ -33,7 +33,7 @@ class LoginController extends GetxController {
           loading.hide();
           coreController.loadCurrentUser();
           Get.offAllNamed(DashPanel.routeName);
-          SkySnackBar.success(title: "Login", message: "Logged in Succesfully");
+          // SkySnackBar.success(title: "Login", message: "Logged in Succesfully");
         },
         onError: (message) {
           loading.hide();

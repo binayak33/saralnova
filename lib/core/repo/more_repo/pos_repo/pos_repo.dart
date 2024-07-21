@@ -418,4 +418,31 @@ class PosRepo {
       onError(Messages.error);
     }
   }
+
+  static Future<void> emptyTable({
+    required String tableId,
+    required String customerId,
+    required Function(String message) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      String url = Api.emptyTable;
+      var body = {
+        "table_id": tableId,
+        "customer_id": customerId,
+      };
+      http.Response response = await SkyRequest.post(url, body: body);
+      var data = json.decode(response.body);
+
+      if (data['status']) {
+        var message = data['message'];
+        onSuccess(message);
+      } else {
+        onError(data['message']);
+      }
+    } catch (e, s) {
+      LogHelper.error(Api.emptyTable, error: e, stackTrace: s);
+      onError(Messages.error);
+    }
+  }
 }

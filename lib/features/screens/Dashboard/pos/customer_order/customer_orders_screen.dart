@@ -4,7 +4,7 @@ import 'package:saralnova/core/model/feature_model/pos/order_customers_model.dar
 import 'package:saralnova/core/utils/constants/custom_text_style.dart';
 import 'package:saralnova/core/utils/constants/icon_path.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
-import 'package:saralnova/features/screens/More/pos/customer_order/customer_kot_checkout_screen.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/customer_order/customer_kot_checkout_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/empty_view.dart';
 import 'package:saralnova/features/widgets/common_widgets/error_view.dart';
 import 'package:saralnova/features/widgets/shimmers/list_shimmer.dart';
@@ -132,9 +132,38 @@ class CustomerCard extends StatelessWidget {
               color: AppColors.fillColor,
               height: 20,
             ),
-            Text(
-              customer.customerName ?? "",
-              style: CustomTextStyles.f18W500(color: AppColors.primary),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  customer.customerName ?? "",
+                  style: CustomTextStyles.f18W500(color: AppColors.primary),
+                ),
+                // if (customer.tableEmptyStatus == true)
+                //   Container(
+                //     padding:
+                //         const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+                //     decoration:
+                //         BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                //     child: Text(
+                //       "Empty Table",
+                //       style:
+                //           CustomTextStyles.f12W400(color: AppColors.errorColor),
+                //     ),
+                //   ),
+                if (customer.isCancelled == true)
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                    child: Text(
+                      "Cancelled",
+                      style:
+                          CustomTextStyles.f12W400(color: AppColors.errorColor),
+                    ),
+                  ),
+              ],
             ),
             const SizedBox(
               height: 5,

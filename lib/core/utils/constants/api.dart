@@ -142,6 +142,7 @@ class Api {
   // dashboard
   static String hotelDashboard = "$apiBaseUrl/hotel/dashboard";
   static String restaurantDashboard = "$apiBaseUrl/restaurant/dashboard";
-    static String transferTable = "$apiBaseUrl/restaurant/transfer-table";
+  static String transferTable = "$apiBaseUrl/restaurant/transfer-table";
 
+  static String emptyTable = "$apiBaseUrl/restaurant/empty-table";
 }

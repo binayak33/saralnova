@@ -8,11 +8,11 @@ import 'package:saralnova/core/model/feature_model/tables/table_model.dart';
 import 'package:saralnova/core/repo/more_repo/pos_repo/pos_repo.dart';
 import 'package:saralnova/core/utils/constants/messages.dart';
 import 'package:saralnova/core/utils/enums/enums.dart';
-import 'package:saralnova/features/screens/More/pos/customer_order/checkout_bottom_sheet.dart';
-import 'package:saralnova/features/screens/More/pos/customer_order/payment_method_bottomsheet.dart';
-import 'package:saralnova/features/screens/More/pos/customer_order/qr_bottom_sheet.dart';
-import 'package:saralnova/features/screens/More/pos/customer_order/transfer_table_bottom_sheet.dart';
-import 'package:saralnova/features/screens/More/pos/pos_bottom_sheets/select_table_pos_bottomSheet.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/customer_order/checkout_bottom_sheet.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/customer_order/payment_method_bottomsheet.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/customer_order/qr_bottom_sheet.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/customer_order/transfer_table_bottom_sheet.dart';
+import 'package:saralnova/features/screens/Dashboard/pos/pos_bottom_sheets/select_table_pos_bottomSheet.dart';
 import 'package:saralnova/features/widgets/common_widgets/loading_dialog.dart';
 
 import '../../../../../features/widgets/common_widgets/sky_snack_bar.dart';
@@ -58,6 +58,8 @@ class CustomersKOTCheckoutController extends GetxController {
   }
 
   void getCustomerKots() async {
+    pageState.value = PageState.LOADING;
+
     if (customer.value != null) {
       PosRepo.getKotsByCustomer(
           customerId: customer.value!.id,
@@ -363,6 +365,43 @@ class CustomersKOTCheckoutController extends GetxController {
           message: Messages.error,
         );
       }
+    }
+  }
+
+  Future<void> emptyTable() async {
+    loading.show();
+    log("customer id ============>${customer.value!.id!}");
+
+    log("tableId  ============>${customer.value!.tables![0].id!}");
+    log("tableName  ============>${customer.value!.tables![0].name!}");
+
+    if (customer.value != null && customer.value!.tables != null) {
+      if (customer.value!.tables!.isNotEmpty) {
+        await PosRepo.emptyTable(
+            tableId: customer.value!.tables![0].id!,
+            customerId: customer.value!.id!,
+            onSuccess: (message) {
+              loading.hide();
+              getCustomerKots();
+              Get.back();
+              transferringTableController.clear();
+              table.value = null;
+              SkySnackBar.success(title: "Table", message: message);
+            },
+            onError: (message) {
+              loading.hide();
+
+              SkySnackBar.error(title: "Table", message: message);
+            });
+      } else {
+        loading.hide();
+
+        SkySnackBar.error(title: "Table", message: Messages.error);
+      }
+    } else {
+      loading.hide();
+
+      SkySnackBar.error(title: "Table", message: Messages.error);
     }
   }
 }

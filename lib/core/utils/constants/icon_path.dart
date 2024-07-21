@@ -17,6 +17,8 @@ class IconPath {
   static const String roomType = "$basePath/room_type.svg";
   static const String placeOrder = "$basePath/placeOrder.svg";
   static const String dining = "$basePath/dining.svg";
+  static const String mergedTable = "$basePath/mergeTable.svg";
+  static const String mergeMain = "$basePath/mergeMain.svg";
 
   static const String table = "$basePath/table.svg";
   static const String merged = "$basePath/merged.svg";
@@ -25,6 +27,7 @@ class IconPath {
   static const String logout = "$basePath/logout.svg";
 
   static const String circleCross = "$basePath/circleCross.svg";
+  static const String dollar = "$basePath/dollar.svg";
 
   static const String circleTick = "$basePath/tick.svg";
   static const String up = "$basePath/up.svg";

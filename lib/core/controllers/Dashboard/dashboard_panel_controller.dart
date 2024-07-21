@@ -4,7 +4,7 @@ import 'package:saralnova/core/controllers/Splash/core_controller.dart';
 import 'package:saralnova/core/utils/constants/colors.dart';
 import 'package:saralnova/features/screens/Calendar/calander_screen.dart';
 import 'package:saralnova/features/screens/Dashboard/main_pos_panel.dart';
-import 'package:saralnova/features/screens/Home/home_screen.dart';
+import 'package:saralnova/features/screens/Dashboard/Home/home_screen.dart';
 import 'package:saralnova/features/screens/More/more_screen.dart';
 import 'package:saralnova/features/widgets/common_widgets/custom_alert_dialog.dart';
 
